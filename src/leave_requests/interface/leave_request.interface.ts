@@ -11,7 +11,7 @@ interface LeaveRequestI {
   dateTimeLeaveFirst: string;
   dateTimeLeaveLast: string;
   leaveDays: string;
-  returnDate: string;
+  returnToWorkDate: string;
   reason: string;
   itineraryFrom: string;
   itineraryTo: string;

@@ -14,15 +14,6 @@ export class CreateLeaveRequestDto {
   leaveApplied: string;
 
   @ApiProperty()
-  otHoursOffset: string;
-
-  @ApiProperty()
-  dateToOffsetFrom: string;
-
-  @ApiProperty()
-  dateToOffsetTo: string;
-
-  @ApiProperty()
   dateTimeLeaveFirst: string;
 
   @ApiProperty()
@@ -32,34 +23,16 @@ export class CreateLeaveRequestDto {
   leaveDays: string;
 
   @ApiProperty()
-  returnDate: string;
+  returnToWorkDate: string;
 
   @ApiProperty()
-  reason: string;
-
-  @ApiProperty()
-  itineraryFrom: string;
-
-  @ApiProperty()
-  itineraryTo: string;
-
-  @ApiProperty()
-  purpose: string;
-
-  @ApiProperty()
-  dateTimeDeparture: string;
-
-  @ApiProperty()
-  dateTimeArrival: string;
-
-  @ApiProperty()
-  information: string;
+  fieldLeaveReason: string;
 
   @ApiProperty()
   immediateSupervisor: string;
 
   @ApiProperty()
-  status: string;
+  applicationLeaveStatus: string;
 
   @ApiProperty()
   disapprovalReason: string;

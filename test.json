@@ -61,7 +61,7 @@
       "dateTimeLeaveFirst": "2/22/2022 8:00:00",
       "dateTimeLeaveLast": "2/22/2022 18:00:00",
       "leaveDays": "1",
-      "returnDate": "2/23/2022",
+      "returnToWorkDate": "2/23/2022",
       "reason": "Vacation",
       "itineraryFrom": "",
       "itineraryTo": "",
@@ -75,5 +75,17 @@
       "approvedDate": "",
       "disapprovedDate": ""
     }
+  ],
+  "leaveTypes" : [
+    "vacationLeave",
+    "sickLeave",
+    "maternityLeave",
+    "paternityLeave",
+    "unpaidLeave",
+    "compensatoryLeave",
+    "serviceIncentiveLeave",
+    "serviceIncentiveLeave",
+    "officialBusiness",
+    "emergencyLeave"
   ]
 }
