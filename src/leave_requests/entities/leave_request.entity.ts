@@ -14,37 +14,19 @@ export class Leave_request {
   @Prop()
   leaveApplied: string;
   @Prop()
-  otHoursOffset: string;
-  @Prop()
-  dateToOffsetFrom: string;
-  @Prop()
-  dateToOffsetTo: string;
-  @Prop()
   dateTimeLeaveFirst: string;
   @Prop()
   dateTimeLeaveLast: string;
   @Prop()
   leaveDays: string;
   @Prop()
-  returnDate: string;
+  returnToWorkDate: string;
   @Prop()
-  reason: string;
-  @Prop()
-  itineraryFrom: string;
-  @Prop()
-  itineraryTo: string;
-  @Prop()
-  purpose: string;
-  @Prop()
-  dateTimeDeparture: string;
-  @Prop()
-  dateTimeArrival: string;
-  @Prop()
-  information: string;
+  fieldLeaveReason: string;
   @Prop()
   immediateSupervisor: string;
   @Prop()
-  status: string;
+  applicationLeaveStatus: string;
   @Prop()
   disapprovalReason: string;
   @Prop()
@@ -54,3 +36,4 @@ export class Leave_request {
 }
 
 export const LeaveRequestSchema = SchemaFactory.createForClass(Leave_request);
+

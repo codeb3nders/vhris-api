@@ -18,7 +18,7 @@ export const LeaveRequestResponseHandler = {
         dateTimeLeaveFirst: item.dateTimeLeaveFirst,
         dateTimeLeaveLast: item.dateTimeLeaveLast,
         leaveDays: item.leaveDays,
-        returnDate: item.returnDate,
+        returnToWorkDate: item.returnToWorkDate,
         reason: item.reason,
         itineraryFrom: item.itineraryFrom,
         itineraryTo: item.itineraryTo,
