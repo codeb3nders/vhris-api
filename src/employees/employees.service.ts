@@ -7,64 +7,66 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Injectable()
 export class EmployeesService {
-  constructor(@InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>) {}
-  
-  async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee>{
+  constructor(
+    @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
+  ) {}
+
+  async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
-    console.log({createEmployeeDto, createdEmployee})
     return await createdEmployee.save();
-   
-   
   }
 
-  async findAll():Promise<Employee[]> {
+  async findAll(): Promise<Employee[]> {
     return this.employeeModel.find().exec();
   }
 
-  async findAllWithLeaves():Promise<any>{
+  async findAllWithLeaves(): Promise<any> {
     const pipeline = [
       {
-        '$lookup': {
-          'from': 'leave_requests', 
-          'localField': 'employeeNo', 
-          'foreignField': 'employeeNo', 
-          'as': 'leave_requests'
-        }
-      }
-    ]
+        $lookup: {
+          from: 'leave_requests',
+          localField: 'employeeNo',
+          foreignField: 'employeeNo',
+          as: 'leave_requests',
+        },
+      },
+    ];
 
-    return this.employeeModel.aggregate(pipeline)
+    return this.employeeModel.aggregate(pipeline);
   }
 
-  async findAllLeavesById(employeeNo:string):Promise<any>{
+  async findAllLeavesById(employeeNo: string): Promise<any> {
     const pipeline = [
       {
-        '$lookup': {
-          'from': 'l', 
-          'localField': 'employeeNo', 
-          'foreignField': 'employeeNo', 
-          'as': 'leave_requests'
-        }
-      }, {
-        '$match': {
-          'employeeNo': employeeNo
-        }
-      }
-    ]
+        $lookup: {
+          from: 'l',
+          localField: 'employeeNo',
+          foreignField: 'employeeNo',
+          as: 'leave_requests',
+        },
+      },
+      {
+        $match: {
+          employeeNo: employeeNo,
+        },
+      },
+    ];
 
-    return this.employeeModel.aggregate(pipeline)
+    return this.employeeModel.aggregate(pipeline);
   }
-
 
   async findOne(employeeNo: string) {
-    return this.employeeModel.findOne({employeeNo})
+    return this.employeeModel.findOne({ employeeNo });
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
-    return this.employeeModel.updateOne({employeeNo}, {$set:{...updateEmployeeDto}})
+    return this.employeeModel.updateOne(
+      { employeeNo },
+      { $set: { ...updateEmployeeDto } },
+    );
   }
 
   async remove(employeeNo: string) {
-    return this.employeeModel.deleteOne({employeeNo})
+    return this.employeeModel.deleteOne({ employeeNo });
   }
 }
