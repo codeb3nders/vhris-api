@@ -64,6 +64,12 @@ export class Employee {
   @Prop()
   tin: string;
   @Prop()
+  city: string;
+  @Prop()
+  zipCode: string;
+  @Prop()
+  region: string;
+  @Prop()
   address: string;
   @Prop()
   course?: string;
