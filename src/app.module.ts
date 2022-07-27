@@ -9,17 +9,23 @@ import { LeaveRequestModule } from './leave_requests/leave_request.module';
 import { OvertimeRequestsModule } from './overtime_requests/overtime_requests.module';
 import { LeaveTypesModule } from './leave_types/leave_types.module';
 import { EmployeeLeavesModule } from './employee_leaves/employee_leaves.module';
+import { EmployeeHistoryModule } from './employee_history/employee_history.module';
 
 @Module({
-  
   imports: [
     ConfigModule.forRoot({
       envFilePath: 'env_var/.env',
       load: [configuration],
     }),
-    EmployeesModule, 
-    MongooseModule.forRoot(`mongodb://${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`), 
-    LeaveRequestModule, OvertimeRequestsModule, LeaveTypesModule, EmployeeLeavesModule
+    EmployeesModule,
+    MongooseModule.forRoot(
+      `mongodb://${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`,
+    ),
+    LeaveRequestModule,
+    OvertimeRequestsModule,
+    LeaveTypesModule,
+    EmployeeLeavesModule,
+    EmployeeHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

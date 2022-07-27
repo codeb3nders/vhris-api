@@ -9,8 +9,8 @@ export class Leave_request {
   leaveRequestNo: string;
   @Prop()
   employeeNo: string;
-  @Prop({default: new Date()})
-  timestamp: string;  
+  @Prop({ default: new Date() })
+  timestamp: string;
   @Prop()
   leaveApplied: string;
   @Prop()
@@ -36,4 +36,3 @@ export class Leave_request {
 }
 
 export const LeaveRequestSchema = SchemaFactory.createForClass(Leave_request);
-
