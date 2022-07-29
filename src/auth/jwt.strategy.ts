@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { EmployeesService } from 'src/employees/employees.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly employeesService: EmployeesService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -13,11 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    // TODO: get user from db
-    // const user = await this.userCredential.getById(payload.sub)
+    // TODO: what to do with this fetched user data
+    const user = await this.employeesService.findOne(payload.employeeNo);
+    console.log('PAYLOAD', payload, user);
     return {
-      id: payload.sub,
-      name: payload.name,
+      isActive: payload.isActive,
+      accessGroup: payload.accessGroup,
     };
   }
 }

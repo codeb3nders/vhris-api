@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
+import {
+  UserCredentialDocument,
+  User_credential,
+} from './entities/user_credential.entity';
+import { encodePassWord } from 'src/utils/encoder';
 
 export type User = {
   id: number;
@@ -11,31 +18,25 @@ export type User = {
 
 @Injectable()
 export class UserCredentialsService {
-  private readonly users: User[] = [
-    {
-      id: 1,
-      name: 'JM',
-      username: 'admin',
-      password: 'adminPassword',
-    },
-    {
-      id: 2,
-      name: 'JMC',
-      username: 'user',
-      password: 'userPassword',
-    },
-  ];
+  constructor(
+    @InjectModel(User_credential.name)
+    private userCredentialModel: Model<UserCredentialDocument>,
+  ) {}
 
-  create(createUserCredentialDto: CreateUserCredentialDto) {
-    return 'This action adds a new userCredential';
+  async create(createUserCredentialDto: CreateUserCredentialDto) {
+    const { password: rawPassword, ...rest } = createUserCredentialDto;
+    const password = await encodePassWord(rawPassword);
+    const body = { ...rest, password };
+    const createUserCredential = new this.userCredentialModel(body);
+    return await createUserCredential.save();
   }
 
-  findAll() {
-    return `This action returns all userCredentials`;
+  async findAll(): Promise<CreateUserCredentialDto[]> {
+    return await this.userCredentialModel.find();
   }
 
-  findOne(username: string) {
-    return this.users.find((user) => user.username === username);
+  async findOne(employeeNo: string) {
+    return await this.userCredentialModel.findOne({ employeeNo });
   }
 
   update(username: string, updateUserCredentialDto: UpdateUserCredentialDto) {

@@ -4,7 +4,6 @@ import { EmployeesController } from './employees.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Employee, EmployeeSchema } from './entities/employee.entity';
 
-
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -16,5 +15,6 @@ import { Employee, EmployeeSchema } from './entities/employee.entity';
   ],
   controllers: [EmployeesController],
   providers: [EmployeesService],
+  exports: [EmployeesService],
 })
 export class EmployeesModule {}

@@ -3,12 +3,18 @@ import { Document } from 'mongoose';
 
 export type UserCredentialDocument = User_credential & Document;
 
-@Schema({ strict: false })
+@Schema()
 export class User_credential {
   @Prop({ required: true, unique: true })
   employeeNo: string;
-  @Prop({ default: Date.now() })
-  timeStamp: Date;
+  @Prop({ default: new Date().getTime() })
+  timeStamp: number;
+  @Prop({ required: true })
+  password: string;
+  @Prop({ required: true })
+  accessGroup: string;
+  @Prop({ default: true })
+  isActive: boolean;
 }
 
 export const UserCredentialSchema =

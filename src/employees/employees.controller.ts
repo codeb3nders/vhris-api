@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -16,6 +17,7 @@ import { ErrorResponse } from 'src/helpers/error_response';
 import { EmployeeResponseHandler } from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 
 @ApiTags('Employees')
 @Controller('employees')
@@ -35,6 +37,7 @@ export class EmployeesController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<EmployeeI[]> {
     try {
@@ -60,6 +63,7 @@ export class EmployeesController {
     return this.employeesService.findAllLeavesById(employeeNo);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
   findOne(@Param('employeeNo') employeeNo: string) {
     return this.employeesService.findOne(employeeNo);

@@ -22,7 +22,6 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   healthCheck(): string {
     // TODO: require an Bearer token, validate token

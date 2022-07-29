@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserCredentialsService } from './user_credentials.service';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 
 @Controller('user-credentials')
 export class UserCredentialsController {
@@ -17,34 +19,39 @@ export class UserCredentialsController {
     private readonly userCredentialsService: UserCredentialsService,
   ) {}
 
+  //@UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createUserCredentialDto: CreateUserCredentialDto) {
     return this.userCredentialsService.create(createUserCredentialDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.userCredentialsService.findAll();
   }
 
-  @Get(':username')
-  findOne(@Param('username') username: string) {
-    return this.userCredentialsService.findOne(username);
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeNo')
+  findOne(@Param('employeeNo') employeeNo: string) {
+    return this.userCredentialsService.findOne(employeeNo);
   }
 
-  @Patch(':username')
+  @UseGuards(JwtAuthGuard)
+  @Patch(':employeeNo')
   update(
-    @Param('username') username: string,
+    @Param('employeeNo') employeeNo: string,
     @Body() updateUserCredentialDto: UpdateUserCredentialDto,
   ) {
     return this.userCredentialsService.update(
-      username,
+      employeeNo,
       updateUserCredentialDto,
     );
   }
 
-  @Delete(':username')
-  remove(@Param('username') username: string) {
-    return this.userCredentialsService.remove(username);
+  @UseGuards(JwtAuthGuard)
+  @Delete(':employeeNo')
+  remove(@Param('employeeNo') employeeNo: string) {
+    return this.userCredentialsService.remove(employeeNo);
   }
 }
