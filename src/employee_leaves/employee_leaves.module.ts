@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { EmployeeLeavesService } from './employee_leaves.service';
 import { EmployeeLeavesController } from './employee_leaves.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EmployeeLeavesSchema, Employee_leaves } from './entities/employee_leave.entity';
+import {
+  EmployeeLeavesSchema,
+  Employee_leaves,
+} from './entities/employee_leave.entity';
 
 @Module({
   imports: [
@@ -14,6 +17,6 @@ import { EmployeeLeavesSchema, Employee_leaves } from './entities/employee_leave
     ]),
   ],
   controllers: [EmployeeLeavesController],
-  providers: [EmployeeLeavesService]
+  providers: [EmployeeLeavesService],
 })
 export class EmployeeLeavesModule {}
