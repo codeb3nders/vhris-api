@@ -4,15 +4,23 @@ import { Model } from 'mongoose';
 import { Employee, EmployeeDocument } from './entities/employee.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class EmployeesService {
   constructor(
-    @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
+    @InjectModel(Employee.name) 
+    private employeeModel: Model<EmployeeDocument>,
+    private emailService: EmailService
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
+    console.log('------', createEmployeeDto.email)
+    this.emailService.sendEmail(
+      'jose.copino@vcdcph.com',
+      createEmployeeDto.email,
+    );
     return await createdEmployee.save();
   }
 
