@@ -1,5 +1,8 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import configuration from 'config/configuration';
+
+const { email } = configuration();
 
 @Injectable()
 export class EmailService {
@@ -7,9 +10,9 @@ export class EmailService {
   async sendEmail(toemmail: string, textMessage: string) {
     return await this.mailService.sendMail({
       to: toemmail,
-      from: 'vision.hris.dev@gmail.com',
+      from: `${email}`,
       subject: 'Test email sending',
-      text: `Welcome to HRIS ${textMessage}`,
+      text: `Welcome to HRIS. your temporary password is  ${textMessage}`,
     });
   }
 }
