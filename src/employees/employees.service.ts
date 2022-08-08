@@ -11,14 +11,14 @@ export class EmployeesService {
   constructor(
     @InjectModel(Employee.name) 
     private employeeModel: Model<EmployeeDocument>,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
     console.log('------', createEmployeeDto.email)
     this.emailService.sendEmail(
-      'jose.copino@vcdcph.com',
+      createEmployeeDto.email,
       createEmployeeDto.email,
     );
     return await createdEmployee.save();

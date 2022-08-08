@@ -18,6 +18,6 @@ import { MongooseModule } from '@nestjs/mongoose';
   ],
   controllers: [UserCredentialsController],
   providers: [UserCredentialsService],
-  exports: [UserCredentialsService],
+  exports: [UserCredentialsService, UserCredentialsService],
 })
 export class UserCredentialsModule {}

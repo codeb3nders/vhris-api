@@ -7,7 +7,7 @@ export class EmailService {
   async sendEmail(toemmail: string, textMessage: string) {
     return await this.mailService.sendMail({
       to: toemmail,
-      from: 'codeb3nder@gmail.com',
+      from: 'vision.hris.dev@gmail.com',
       subject: 'Test email sending',
       text: `Welcome to HRIS ${textMessage}`,
     });

@@ -28,6 +28,7 @@ export class UserCredentialsService {
     const password = await encodePassWord(rawPassword);
     const body = { ...rest, password };
     const createUserCredential = new this.userCredentialModel(body);
+    // TODO: send email
     return await createUserCredential.save();
   }
 
