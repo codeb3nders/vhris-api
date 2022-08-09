@@ -29,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
       },
     }),
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: 'env_var/.env',
       load: [configuration],
     }),
@@ -36,6 +37,15 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(
       `mongodb://${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`,
     ),
+    MailerModule.forRoot({
+      transport: {
+        host: `${process.env.EMAIL_HOST}`,
+        auth: {
+          user: `${process.env.EMAIL_USER}`,
+          pass: `${process.env.EMAIL_PASSWORD}`,
+        },
+      },
+    }),
     LeaveRequestModule,
     OvertimeRequestsModule,
     LeaveTypesModule,

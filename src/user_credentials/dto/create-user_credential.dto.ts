@@ -4,11 +4,14 @@ export class CreateUserCredentialDto {
   @ApiProperty()
   employeeNo: string;
   @ApiProperty()
-  timeStamp: string;
+  timeStamp: number;
+
   @ApiProperty()
   password: string;
   @ApiProperty()
   accessGroup: string;
   @ApiProperty()
-  isActive: string;
+  isActive: boolean;
+  @ApiProperty()
+  email?: string;
 }
