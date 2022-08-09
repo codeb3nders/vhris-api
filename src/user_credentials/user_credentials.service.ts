@@ -13,7 +13,7 @@ import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
 
 export type User = {
-  id: number;
+  id: string;
   username: string;
   name: string;
   password: string;
@@ -46,7 +46,7 @@ export class UserCredentialsService {
     const response = await createUserCredential.save();
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
-      this.emailService.sendEmail(employee.email, rawPassword);
+      //  this.emailService.sendEmail(employee.email, rawPassword);
       return response;
     }
     return 'fail to create';

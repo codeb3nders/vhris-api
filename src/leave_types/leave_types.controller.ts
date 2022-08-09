@@ -45,8 +45,6 @@ export class LeaveTypesController {
     }
   }
 
-  
-
   @Get(':typeId')
   findOne(@Param('typeId') typeId: string) {
     return this.leaveTypeService.findOne(typeId);

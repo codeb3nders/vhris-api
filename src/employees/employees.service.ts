@@ -11,6 +11,7 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { generatePassword } from 'src/helpers/password_generator';
 import { ConfigService } from '@nestjs/config';
+import { zeroPad } from 'src/helpers/number_helper';
 
 @Injectable()
 export class EmployeesService {
@@ -26,18 +27,29 @@ export class EmployeesService {
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
 
-    console.log('------', createEmployeeDto.email);
-    this.emailService.sendEmail(
-      createEmployeeDto.email,
-      createEmployeeDto.email,
-    );
-
     console.log(
       '------',
       createEmployeeDto.email,
       this.configService.get('EMAIL_DOMAIN'),
     );
 
+    console.log('------', createEmployeeDto.email);
+
+    // try {
+    //   this.emailService.sendEmail(
+    //     'jose.copino@vcdcph.com',
+    //     createEmployeeDto.email,
+    //   );
+    // } catch (error) {
+    //   console.log('may Xerror:', error);
+    // }
+
+    console.log('LAST EMPLOYEE');
+
+    const lastEmployee = await this.findLast();
+
+    const newEmployeeNo = Number(lastEmployee?.employeeNo || 0) + 1;
+    createdEmployee.employeeNo = zeroPad(newEmployeeNo, 6);
     const response = await createdEmployee.save();
     if (response) {
       const password = generatePassword();
@@ -98,6 +110,11 @@ export class EmployeesService {
     ];
 
     return this.employeeModel.aggregate(pipeline);
+  }
+
+  async findLast() {
+    const options = {};
+    return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 
   async findOne(employeeNo: string) {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import configuration from 'config/configuration';
+//import configuration from 'config/configuration-to delete';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EmployeesModule } from './employees/employees.module';
@@ -24,14 +24,14 @@ import { AuthModule } from './auth/auth.module';
         host: 'smtp.sendgrid.net',
         auth: {
           user: 'apikey',
-          pass: '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',
+          pass: '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',
         },
       },
     }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: 'env_var/.env',
-      load: [configuration],
+      //load: [configuration],
     }),
     EmployeesModule,
     MongooseModule.forRoot(

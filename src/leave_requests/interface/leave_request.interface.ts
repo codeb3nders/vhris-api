@@ -1,4 +1,4 @@
-import { EmployeeI } from "src/employees/interface/employee.interface";
+import { EmployeeI } from 'src/employees/interface/employee.interface';
 
 interface LeaveRequestI {
   leaveRequestNo: string;
@@ -24,7 +24,7 @@ interface LeaveRequestI {
   disapprovalReason: string;
   approvedDate: string;
   disapprovedDate: string;
-  employee?: EmployeeI
+  employee?: EmployeeI;
 }
 
 export { LeaveRequestI };

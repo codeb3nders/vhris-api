@@ -1,5 +1,7 @@
 const config = {
+  xxx: 'xxx',
   dev: {
+    zeroPad: 2,
     port: parseInt(process.env.PORT, 10) || 4002,
     database: {
       host: process.env.DATABASE_HOST,
@@ -14,6 +16,7 @@ const config = {
     },
   },
   prod: {
+    zeroPad: 2,
     port: parseInt(process.env.PORT, 10) || 4002,
     database: {
       host: process.env.DATABASE_HOST,

@@ -17,8 +17,5 @@ export class Employee_leaves {
   used: string;
 }
 
-export const EmployeeLeavesSchema = SchemaFactory.createForClass(Employee_leaves);
-
-
-
-
+export const EmployeeLeavesSchema =
+  SchemaFactory.createForClass(Employee_leaves);
