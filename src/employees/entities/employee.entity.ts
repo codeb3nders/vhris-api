@@ -7,52 +7,52 @@ export type EmployeeDocument = Employee & Document;
 export class Employee {
   @Prop({ required: true, unique: true })
   employeeNo: string;
-  @Prop()
+  @Prop({ required: true })
   firstName: string;
-  @Prop()
+  @Prop({ required: true })
   lastName: string;
   @Prop()
   middleName: string;
-  @Prop()
-  fsCode: string;
-  @Prop()
-  bioCode: string;
-  @Prop()
+  @Prop({ required: true })
   position: string;
-  @Prop()
+  @Prop({ required: true })
   rank: string;
-  @Prop()
-  division: string;
-  @Prop()
+  @Prop({ required: true })
   department: string;
+  @Prop({ required: true })
+  location: string;
+  @Prop({ required: true })
+  isActive: boolean;
+  @Prop({ required: true })
+  userGroup: string;
   @Prop()
-  designation: string;
-  @Prop()
+  reportsTo: string;
+  @Prop({ required: true })
   dateHired: Date;
-  @Prop()
-  yearsInService: number;
-  @Prop()
+  @Prop({ required: true })
   employmentStatus: string;
   @Prop()
   endOfProbationary: Date;
   @Prop()
   contractEndDate: Date;
-  @Prop()
+  @Prop({ required: true })
   gender: string;
-  @Prop()
+  @Prop({ required: true })
   birthDate: Date;
-  @Prop()
-  age: number;
-  @Prop()
+  @Prop({ required: true })
   contactNumber: string;
-  @Prop()
+  @Prop({ required: true })
   taxExemption: string;
   @Prop({ required: true, unique: true })
-  email: string;
-  @Prop()
+  companyEmail: string;
+  @Prop({ required: true, unique: true })
+  personalEmail: string;
+  @Prop({ required: true })
   backAccountNo: string;
-  @Prop()
+  @Prop({ required: true })
   civilStatus: string;
+  @Prop()
+  religion: string;
   @Prop()
   NumberOfDependents: number;
   @Prop()
@@ -82,26 +82,18 @@ export class Employee {
   @Prop()
   prcIdNo: string;
   @Prop()
-  noticeOffense: string;
-  @Prop()
   audit201: string;
   @Prop()
-  remarks: string;
+  notes: string;
   @Prop()
   cocNo: string;
   @Prop()
-  vaccineStatus: string;
-  @Prop()
-  digitalBulletin: string;
-  @Prop()
-  viberNumber: string;
-  @Prop()
   vpdcEmail: string;
-  @Prop()
+  @Prop({ required: true })
   emergencyContactPerson: string;
-  @Prop()
+  @Prop({ required: true })
   emergencyAddress: string;
-  @Prop()
+  @Prop({ required: true })
   emergencyContactNo: string;
 }
 

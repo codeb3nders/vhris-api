@@ -27,40 +27,21 @@ export class EmployeesService {
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
 
-    console.log(
-      '------',
-      createEmployeeDto.email,
-      this.configService.get('EMAIL_DOMAIN'),
-    );
-
-    console.log('------', createEmployeeDto.email);
-
-    // try {
-    //   this.emailService.sendEmail(
-    //     'jose.copino@vcdcph.com',
-    //     createEmployeeDto.email,
-    //   );
-    // } catch (error) {
-    //   console.log('may Xerror:', error);
-    // }
-
-    console.log('LAST EMPLOYEE');
-
     const lastEmployee = await this.findLast();
 
     const newEmployeeNo = Number(lastEmployee?.employeeNo || 0) + 1;
     createdEmployee.employeeNo = zeroPad(newEmployeeNo, 6);
     const response = await createdEmployee.save();
+
     if (response) {
       const password = generatePassword();
-
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
         password: password,
         accessGroup: 'employee',
         isActive: true,
-        email: response.email,
+        email: response.personalEmail,
       };
 
       const userCredential = await this.userCredentialsService.create(

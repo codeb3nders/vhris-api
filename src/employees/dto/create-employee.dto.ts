@@ -2,160 +2,94 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateEmployeeDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ required: true })
   employeeNo: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ required: true })
   firstName: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ required: true })
   lastName: string;
-
   @ApiProperty()
-  @IsNotEmpty()
   middleName: string;
-
-  @ApiProperty({ required: false })
-  fsCode?: string;
-
-  @ApiProperty({ required: false })
-  bioCode?: string;
-
-  @ApiProperty({ required: false })
-  position?: string;
-
-  @ApiProperty({ required: false })
-  rank?: string;
-
-  @ApiProperty({ required: false })
-  division?: string;
-
-  @ApiProperty({ required: false })
-  department?: string;
-
-  @ApiProperty({ required: false })
-  designation?: string;
-
+  @ApiProperty({ required: true })
+  position: string;
+  @ApiProperty({ required: true })
+  rank: string;
+  @ApiProperty({ required: true })
+  department: string;
+  @ApiProperty({ required: true })
+  location: string;
+  @ApiProperty({ required: true })
+  isActive: boolean;
+  @ApiProperty({ required: true })
+  userGroup: string;
   @ApiProperty()
-  @ApiProperty({ required: false })
-  dateHired?: Date;
-
-  @ApiProperty({ required: false })
-  yearsInService?: number;
-
-  @ApiProperty({ required: false })
-  employmentStatus?: string;
-
-  @ApiProperty({ required: false })
-  endOfProbationary?: Date;
-
-  @ApiProperty({ required: false })
-  contractEndDate?: Date;
-
+  reportsTo: string;
+  @ApiProperty({ required: true })
+  dateHired: Date;
+  @ApiProperty({ required: true })
+  employmentStatus: string;
   @ApiProperty()
-  @IsNotEmpty()
+  endOfProbationary: Date;
+  @ApiProperty()
+  contractEndDate: Date;
+  @ApiProperty({ required: true })
   gender: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ required: true })
   birthDate: Date;
-
+  @ApiProperty({ required: true })
+  contactNumber: string;
+  @ApiProperty({ required: true })
+  taxExemption: string;
+  @ApiProperty({ required: true })
+  companyEmail: string;
+  @ApiProperty({ required: true })
+  personalEmail: string;
+  @ApiProperty({ required: true })
+  backAccountNo: string;
+  @ApiProperty({ required: true })
+  civilStatus: string;
   @ApiProperty()
-  @IsNotEmpty()
-  age: number;
-
-  @ApiProperty({ required: false })
-  contactNumber?: string;
-
-  @ApiProperty({ required: false })
-  taxExemption?: string;
-
-  @ApiProperty()
-  @IsEmail()
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty({ required: false })
-  backAccountNo?: string;
-
-  @ApiProperty({ required: false })
-  civilStatus?: string;
-
+  religion: string;
   @ApiProperty()
   NumberOfDependents: number;
-
-  @ApiProperty({ required: false })
-  sss?: string;
-
-  @ApiProperty({ required: false })
-  philHealth?: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
+  sss: string;
+  @ApiProperty()
+  philHealth: string;
+  @ApiProperty()
   pagIbig?: string;
-
-  @ApiProperty({ required: false })
-  tin?: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
+  tin: string;
+  @ApiProperty()
   city: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
   zipCode: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
   region: string;
-
-  @ApiProperty({ required: false })
-  address?: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
+  address: string;
+  @ApiProperty()
   course?: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
   educationalAttainment?: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty()
   schoolAttended?: string;
-
-  @ApiProperty({ required: false })
-  licensure?: string;
-
-  @ApiProperty({ required: false })
-  prcIdNo?: string;
-
-  @ApiProperty({ required: false })
-  noticeOffense?: string;
-
-  @ApiProperty({ required: false })
-  audit201?: string;
-
-  @ApiProperty({ required: false })
-  remarks?: string;
-
-  @ApiProperty({ required: false })
-  cocNo?: string;
-
-  @ApiProperty({ required: false })
-  vaccineStatus?: string;
-
-  @ApiProperty({ required: false })
-  digitalBulletin?: string;
-
-  @ApiProperty({ required: false })
-  viberNumber?: string;
-
-  @ApiProperty({ required: false })
-  vpdcEmail?: string;
-
-  @ApiProperty({ required: false })
-  emergencyContactPerson?: string;
-
-  @ApiProperty({ required: false })
-  emergencyAddress?: string;
-
-  @ApiProperty({ required: false })
-  emergencyContactNo?: string;
+  @ApiProperty()
+  licensure: string;
+  @ApiProperty()
+  prcIdNo: string;
+  @ApiProperty()
+  audit201: string;
+  @ApiProperty()
+  notes: string;
+  @ApiProperty()
+  cocNo: string;
+  @ApiProperty()
+  vpdcEmail: string;
+  @ApiProperty({ required: true })
+  emergencyContactPerson: string;
+  @ApiProperty({ required: true })
+  emergencyAddress: string;
+  @ApiProperty({ required: true })
+  emergencyContactNo: string;
 }

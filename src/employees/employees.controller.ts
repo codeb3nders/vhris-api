@@ -29,8 +29,6 @@ export class EmployeesController {
   async create(
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<Employee> {
-    // TODO: Add validation
-
     try {
       return await this.employeesService.create(createEmployeeDto);
     } catch (error) {

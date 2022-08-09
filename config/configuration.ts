@@ -1,5 +1,4 @@
 const config = {
-  xxx: 'xxx',
   dev: {
     zeroPad: 2,
     port: parseInt(process.env.PORT, 10) || 4002,

@@ -33,7 +33,7 @@ export class UserCredentialsService {
     const { password: rawPassword, ...rest } = createUserCredentialDto;
     const password = await encodePassWord(rawPassword);
     const body = { ...rest, password };
-    // TODO: send email
+
     const employee = await this.employeesService.findOne(
       createUserCredentialDto.employeeNo,
     );
@@ -46,7 +46,8 @@ export class UserCredentialsService {
     const response = await createUserCredential.save();
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
-      //  this.emailService.sendEmail(employee.email, rawPassword);
+      this.emailService.sendEmail(employee.personalEmail, rawPassword);
+      console.log('SEND TO EMAIL', employee.personalEmail, rawPassword);
       return response;
     }
     return 'fail to create';
