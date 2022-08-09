@@ -1,19 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Employee, EmployeeDocument } from './entities/employee.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
+import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
+import { generatePassword } from 'src/helpers/password_generator';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class EmployeesService {
   constructor(
-    @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
+    @InjectModel(Employee.name)
+    private employeeModel: Model<EmployeeDocument>,
+    @Inject(forwardRef(() => UserCredentialsService))
+    private userCredentialsService: UserCredentialsService,
+    private configService: ConfigService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
-    return await createdEmployee.save();
+    console.log(
+      '------',
+      createEmployeeDto.email,
+      this.configService.get('EMAIL_DOMAIN'),
+    );
+
+    const response = await createdEmployee.save();
+    if (response) {
+      const password = generatePassword();
+
+      const userCredentials: CreateUserCredentialDto = {
+        employeeNo: response.employeeNo,
+        timeStamp: new Date().getTime(),
+        password: password,
+        accessGroup: 'employee',
+        isActive: true,
+        email: response.email,
+      };
+
+      const userCredential = await this.userCredentialsService.create(
+        userCredentials,
+      );
+
+      console.log('USER CREDENTIAL RESULT', userCredential);
+
+      return response;
+    }
   }
 
   async findAll(): Promise<Employee[]> {
