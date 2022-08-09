@@ -4,7 +4,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsEmpty,
-  IsEnum,
   IsOptional,
   Matches,
 } from 'class-validator';
@@ -17,6 +16,7 @@ import {
   LocationsEnum,
   RankEnum,
   ReligionEnum,
+  UserGroupEnum,
 } from 'src/enums/employee.enum';
 
 export class CreateEmployeeDto {
@@ -74,7 +74,13 @@ export class CreateEmployeeDto {
   isActive: boolean;
 
   @ApiProperty({ required: true })
-  userGroup: string;
+  @Matches(
+    `^${Object.values(UserGroupEnum)
+      .filter((v) => typeof v !== 'number')
+      .join('|')}$`,
+    'i',
+  )
+  userGroup: UserGroupEnum;
 
   @ApiProperty()
   reportsTo: string;
@@ -207,4 +213,8 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   emergencyContactNo: string;
+
+  @IsEmpty()
+  @ApiProperty()
+  password: string;
 }

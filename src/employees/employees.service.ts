@@ -4,14 +4,11 @@ import { Model } from 'mongoose';
 import { Employee, EmployeeDocument } from './entities/employee.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-
-import { EmailService } from 'src/email/email.service';
-
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { generatePassword } from 'src/helpers/password_generator';
-import { ConfigService } from '@nestjs/config';
 import { zeroPad } from 'src/helpers/number_helper';
+import { AutoCredentialEnum } from 'src/enums/employee.enum';
 
 @Injectable()
 export class EmployeesService {
@@ -20,20 +17,17 @@ export class EmployeesService {
     private employeeModel: Model<EmployeeDocument>,
     @Inject(forwardRef(() => UserCredentialsService))
     private userCredentialsService: UserCredentialsService,
-    private emailService: EmailService,
-    private configService: ConfigService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
 
     const lastEmployee = await this.findLast();
-
     const newEmployeeNo = Number(lastEmployee?.employeeNo || 0) + 1;
     createdEmployee.employeeNo = zeroPad(newEmployeeNo, 6);
     const response = await createdEmployee.save();
 
-    if (response) {
+    if (response && AutoCredentialEnum[response.userGroup.toUpperCase()]) {
       const password = generatePassword();
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
@@ -44,14 +38,13 @@ export class EmployeesService {
         email: response.personalEmail,
       };
 
-      const userCredential = await this.userCredentialsService.create(
-        userCredentials,
-      );
+      await this.userCredentialsService.create(userCredentials);
 
-      console.log('USER CREDENTIAL RESULT', userCredential);
+      response.password = password;
 
       return response;
     }
+    return response;
   }
 
   async findAll(): Promise<Employee[]> {
@@ -94,7 +87,6 @@ export class EmployeesService {
   }
 
   async findLast() {
-    const options = {};
     return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 

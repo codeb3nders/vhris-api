@@ -95,6 +95,8 @@ export class Employee {
   emergencyAddress: string;
   @Prop({ required: true })
   emergencyContactNo: string;
+  @Prop()
+  password?: string;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
