@@ -47,7 +47,11 @@ export class UserCredentialsService {
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
       // this.emailService.sendEmail(employee.personalEmail, rawPassword);
-      console.log('SEND TO EMAIL', employee.personalEmail, rawPassword);
+      console.log(
+        'TODO: MAKE SEND TO EMAIL WORK',
+        employee.personalEmail,
+        rawPassword,
+      );
       return response;
     }
     return 'fail to create';

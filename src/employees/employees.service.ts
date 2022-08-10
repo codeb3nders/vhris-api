@@ -24,16 +24,19 @@ export class EmployeesService {
 
     const lastEmployee = await this.findLast();
     const newEmployeeNo = Number(lastEmployee?.employeeNo || 0) + 1;
-    createdEmployee.employeeNo = zeroPad(newEmployeeNo, 6);
+    createdEmployee.employeeNo = zeroPad(newEmployeeNo);
     const response = await createdEmployee.save();
 
-    if (response && AutoCredentialEnum[response.userGroup.toUpperCase()]) {
+    if (
+      response &&
+      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
+    ) {
       const password = generatePassword();
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
         password: password,
-        accessGroup: 'employee',
+        accessGroup: response.userGroup,
         isActive: true,
         email: response.personalEmail,
       };
