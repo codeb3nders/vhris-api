@@ -11,6 +11,7 @@ import { encodePassWord } from 'src/utils/encoder';
 
 import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
+import { generatePassword } from 'src/helpers/password_generator';
 
 export type User = {
   id: string;
@@ -30,7 +31,8 @@ export class UserCredentialsService {
   ) {}
 
   async create(createUserCredentialDto: CreateUserCredentialDto) {
-    const { password: rawPassword, ...rest } = createUserCredentialDto;
+    const rawPassword = generatePassword();
+    const { ...rest } = createUserCredentialDto;
     const password = await encodePassWord(rawPassword);
     const body = { ...rest, password };
 
@@ -48,7 +50,7 @@ export class UserCredentialsService {
       // TODO: MAKE SEND EMAIL WORKING
       // this.emailService.sendEmail(employee.personalEmail, rawPassword);
 
-      return response;
+      return { userName: response.employeeNo, password: rawPassword };
     }
     return 'fail to create';
   }

@@ -11,5 +11,5 @@ export class CreateUserCredentialDto {
 
   @ApiProperty()
   @IsEmpty()
-  password: string;
+  password?: string;
 }

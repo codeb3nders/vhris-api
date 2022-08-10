@@ -31,16 +31,16 @@ export class EmployeesService {
       response &&
       AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
     ) {
-      const password = generatePassword();
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
-        password: password,
       };
 
-      await this.userCredentialsService.create(userCredentials);
+      const res: any = await this.userCredentialsService.create(
+        userCredentials,
+      );
 
-      response.password = password;
+      response.password = res.password;
 
       return response;
     }
