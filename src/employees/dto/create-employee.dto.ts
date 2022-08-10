@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsEmail, IsEmpty, IsEnum, IsOptional } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsEmail,
+  IsEmpty,
+  IsEnum,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
 
 import {
   CivilStatusEnum,
@@ -10,10 +16,21 @@ import {
   HighestEducationalAttainmentEnum,
   LocationsEnum,
   RankEnum,
+  RelationEnum,
   ReligionEnum,
   UserGroupEnum,
 } from 'src/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
+
+class FamilyBackground {
+  name: string;
+  @IsEnum(RelationEnum)
+  @Transform((param) => param.value.toUpperCase())
+  relation: RelationEnum;
+  occupation: string;
+  company: string;
+  residence: string;
+}
 
 export class CreateEmployeeDto {
   @IsEmpty()
@@ -29,6 +46,12 @@ export class CreateEmployeeDto {
 
   @ApiProperty()
   middleName: string;
+
+  @ApiProperty()
+  suffix: string;
+
+  @ApiProperty()
+  citizenship: string;
 
   @ApiProperty({ required: true })
   @IsEnum(EmployeeEnum)
@@ -82,7 +105,10 @@ export class CreateEmployeeDto {
   birthDate: Date;
 
   @ApiProperty({ required: true })
-  contactNumber: string;
+  personalContactNumber: string;
+
+  @ApiProperty()
+  companyContactNumber: string;
 
   @ApiProperty({ required: true })
   taxExemption: string;
@@ -95,8 +121,13 @@ export class CreateEmployeeDto {
   @IsEmail()
   personalEmail: string;
 
-  @ApiProperty({ required: true })
-  backAccountNo: string;
+  @ApiProperty()
+  payrollBankAccount: {
+    accountName: string;
+    accountNumber: string;
+    bankName: string;
+    bankBranch: string;
+  };
 
   @ApiProperty({ required: true })
   @IsEnum(CivilStatusEnum)
@@ -124,55 +155,146 @@ export class CreateEmployeeDto {
   tin: string;
 
   @ApiProperty()
-  city: string;
+  presentCity: string;
 
   @ApiProperty()
-  zipCode: string;
+  permanentCity: string;
 
   @ApiProperty()
-  region: string;
+  presentZipCode: string;
 
   @ApiProperty()
-  address: string;
+  permanentZipCode: string;
 
   @ApiProperty()
-  course?: string;
+  presentRegion: string;
+
+  @ApiProperty()
+  permanentRegion: string;
+
+  @ApiProperty()
+  permanentResidenceAddress: string;
+
+  @ApiProperty()
+  presentResidenceAddress: string;
 
   @ApiProperty()
   @IsOptional()
   @IsEnum(HighestEducationalAttainmentEnum)
   @Transform((param) => param.value.toUpperCase())
-  educationalAttainment?: HighestEducationalAttainmentEnum;
+  highestEducationalAttainment?: HighestEducationalAttainmentEnum;
 
   @ApiProperty()
-  schoolAttended?: string;
+  elementaryYrFrom: number;
+
+  @ApiProperty()
+  elementaryYrTo: number;
+
+  @ApiProperty()
+  elementarySchoolAndAddress: string;
+
+  @ApiProperty()
+  elementaryHonors: string;
+
+  @ApiProperty()
+  secondaryYrFrom: number;
+
+  @ApiProperty()
+  secondaryYrTo: number;
+
+  @ApiProperty()
+  secondarySchoolAndAddress: string;
+
+  @ApiProperty()
+  secondaryHonors: string;
+
+  @ApiProperty()
+  tertiaryYrFrom: number;
+
+  @ApiProperty()
+  tertiaryYrTo: number;
+
+  @ApiProperty()
+  tertiarySchoolAndAddress: string;
+
+  @ApiProperty()
+  tertiaryDegree: string;
+
+  @ApiProperty()
+  tertiaryHonors: string;
+
+  @ApiProperty()
+  postGradYrFrom: number;
+
+  @ApiProperty()
+  postGradYrTo: number;
+
+  @ApiProperty()
+  postGradSchoolAndAddress: string;
+
+  @ApiProperty()
+  postGradDegree: string;
+
+  @ApiProperty()
+  postGradHonors: string;
+
+  @ApiProperty()
+  othersYrFrom: number;
+
+  @ApiProperty()
+  othersYrTo: number;
+
+  @ApiProperty()
+  othersSchoolAndAddress: string;
+
+  @ApiProperty()
+  othersDegree: string;
+
+  @ApiProperty()
+  othersHonors: string;
 
   @ApiProperty()
   licensure: string;
 
-  @ApiProperty()
-  prcIdNo: string;
-
-  @ApiProperty()
-  audit201: string;
-
-  @ApiProperty()
-  notes: string;
-
-  @ApiProperty()
-  cocNo: string;
-
-  @ApiProperty()
-  vpdcEmail: string;
-
   @ApiProperty({ required: true })
-  emergencyContactPerson: string;
+  emergencyContact: {
+    name: string;
+    address: string;
+    phoneNumber: string;
+  };
 
-  @ApiProperty({ required: true })
-  emergencyAddress: string;
+  @ApiProperty()
+  employmentRecords: [
+    {
+      examTitle: string;
+      dateTaken: Date;
+      Rating: string;
+    },
+  ];
 
-  @ApiProperty({ required: true })
-  emergencyContactNo: string;
+  @ApiProperty()
+  govtProfExamsPassed: [
+    {
+      examTitle: string;
+      dateTaken: Date;
+      Rating: string;
+    },
+  ];
+
+  @ApiProperty()
+  licensesCertifications: [
+    {
+      name: string;
+      authorizingEntity: string;
+      validUntil: Date;
+      licenseCertNo: string;
+    },
+  ];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => FamilyBackground)
+  familyBackground: FamilyBackground[];
 
   @IsEmpty()
   @ApiProperty()

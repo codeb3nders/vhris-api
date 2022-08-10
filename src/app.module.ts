@@ -21,17 +21,16 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.sendgrid.net',
+        host: process.env.EMAIL_HOST,
         auth: {
-          user: 'apikey',
-          pass: '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',
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
         },
       },
     }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: 'env_var/.env',
-      load: [configuration],
     }),
     EmployeesModule,
     MongooseModule.forRoot(

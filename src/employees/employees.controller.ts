@@ -32,7 +32,6 @@ export class EmployeesController {
   async create(
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<Employee> {
-    console.log('DTO', createEmployeeDto);
     try {
       return await this.employeesService.create(createEmployeeDto);
     } catch (error) {

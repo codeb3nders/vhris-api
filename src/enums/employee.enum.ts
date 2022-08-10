@@ -225,3 +225,10 @@ export enum AutoCredentialEnum {
   'SYSTEM ADMIN',
   'APPROVER',
 }
+
+export enum RelationEnum {
+  'PARENTS',
+  'SIBLINGS',
+  'SPOUSE',
+  'CHILDREN',
+}
