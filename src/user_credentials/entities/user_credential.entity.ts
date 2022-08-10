@@ -11,10 +11,6 @@ export class User_credential {
   timeStamp: number;
   @Prop({ required: true })
   password: string;
-  @Prop({ required: true })
-  accessGroup: string;
-  @Prop({ default: true })
-  isActive: boolean;
 }
 
 export const UserCredentialSchema =

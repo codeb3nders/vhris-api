@@ -14,8 +14,7 @@ export class AuthService {
     const isMatch = await comparePassword(password, user.password);
 
     if (isMatch) {
-      const { accessGroup, isActive, employeeNo } = user;
-      return { accessGroup, isActive, employeeNo };
+      return { employeeNo };
     }
     return null;
   }

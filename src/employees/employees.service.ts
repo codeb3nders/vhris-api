@@ -36,9 +36,6 @@ export class EmployeesService {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
         password: password,
-        accessGroup: response.userGroup,
-        isActive: true,
-        email: response.personalEmail,
       };
 
       await this.userCredentialsService.create(userCredentials);

@@ -1,17 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmpty } from 'class-validator';
 
 export class CreateUserCredentialDto {
-  @ApiProperty()
+  @ApiProperty({ required: true })
   employeeNo: string;
-  @ApiProperty()
+
+  @ApiProperty({ default: new Date().getTime() })
+  @IsEmpty()
   timeStamp: number;
 
   @ApiProperty()
+  @IsEmpty()
   password: string;
-  @ApiProperty()
-  accessGroup: string;
-  @ApiProperty()
-  isActive: boolean;
-  @ApiProperty()
-  email?: string;
 }
