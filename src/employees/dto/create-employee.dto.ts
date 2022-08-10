@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsEmail, IsEmpty, IsEnum, IsOptional } from 'class-validator';
 
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsEmpty,
-  IsOptional,
-  Matches,
-} from 'class-validator';
 import {
   CivilStatusEnum,
   DepartmentsEnum,
@@ -18,6 +13,7 @@ import {
   ReligionEnum,
   UserGroupEnum,
 } from 'src/enums/employee.enum';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateEmployeeDto {
   @IsEmpty()
@@ -35,51 +31,31 @@ export class CreateEmployeeDto {
   middleName: string;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(EmployeeEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(EmployeeEnum)
+  @Transform((param) => param.value.toUpperCase())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(RankEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(RankEnum)
+  @Transform((param) => param.value.toUpperCase())
   rank: RankEnum;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(DepartmentsEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(DepartmentsEnum)
+  @Transform((param) => param.value.toUpperCase())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(LocationsEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(LocationsEnum)
+  @Transform((param) => param.value.toUpperCase())
   location: LocationsEnum;
 
   @ApiProperty({ required: true })
   isActive: boolean;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(UserGroupEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(UserGroupEnum)
+  @Transform((param) => param.value.toUpperCase())
   userGroup: UserGroupEnum;
 
   @ApiProperty()
@@ -89,12 +65,8 @@ export class CreateEmployeeDto {
   dateHired: Date;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(EmploymentStatusEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(EmploymentStatusEnum)
+  @Transform((param) => param.value.toUpperCase())
   employmentStatus: EmploymentStatusEnum;
 
   @ApiProperty()
@@ -127,21 +99,13 @@ export class CreateEmployeeDto {
   backAccountNo: string;
 
   @ApiProperty({ required: true })
-  @Matches(
-    `^${Object.values(CivilStatusEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(CivilStatusEnum)
+  @Transform((param) => param.value.toUpperCase())
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @Matches(
-    `^${Object.values(ReligionEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(ReligionEnum)
+  @Transform((param) => param.value.toUpperCase())
   religion: ReligionEnum;
 
   @ApiProperty()
@@ -176,12 +140,8 @@ export class CreateEmployeeDto {
 
   @ApiProperty()
   @IsOptional()
-  @Matches(
-    `^${Object.values(HighestEducationalAttainmentEnum)
-      .filter((v) => typeof v !== 'number')
-      .join('|')}$`,
-    'i',
-  )
+  @IsEnum(HighestEducationalAttainmentEnum)
+  @Transform((param) => param.value.toUpperCase())
   educationalAttainment?: HighestEducationalAttainmentEnum;
 
   @ApiProperty()
