@@ -28,6 +28,7 @@ export const EmployeeResponseHandler = {
         contractEndDate: item.contractEndDate,
         gender: item.gender,
         birthDate: item.birthDate,
+        age: getAge(item.birthDate), 
         personalContactNumber: item.personalContactNumber,
         companyContactNumber: item.companyContactNumber,
         taxExemption: item.taxExemption,
@@ -88,3 +89,14 @@ export const EmployeeResponseHandler = {
     });
   },
 };
+
+function getAge(dateString) {
+  var today = new Date();
+  var birthDate = new Date(dateString);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+  }
+  return age;
+}

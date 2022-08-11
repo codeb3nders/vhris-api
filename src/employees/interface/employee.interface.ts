@@ -18,6 +18,7 @@ interface EmployeeI {
   contractEndDate: Date;
   gender: string;
   birthDate: Date;
+  age:number;
   personalContactNumber: string;
   companyContactNumber: string;
   taxExemption: string;
