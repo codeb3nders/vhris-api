@@ -31,19 +31,20 @@ export class EmployeesService {
       response &&
       AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
     ) {
-      const password = generatePassword();
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
-        password: password,
+
         accessGroup: response.userGroup,
         isActive: true,
         email: response.personalEmail,
       };
 
-      await this.userCredentialsService.create(userCredentials);
+      const result: any = await this.userCredentialsService.create(
+        userCredentials,
+      );
 
-      response.password = password;
+      response.password = result.password; //TODO: to be remove
 
       return response;
     }
@@ -105,6 +106,10 @@ export class EmployeesService {
   }
 
   async remove(employeeNo: string) {
-    return this.employeeModel.deleteOne({ employeeNo });
+    const response = await this.employeeModel.deleteOne({ employeeNo });
+    if (response) {
+      await this.userCredentialsService.remove(employeeNo);
+    }
+    return response;
   }
 }

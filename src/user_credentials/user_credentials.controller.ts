@@ -19,7 +19,6 @@ export class UserCredentialsController {
     private readonly userCredentialsService: UserCredentialsService,
   ) {}
 
-  //@UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createUserCredentialDto: CreateUserCredentialDto) {
     return this.userCredentialsService.create(createUserCredentialDto);
@@ -35,18 +34,6 @@ export class UserCredentialsController {
   @Get(':employeeNo')
   findOne(@Param('employeeNo') employeeNo: string) {
     return this.userCredentialsService.findOne(employeeNo);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch(':employeeNo')
-  update(
-    @Param('employeeNo') employeeNo: string,
-    @Body() updateUserCredentialDto: UpdateUserCredentialDto,
-  ) {
-    return this.userCredentialsService.update(
-      employeeNo,
-      updateUserCredentialDto,
-    );
   }
 
   @UseGuards(JwtAuthGuard)

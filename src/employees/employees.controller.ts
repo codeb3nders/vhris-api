@@ -9,6 +9,8 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -16,11 +18,17 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
-import { EmployeeResponseHandler, ResponseHandler } from './response_handler/employee.response';
+import {
+  EmployeeResponseHandler,
+  ResponseHandler,
+} from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
+import { isAllowedUser, isValidRequest } from './dto/validate.request';
+import { AuthUser } from 'src/auth/jwt.helper';
+import { CONSTANTS } from 'src/constants/employees';
 
 @ApiTags('Employees')
 @Controller('employees')
@@ -50,6 +58,7 @@ export class EmployeesController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/leaves/')
   async findAllLeaves(): Promise<EmployeeI[]> {
     try {
@@ -60,6 +69,7 @@ export class EmployeesController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/leaves/:employeeNo')
   findAllLeavesById(@Param('employeeNo') employeeNo: string) {
     return this.employeesService.findAllLeavesById(employeeNo);
@@ -67,23 +77,34 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  async findOne(@Param('employeeNo') employeeNo: string) {
+  async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI> {
     const response = await this.employeesService.findOne(employeeNo);
-    console.log('RESPONSE', response)
-    // return response
-   return ResponseHandler.ok(response);    
+    return ResponseHandler.ok(response);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':employeeNo')
-  update(
+  async update(
+    @AuthUser() user: any,
     @Param('employeeNo') employeeNo: string,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    return this.employeesService.update(employeeNo, updateEmployeeDto);
+    isValidRequest(updateEmployeeDto, user);
+    const results = await this.employeesService.update(
+      employeeNo,
+      updateEmployeeDto,
+    );
+
+    if (results.acknowledged) {
+      return await this.employeesService.findOne(employeeNo);
+    }
+    throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':employeeNo')
-  remove(@Param('employeeNo') employeeNo: string) {
+  remove(@AuthUser() user: any, @Param('employeeNo') employeeNo: string) {
+    isAllowedUser(user, CONSTANTS.HR_ADMIN);
     return this.employeesService.remove(employeeNo);
   }
 }

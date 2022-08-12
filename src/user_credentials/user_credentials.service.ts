@@ -11,6 +11,7 @@ import { encodePassWord } from 'src/utils/encoder';
 
 import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
+import { generatePassword } from 'src/helpers/password_generator';
 
 export type User = {
   id: string;
@@ -30,24 +31,31 @@ export class UserCredentialsService {
   ) {}
 
   async create(createUserCredentialDto: CreateUserCredentialDto) {
-    const { password: rawPassword, ...rest } = createUserCredentialDto;
+    const { employeeNo } = createUserCredentialDto;
+    const rawPassword = generatePassword();
     const password = await encodePassWord(rawPassword);
-    const body = { ...rest, password };
 
-    const employee = await this.employeesService.findOne(
-      createUserCredentialDto.employeeNo,
-    );
+    const employee = await this.employeesService.findOne(employeeNo);
 
     if (!employee) {
       return 'No Employee found';
     }
 
-    const createUserCredential = new this.userCredentialModel(body);
+    const userCredentials: CreateUserCredentialDto = {
+      employeeNo: employee.employeeNo,
+      timeStamp: new Date().getTime(),
+      password: password,
+      accessGroup: employee.userGroup,
+      isActive: true,
+    };
+
+    const createUserCredential = new this.userCredentialModel(userCredentials);
     const response = await createUserCredential.save();
+
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
       // this.emailService.sendEmail(employee.personalEmail, rawPassword);
-
+      // response.password = rawPassword; // TODO: to be remove
       return response;
     }
     return 'fail to create';
@@ -61,11 +69,7 @@ export class UserCredentialsService {
     return await this.userCredentialModel.findOne({ employeeNo });
   }
 
-  update(username: string, updateUserCredentialDto: UpdateUserCredentialDto) {
-    return `This action updates a #${username} userCredential`;
-  }
-
-  remove(username: string) {
-    return `This action removes a #${username} userCredential`;
+  remove(employeeNo: string) {
+    return this.userCredentialModel.deleteOne({ employeeNo });
   }
 }

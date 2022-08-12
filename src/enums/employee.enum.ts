@@ -232,3 +232,14 @@ export enum RelationEnum {
   'SPOUSE',
   'CHILDREN',
 }
+
+export enum NotAllowedToEdit {
+  'EMPLOYEENO',
+  'POSITION',
+  'RANK',
+  'DEPARTMENT',
+  'LOCATION',
+  'USERGROUP',
+  'EMPLOYMENTSTATUS',
+  'CIVILSTATUS',
+}
