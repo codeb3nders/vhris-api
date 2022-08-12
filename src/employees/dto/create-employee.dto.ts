@@ -16,21 +16,11 @@ import {
   HighestEducationalAttainmentEnum,
   LocationsEnum,
   RankEnum,
-  RelationEnum,
   ReligionEnum,
   UserGroupEnum,
 } from 'src/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
-
-class FamilyBackground {
-  name: string;
-  @IsEnum(RelationEnum)
-  @Transform((param) => param.value.toUpperCase())
-  relation: RelationEnum;
-  occupation: string;
-  company: string;
-  residence: string;
-}
+import { FamilyBackground } from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
   @IsEmpty()

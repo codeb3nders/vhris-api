@@ -16,7 +16,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
-import { EmployeeResponseHandler } from './response_handler/employee.response';
+import { EmployeeResponseHandler, ResponseHandler } from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
@@ -67,8 +67,11 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  findOne(@Param('employeeNo') employeeNo: string) {
-    return this.employeesService.findOne(employeeNo);
+  async findOne(@Param('employeeNo') employeeNo: string) {
+    const response = await this.employeesService.findOne(employeeNo);
+    console.log('RESPONSE', response)
+    // return response
+   return ResponseHandler.ok(response);    
   }
 
   @Patch(':employeeNo')

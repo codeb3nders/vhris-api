@@ -1,3 +1,7 @@
+import { Transform } from 'class-transformer';
+import { IsEnum } from 'class-validator';
+import { RelationEnum } from 'src/enums/employee.enum';
+
 interface EmployeeI {
   employeeNo: string;
   firstName: string;
@@ -18,7 +22,7 @@ interface EmployeeI {
   contractEndDate: Date;
   gender: string;
   birthDate: Date;
-  age:number;
+  age: number;
   personalContactNumber: string;
   companyContactNumber: string;
   taxExemption: string;
@@ -73,4 +77,14 @@ interface EmployeeI {
   leave_requests?: any;
 }
 
-export { EmployeeI };
+class FamilyBackground {
+  name: string;
+  @IsEnum(RelationEnum)
+  @Transform((param) => param.value.toUpperCase())
+  relation: RelationEnum;
+  occupation: string;
+  company: string;
+  residence: string;
+}
+
+export { EmployeeI, FamilyBackground };
