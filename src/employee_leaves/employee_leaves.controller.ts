@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { EmployeeLeavesService } from './employee_leaves.service';
-import { createEmployeeLeaveDto } from './dto/create-employee_leave.dto';
+import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
 import { UpdateEmployeeleaveDto } from './dto/update-employee_leave.dto';
 
 @Controller('employee-leaves')
@@ -16,7 +16,7 @@ export class EmployeeLeavesController {
   constructor(private readonly employeeLeavesService: EmployeeLeavesService) {}
 
   @Post()
-  create(@Body() createEmployeeLeaveDto: createEmployeeLeaveDto) {
+  create(@Body() createEmployeeLeaveDto: CreateEmployeeLeaveDto) {
     return this.employeeLeavesService.create(createEmployeeLeaveDto);
   }
 

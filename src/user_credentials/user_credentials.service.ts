@@ -2,7 +2,6 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
-import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 import {
   UserCredentialDocument,
   User_credential,

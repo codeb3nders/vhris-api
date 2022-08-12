@@ -8,13 +8,13 @@ import { LeaveTypesSchema, Leave_types } from './entities/leave_types.entity';
   imports: [
     MongooseModule.forFeature([
       {
-        name:Leave_types.name,
-        schema:LeaveTypesSchema
-      }
-    ])
+        name: Leave_types.name,
+        schema: LeaveTypesSchema,
+      },
+    ]),
   ],
 
   controllers: [LeaveTypesController],
-  providers: [LeaveTypeService]
+  providers: [LeaveTypeService],
 })
 export class LeaveTypesModule {}

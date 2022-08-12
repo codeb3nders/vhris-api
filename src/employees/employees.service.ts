@@ -6,7 +6,6 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
-import { generatePassword } from 'src/helpers/password_generator';
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
 

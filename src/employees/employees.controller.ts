@@ -25,7 +25,6 @@ import {
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
-import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { isAllowedUser, isValidRequest } from './dto/validate.request';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';

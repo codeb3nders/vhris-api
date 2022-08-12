@@ -4,10 +4,11 @@ import { Leave_request } from '../entities/leave_request.entity';
 export const LeaveRequestResponseHandler = {
   ok: (data: Leave_request[]) => {
     return data.map((item: any) => {
-      
-      const employee = item.employee ? EmployeeResponseHandler.ok(item.employee) : null
-      
-      const toReturn:any =  {
+      const employee = item.employee
+        ? EmployeeResponseHandler.ok(item.employee)
+        : null;
+
+      const toReturn: any = {
         leaveRequestNo: item.leaveRequestNo,
         employeeNo: item.employeeNo,
         timestamp: item.timestamp,
@@ -33,11 +34,11 @@ export const LeaveRequestResponseHandler = {
         disapprovedDate: item.disapprovedDate,
       };
 
-      if(employee){
-        toReturn.employee = employee
+      if (employee) {
+        toReturn.employee = employee;
       }
 
-      return toReturn
+      return toReturn;
     });
   },
 };

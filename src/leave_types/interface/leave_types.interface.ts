@@ -1,8 +1,7 @@
-
- interface LeaveTypesI {
-    typeId:string;
-    typeCode:string;
-    typeName:string
+interface LeaveTypesI {
+  typeId: string;
+  typeCode: string;
+  typeName: string;
 }
 
-export {LeaveTypesI}
+export { LeaveTypesI };

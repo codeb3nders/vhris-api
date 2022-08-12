@@ -5,20 +5,18 @@ import { EmployeeI } from '../interface/employee.interface';
 export const EmployeeResponseHandler = {
   ok: (data: Employee[]) => {
     return data.map((item: any) => {
-      return returnItem(item)
-    }
-    );
+      return returnItem(item);
+    });
   },
 };
 
 export const ResponseHandler = {
   ok: (data: Employee) => {
-    return returnItem(data)
-    
+    return returnItem(data);
   },
 };
 
-function returnItem(item){
+function returnItem(item) {
   const leaveRequests = item.leave_requests
     ? LeaveRequestResponseHandler.ok(item.leave_requests)
     : null;
@@ -42,7 +40,7 @@ function returnItem(item){
     contractEndDate: item.contractEndDate,
     gender: item.gender,
     birthDate: item.birthDate,
-    age: getAge(item.birthDate), 
+    age: getAge(item.birthDate),
     personalContactNumber: item.personalContactNumber,
     companyContactNumber: item.companyContactNumber,
     taxExemption: item.taxExemption,
@@ -103,12 +101,12 @@ function returnItem(item){
 }
 
 function getAge(dateString) {
-  var today = new Date();
-  var birthDate = new Date(dateString);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+    age--;
   }
   return age;
 }
