@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { EmployeeLeavesService } from './employee_leaves.service';
 import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
-import { UpdateEmployeeleaveDto } from './dto/update-employee_leave.dto';
+import { UpdateEmployeeLeaveDto } from './dto/update-employee_leave.dto';
 
 @Controller('employee-leaves')
 export class EmployeeLeavesController {
@@ -33,7 +33,7 @@ export class EmployeeLeavesController {
   @Patch(':employeeNo')
   update(
     @Param('employeeNo') employeeNo: string,
-    @Body() updateEmployeeLeaveDto: UpdateEmployeeleaveDto,
+    @Body() updateEmployeeLeaveDto: UpdateEmployeeLeaveDto,
   ) {
     return this.employeeLeavesService.update(
       employeeNo,

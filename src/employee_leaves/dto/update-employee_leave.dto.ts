@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
-import { createEmployeeLeaveDto } from './create-employee_leave.dto';
+import { CreateEmployeeLeaveDto } from './create-employee_leave.dto';
 
-export class UpdateEmployeeleaveDto extends PartialType(
-  createEmployeeLeaveDto,
+export class UpdateEmployeeLeaveDto extends PartialType(
+  CreateEmployeeLeaveDto,
 ) {}
