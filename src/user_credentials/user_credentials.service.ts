@@ -55,7 +55,7 @@ export class UserCredentialsService {
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
       // this.emailService.sendEmail(employee.personalEmail, rawPassword);
-      // response.password = rawPassword; // TODO: to be remove
+      response.password = rawPassword; // TODO: to be remove
       return response;
     }
     return 'fail to create';
