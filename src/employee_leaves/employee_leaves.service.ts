@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { createEmployeeLeaveDto } from './dto/create-employee_leave.dto';
-import { UpdateEmployeeleaveDto } from './dto/update-employee_leave.dto';
+import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
+import { UpdateEmployeeLeaveDto } from './dto/update-employee_leave.dto';
 import {
   EmployeeLeavesDocument,
   Employee_leaves,
@@ -15,7 +15,7 @@ export class EmployeeLeavesService {
     private employeeLeavesModel: Model<EmployeeLeavesDocument>,
   ) {}
 
-  create(createEmployeeLeaveDto: createEmployeeLeaveDto) {
+  create(createEmployeeLeaveDto: CreateEmployeeLeaveDto) {
     const createdEmployeeLeave = new this.employeeLeavesModel(
       createEmployeeLeaveDto,
     );
@@ -30,7 +30,7 @@ export class EmployeeLeavesService {
     return this.employeeLeavesModel.findOne({ employeeNo });
   }
 
-  update(employeeNo: string, updateEmployeeLeaveDto: UpdateEmployeeleaveDto) {
+  update(employeeNo: string, updateEmployeeLeaveDto: UpdateEmployeeLeaveDto) {
     return this.employeeLeavesModel.updateOne(
       { employeeNo },
       { $set: { ...updateEmployeeLeaveDto } },

@@ -11,7 +11,9 @@ describe('OvertimeRequestsController', () => {
       providers: [OvertimeRequestsService],
     }).compile();
 
-    controller = module.get<OvertimeRequestsController>(OvertimeRequestsController);
+    controller = module.get<OvertimeRequestsController>(
+      OvertimeRequestsController,
+    );
   });
 
   it('should be defined', () => {

@@ -1,14 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EmployeeLeavesService } from './employee_leaves.service';
-import { createEmployeeLeaveDto } from './dto/create-employee_leave.dto';
-import { UpdateEmployeeleaveDto } from './dto/update-employee_leave.dto';
+import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
+import { UpdateEmployeeLeaveDto } from './dto/update-employee_leave.dto';
 
 @Controller('employee-leaves')
 export class EmployeeLeavesController {
   constructor(private readonly employeeLeavesService: EmployeeLeavesService) {}
 
   @Post()
-  create(@Body() createEmployeeLeaveDto: createEmployeeLeaveDto) {
+  create(@Body() createEmployeeLeaveDto: CreateEmployeeLeaveDto) {
     return this.employeeLeavesService.create(createEmployeeLeaveDto);
   }
 
@@ -23,8 +31,14 @@ export class EmployeeLeavesController {
   }
 
   @Patch(':employeeNo')
-  update(@Param('employeeNo') employeeNo: string, @Body() updateEmployeeLeaveDto: UpdateEmployeeleaveDto) {
-    return this.employeeLeavesService.update(employeeNo, updateEmployeeLeaveDto);
+  update(
+    @Param('employeeNo') employeeNo: string,
+    @Body() updateEmployeeLeaveDto: UpdateEmployeeLeaveDto,
+  ) {
+    return this.employeeLeavesService.update(
+      employeeNo,
+      updateEmployeeLeaveDto,
+    );
   }
 
   @Delete(':employeeNo')

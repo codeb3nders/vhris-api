@@ -14,7 +14,6 @@ import { UpdateLeaveTypeDto } from './dto/update-leave_type.dto';
 import { Leave_types } from './entities/leave_types.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
 import { LeaveTypesResponseHandler } from './response_handler/leave_types.response';
-import { LeaveTypesI } from './interface/leave_types.interface';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Leave_types')
@@ -44,8 +43,6 @@ export class LeaveTypesController {
       ErrorResponse.badRequest(error.message || error);
     }
   }
-
-  
 
   @Get(':typeId')
   findOne(@Param('typeId') typeId: string) {

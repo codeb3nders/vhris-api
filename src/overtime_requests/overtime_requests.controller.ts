@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OvertimeRequestsService } from './overtime_requests.service';
 import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
@@ -10,41 +18,39 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Overtime Requests')
 @Controller('overtime')
 export class OvertimeRequestsController {
-  constructor(private readonly overtimeRequestsService: OvertimeRequestsService) {}
+  constructor(
+    private readonly overtimeRequestsService: OvertimeRequestsService,
+  ) {}
 
   @Post()
   async create(@Body() overtimeLeaveRequestDto: CreateOvertimeRequestDto) {
     try {
       return await this.overtimeRequestsService.create(overtimeLeaveRequestDto);
     } catch (error) {
-      return error.message || error
-    }   
+      return error.message || error;
+    }
   }
 
   @Get()
-  async findAll(): Promise <Overtime_request[]> {
+  async findAll(): Promise<Overtime_request[]> {
     try {
       const response = await this.overtimeRequestsService.findAll();
-    return OvertimeRequestResponseHandler.ok(response)
+      return OvertimeRequestResponseHandler.ok(response);
     } catch (error) {
-      ErrorResponse.badRequest(error.message || error)
+      ErrorResponse.badRequest(error.message || error);
     }
-    
   }
 
   @Get('/employee')
   async findAllWithEmployeeDetails(): Promise<Overtime_request[]> {
     try {
-      const response =  await this.overtimeRequestsService.findAllWithEmployeeDetails();
-      return OvertimeRequestResponseHandler.ok(response)
+      const response =
+        await this.overtimeRequestsService.findAllWithEmployeeDetails();
+      return OvertimeRequestResponseHandler.ok(response);
     } catch (error) {
-      ErrorResponse.badRequest(error.message || error)
+      ErrorResponse.badRequest(error.message || error);
     }
-   
   }
-
-
-  
 
   @Get(':overtimeRequestNo')
   findOne(@Param('overtimeRequestNo') overtimeRequestNo: string) {
@@ -52,15 +58,23 @@ export class OvertimeRequestsController {
   }
 
   @Get('/employee/:overtimeRequestNo')
-  findByIdWithEmployeeDetails(@Param('overtimeRequestNo') overtimeRequestNo: string) {
-    return this.overtimeRequestsService.findByIdWithEmployeeDetails(overtimeRequestNo);
+  findByIdWithEmployeeDetails(
+    @Param('overtimeRequestNo') overtimeRequestNo: string,
+  ) {
+    return this.overtimeRequestsService.findByIdWithEmployeeDetails(
+      overtimeRequestNo,
+    );
   }
 
-  
-
   @Patch(':overtimeRequestNo')
-  update(@Param('overtimeRequestNo') overtimeRequestNo: string, @Body() updateLeaveDto: UpdateOvertimeRequestDto) {
-    return this.overtimeRequestsService.update(overtimeRequestNo, updateLeaveDto);
+  update(
+    @Param('overtimeRequestNo') overtimeRequestNo: string,
+    @Body() updateLeaveDto: UpdateOvertimeRequestDto,
+  ) {
+    return this.overtimeRequestsService.update(
+      overtimeRequestNo,
+      updateLeaveDto,
+    );
   }
 
   @Delete(':overtimeRequestNo')

@@ -6,8 +6,8 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
-import { generatePassword } from 'src/helpers/password_generator';
-import { ConfigService } from '@nestjs/config';
+import { zeroPad } from 'src/helpers/number_helper';
+import { AutoCredentialEnum } from 'src/enums/employee.enum';
 
 @Injectable()
 export class EmployeesService {
@@ -16,38 +16,38 @@ export class EmployeesService {
     private employeeModel: Model<EmployeeDocument>,
     @Inject(forwardRef(() => UserCredentialsService))
     private userCredentialsService: UserCredentialsService,
-    private configService: ConfigService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
-    console.log(
-      '------',
-      createEmployeeDto.email,
-      this.configService.get('EMAIL_DOMAIN'),
-    );
 
+    const lastEmployee = await this.findLast();
+    const newEmployeeNo = Number(lastEmployee?.employeeNo || 0) + 1;
+    createdEmployee.employeeNo = zeroPad(newEmployeeNo);
     const response = await createdEmployee.save();
-    if (response) {
-      const password = generatePassword();
 
+    if (
+      response &&
+      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
+    ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
         timeStamp: new Date().getTime(),
-        password: password,
-        accessGroup: 'employee',
+
+        accessGroup: response.userGroup,
         isActive: true,
-        email: response.email,
+        email: response.personalEmail,
       };
 
-      const userCredential = await this.userCredentialsService.create(
+      const result: any = await this.userCredentialsService.create(
         userCredentials,
       );
 
-      console.log('USER CREDENTIAL RESULT', userCredential);
+      response.password = result.password; //TODO: to be remove
 
       return response;
     }
+    return response;
   }
 
   async findAll(): Promise<Employee[]> {
@@ -89,6 +89,10 @@ export class EmployeesService {
     return this.employeeModel.aggregate(pipeline);
   }
 
+  async findLast() {
+    return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
+  }
+
   async findOne(employeeNo: string) {
     return this.employeeModel.findOne({ employeeNo });
   }
@@ -101,6 +105,10 @@ export class EmployeesService {
   }
 
   async remove(employeeNo: string) {
-    return this.employeeModel.deleteOne({ employeeNo });
+    const response = await this.employeeModel.deleteOne({ employeeNo });
+    if (response) {
+      await this.userCredentialsService.remove(employeeNo);
+    }
+    return response;
   }
 }

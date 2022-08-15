@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class createEmployeeLeaveDto {
+export class CreateEmployeeLeaveDto {
   @ApiProperty()
   employeeNo: string;
   @ApiProperty()

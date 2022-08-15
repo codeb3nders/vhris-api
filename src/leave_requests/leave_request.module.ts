@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { LeaveRequestService } from './leave_request.service';
 import { LeaveRequestController } from './leave_request.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Leave_request, LeaveRequestSchema } from './entities/leave_request.entity';
+import {
+  Leave_request,
+  LeaveRequestSchema,
+} from './entities/leave_request.entity';
 
 @Module({
   imports: [
@@ -14,6 +17,6 @@ import { Leave_request, LeaveRequestSchema } from './entities/leave_request.enti
     ]),
   ],
   controllers: [LeaveRequestController],
-  providers: [LeaveRequestService]
+  providers: [LeaveRequestService],
 })
 export class LeaveRequestModule {}

@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { OvertimeRequestsService } from './overtime_requests.service';
 import { OvertimeRequestsController } from './overtime_requests.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { OvertimeRequestSchema, Overtime_request } from './entities/overtime_request.entity';
+import {
+  OvertimeRequestSchema,
+  Overtime_request,
+} from './entities/overtime_request.entity';
 
 @Module({
   imports: [
@@ -14,6 +17,6 @@ import { OvertimeRequestSchema, Overtime_request } from './entities/overtime_req
     ]),
   ],
   controllers: [OvertimeRequestsController],
-  providers: [OvertimeRequestsService]
+  providers: [OvertimeRequestsService],
 })
 export class OvertimeRequestsModule {}
