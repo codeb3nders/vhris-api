@@ -18,15 +18,6 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.EMAIL_HOST,
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      },
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: 'env_var/.env',
