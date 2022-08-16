@@ -89,15 +89,17 @@ export class EmployeesController {
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
     isValidRequest(updateEmployeeDto, user);
-    const results = await this.employeesService.update(
-      employeeNo,
-      updateEmployeeDto,
-    );
-
-    if (results.acknowledged) {
-      return await this.employeesService.findOne(employeeNo);
+    let employee = null;
+    try {
+      employee = await this.employeesService.findOne(employeeNo);
+      console.log('employee', employeeNo, updateEmployeeDto);
+    } catch (error) {
+      console.log('ERROR', error);
     }
-    throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
+
+    if (!employee)
+      throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
+    return await this.employeesService.update(employeeNo, updateEmployeeDto);
   }
 
   @UseGuards(JwtAuthGuard)
