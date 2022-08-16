@@ -13,8 +13,8 @@ import { EmployeesModule } from 'src/employees/employees.module';
     UserCredentialsModule,
     PassportModule,
     JwtModule.register({
-      secret: 'SECRET', // TODO: to put in env variables
-      signOptions: { expiresIn: '60S' }, // TODO: put in config
+      secret: `SeCR3TK3YF0RAp1`,
+      //signOptions: { expiresIn: '60S' }, // TODO: put in config
     }),
   ],
   providers: [AuthService, localStrategy, JwtStrategy],
