@@ -53,11 +53,7 @@ export class UserCredentialsService {
 
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
-<<<<<<< HEAD
-      this.emailService.sendEmail(employee, rawPassword);
-=======
       //this.emailService.sendEmail(employee, rawPassword);
->>>>>>> feature/VHRIS-3
       response.password = rawPassword; // TODO: to be remove
       return response;
     }
