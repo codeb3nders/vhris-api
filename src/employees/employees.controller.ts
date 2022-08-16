@@ -46,7 +46,7 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<EmployeeI[]> {
     try {
@@ -57,7 +57,11 @@ export class EmployeesController {
     }
   }
 
+<<<<<<< HEAD
   @UseGuards(JwtAuthGuard)
+=======
+  //@UseGuards(JwtAuthGuard)
+>>>>>>> feature/VHRIS-3
   @Get('/leaves/')
   async findAllLeaves(): Promise<EmployeeI[]> {
     try {
@@ -68,26 +72,35 @@ export class EmployeesController {
     }
   }
 
+<<<<<<< HEAD
   @UseGuards(JwtAuthGuard)
+=======
+  //@UseGuards(JwtAuthGuard)
+>>>>>>> feature/VHRIS-3
   @Get('/leaves/:employeeNo')
   findAllLeavesById(@Param('employeeNo') employeeNo: string) {
     return this.employeesService.findAllLeavesById(employeeNo);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
   async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI> {
     const response = await this.employeesService.findOne(employeeNo);
     return ResponseHandler.ok(response);
   }
 
+<<<<<<< HEAD
   @UseGuards(JwtAuthGuard)
+=======
+  // @UseGuards(JwtAuthGuard)
+>>>>>>> feature/VHRIS-3
   @Patch(':employeeNo')
   async update(
     @AuthUser() user: any,
     @Param('employeeNo') employeeNo: string,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
+<<<<<<< HEAD
     isValidRequest(updateEmployeeDto, user);
     const results = await this.employeesService.update(
       employeeNo,
@@ -101,6 +114,23 @@ export class EmployeesController {
   }
 
   @UseGuards(JwtAuthGuard)
+=======
+    // isValidRequest(updateEmployeeDto, user);
+    let employee = null;
+    try {
+      employee = await this.employeesService.findOne(employeeNo);
+      console.log('employee', employeeNo, updateEmployeeDto);
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+
+    if (!employee)
+      throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
+    return await this.employeesService.update(employeeNo, updateEmployeeDto);
+  }
+
+  //@UseGuards(JwtAuthGuard)
+>>>>>>> feature/VHRIS-3
   @Delete(':employeeNo')
   remove(@AuthUser() user: any, @Param('employeeNo') employeeNo: string) {
     isAllowedUser(user, CONSTANTS.HR_ADMIN);
