@@ -53,7 +53,7 @@ export class UserCredentialsService {
 
     if (response) {
       // TODO: MAKE SEND EMAIL WORKING
-      this.emailService.sendEmail(employee, rawPassword);
+      //this.emailService.sendEmail(employee, rawPassword);
       response.password = rawPassword; // TODO: to be remove
       return response;
     }

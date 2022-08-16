@@ -46,7 +46,7 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<EmployeeI[]> {
     try {
@@ -57,7 +57,7 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get('/leaves/')
   async findAllLeaves(): Promise<EmployeeI[]> {
     try {
@@ -68,27 +68,27 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get('/leaves/:employeeNo')
   findAllLeavesById(@Param('employeeNo') employeeNo: string) {
     return this.employeesService.findAllLeavesById(employeeNo);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
   async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI> {
     const response = await this.employeesService.findOne(employeeNo);
     return ResponseHandler.ok(response);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Patch(':employeeNo')
   async update(
     @AuthUser() user: any,
     @Param('employeeNo') employeeNo: string,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    isValidRequest(updateEmployeeDto, user);
+    // isValidRequest(updateEmployeeDto, user);
     let employee = null;
     try {
       employee = await this.employeesService.findOne(employeeNo);
@@ -102,7 +102,7 @@ export class EmployeesController {
     return await this.employeesService.update(employeeNo, updateEmployeeDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Delete(':employeeNo')
   remove(@AuthUser() user: any, @Param('employeeNo') employeeNo: string) {
     isAllowedUser(user, CONSTANTS.HR_ADMIN);
