@@ -89,14 +89,7 @@ export class EmployeesController {
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
     isValidRequest(updateEmployeeDto, user);
-    let employee = null;
-    try {
-      employee = await this.employeesService.findOne(employeeNo);
-      console.log('employee', employeeNo, updateEmployeeDto);
-    } catch (error) {
-      console.log('ERROR', error);
-    }
-
+    let employee = await this.employeesService.findOne(employeeNo);
     if (!employee)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
     return await this.employeesService.update(employeeNo, updateEmployeeDto);

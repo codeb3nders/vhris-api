@@ -13,7 +13,7 @@ import { EmployeesModule } from 'src/employees/employees.module';
     UserCredentialsModule,
     PassportModule,
     JwtModule.register({
-      secret: `SeCR3TK3YF0RAp1`,
+      secret: `SeCR3TK3YF0RAp1@vhris`,
       //signOptions: { expiresIn: '60S' }, // TODO: put in config
     }),
   ],
