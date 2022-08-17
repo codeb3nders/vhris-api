@@ -1,11 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { EmployeesService } from 'src/employees/employees.service';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { comparePassword } from 'src/utils/encoder';
 @Injectable()
 export class AuthService {
   constructor(
     private userCredentialService: UserCredentialsService,
+    private employeeService: EmployeesService,
     private jwtService: JwtService,
   ) {}
 
@@ -30,9 +32,10 @@ export class AuthService {
       isActive,
       employeeNo,
     };
-
+    const employee = await this.employeeService.findOne(employeeNo);
     return {
       access_token: this.jwtService.sign(payload),
+      userInfo: employee,
     };
   }
 }
