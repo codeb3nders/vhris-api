@@ -15,6 +15,7 @@ import { EmailModule } from './email/email.module';
 
 import { UserCredentialsModule } from './user_credentials/user_credentials.module';
 import { AuthModule } from './auth/auth.module';
+import { PersonalInformationModule } from './personal_information/personal_information.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
     EmailModule,
     UserCredentialsModule,
     AuthModule,
+    PersonalInformationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

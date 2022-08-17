@@ -4,6 +4,7 @@ import {
   IsEmail,
   IsEmpty,
   IsEnum,
+  IsNotEmpty,
   IsOptional,
   ValidateNested,
 } from 'class-validator';
@@ -15,11 +16,13 @@ import {
   EmploymentStatusEnum,
   HighestEducationalAttainmentEnum,
   LocationsEnum,
+  PaymentMethodEnum,
+  PayTypeEnum,
   RankEnum,
   ReligionEnum,
   UserGroupEnum,
 } from 'src/enums/employee.enum';
-import { IsNotEmpty } from 'class-validator';
+
 import { FamilyBackground } from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
@@ -27,21 +30,9 @@ export class CreateEmployeeDto {
   @ApiProperty()
   employeeNo: string;
 
+  @ApiProperty()
   @IsNotEmpty()
-  @ApiProperty({ required: true })
-  firstName: string;
-
-  @ApiProperty({ required: true })
-  lastName: string;
-
-  @ApiProperty()
-  middleName: string;
-
-  @ApiProperty()
-  suffix: string;
-
-  @ApiProperty()
-  citizenship: string;
+  personalID: string;
 
   @ApiProperty({ required: true })
   @IsEnum(EmployeeEnum)
@@ -88,15 +79,6 @@ export class CreateEmployeeDto {
   @ApiProperty()
   contractEndDate: Date;
 
-  @ApiProperty({ required: true })
-  gender: string;
-
-  @ApiProperty({ required: true })
-  birthDate: Date;
-
-  @ApiProperty({ required: true })
-  personalContactNumber: string;
-
   @ApiProperty()
   companyContactNumber: string;
 
@@ -106,28 +88,6 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true })
   @IsEmail()
   companyEmail: string;
-
-  @ApiProperty({ required: true })
-  @IsEmail()
-  personalEmail: string;
-
-  @ApiProperty()
-  payrollBankAccount: {
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    bankBranch: string;
-  };
-
-  @ApiProperty({ required: true })
-  @IsEnum(CivilStatusEnum)
-  @Transform((param) => param.value.toUpperCase())
-  civilStatus: CivilStatusEnum;
-
-  @ApiProperty()
-  @IsEnum(ReligionEnum)
-  @Transform((param) => param.value.toUpperCase())
-  religion: ReligionEnum;
 
   @ApiProperty()
   NumberOfDependents: number;
@@ -139,154 +99,57 @@ export class CreateEmployeeDto {
   philHealth: string;
 
   @ApiProperty()
-  pagIbig?: string;
+  pagIbig: string;
 
   @ApiProperty()
   tin: string;
 
-  @ApiProperty()
-  presentCity: string;
-
-  @ApiProperty()
-  permanentCity: string;
-
-  @ApiProperty()
-  presentZipCode: string;
-
-  @ApiProperty()
-  permanentZipCode: string;
-
-  @ApiProperty()
-  presentRegion: string;
-
-  @ApiProperty()
-  permanentRegion: string;
-
-  @ApiProperty()
-  permanentResidenceAddress: string;
-
-  @ApiProperty()
-  presentResidenceAddress: string;
-
-  @ApiProperty()
   @IsOptional()
-  @IsEnum(HighestEducationalAttainmentEnum)
-  @Transform((param) => param.value.toUpperCase())
-  highestEducationalAttainment?: HighestEducationalAttainmentEnum;
-
   @ApiProperty()
-  elementaryYrFrom: number;
+  yearsInService: string;
 
+  @IsOptional()
   @ApiProperty()
-  elementaryYrTo: number;
+  basicPay: number;
 
+  @IsOptional()
   @ApiProperty()
-  elementarySchoolAndAddress: string;
+  @IsEnum(PayTypeEnum)
+  payRateType: string;
 
+  @IsOptional()
   @ApiProperty()
-  elementaryHonors: string;
+  @IsEnum(PaymentMethodEnum)
+  paymentMethod: string;
 
+  @IsOptional()
   @ApiProperty()
-  secondaryYrFrom: number;
+  @IsEnum(PayTypeEnum)
+  payrollGroup: string;
 
+  @IsOptional()
   @ApiProperty()
-  secondaryYrTo: number;
+  deductionSSS: number;
 
+  @IsOptional()
   @ApiProperty()
-  secondarySchoolAndAddress: string;
+  @IsEnum(PayTypeEnum)
+  deductPhilhealth: number;
 
+  @IsOptional()
   @ApiProperty()
-  secondaryHonors: string;
+  deductHMDF: number;
 
+  @IsOptional()
   @ApiProperty()
-  tertiaryYrFrom: number;
+  @IsEnum(PayTypeEnum)
+  fixedContributionRate: string;
 
+  @IsOptional()
   @ApiProperty()
-  tertiaryYrTo: number;
+  deductWithholdingTax: number;
 
+  @IsOptional()
   @ApiProperty()
-  tertiarySchoolAndAddress: string;
-
-  @ApiProperty()
-  tertiaryDegree: string;
-
-  @ApiProperty()
-  tertiaryHonors: string;
-
-  @ApiProperty()
-  postGradYrFrom: number;
-
-  @ApiProperty()
-  postGradYrTo: number;
-
-  @ApiProperty()
-  postGradSchoolAndAddress: string;
-
-  @ApiProperty()
-  postGradDegree: string;
-
-  @ApiProperty()
-  postGradHonors: string;
-
-  @ApiProperty()
-  othersYrFrom: number;
-
-  @ApiProperty()
-  othersYrTo: number;
-
-  @ApiProperty()
-  othersSchoolAndAddress: string;
-
-  @ApiProperty()
-  othersDegree: string;
-
-  @ApiProperty()
-  othersHonors: string;
-
-  @ApiProperty()
-  licensure: string;
-
-  @ApiProperty({ required: true })
-  emergencyContact: {
-    name: string;
-    address: string;
-    phoneNumber: string;
-  };
-
-  @ApiProperty()
-  employmentRecords: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
-
-  @ApiProperty()
-  govtProfExamsPassed: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
-
-  @ApiProperty()
-  licensesCertifications: [
-    {
-      name: string;
-      authorizingEntity: string;
-      validUntil: Date;
-      licenseCertNo: string;
-    },
-  ];
-
-  @ApiProperty()
-  @ValidateNested({ each: true })
-  @Type(() => FamilyBackground)
-  familyBackground: FamilyBackground[];
-
-  @IsEmpty()
-  @ApiProperty()
-  password: string;
+  allowanceDetails: string;
 }

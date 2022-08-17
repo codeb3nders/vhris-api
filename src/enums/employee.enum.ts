@@ -206,11 +206,11 @@ export enum HighestEducationalAttainmentEnum {
 }
 
 export enum DisciplinaryActionsEnum {
-  'Verbal Warning',
-  '1st Written Warning',
-  'Final Written Warning',
-  'Suspension',
-  'Termination',
+  'VERBAL WARNING',
+  '1ST WRITTEN WARNING',
+  'FINAL WRITTEN WARNING',
+  'SUSPENSION',
+  'TERMINATION',
 }
 
 export enum UserGroupEnum {
@@ -242,4 +242,15 @@ export enum NotAllowedToEdit {
   'USERGROUP',
   'EMPLOYMENTSTATUS',
   'CIVILSTATUS',
+}
+
+export enum PayTypeEnum {
+  'BI MONTHLY',
+  'WEEKLY',
+}
+
+export enum PaymentMethodEnum {
+  'CASH',
+  'CHECK',
+  'PAYROLL ACCOUNT',
 }
