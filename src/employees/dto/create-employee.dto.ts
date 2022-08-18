@@ -13,8 +13,9 @@ import {
   DepartmentsEnum,
   EmployeeEnum,
   EmploymentStatusEnum,
-  HighestEducationalAttainmentEnum,
   LocationsEnum,
+  PaymentMethodEnum,
+  PayTypeEnum,
   RankEnum,
   ReligionEnum,
   UserGroupEnum,
@@ -182,15 +183,49 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true })
   taxExemption: string;
 
-  basicPay: string;
+  @IsOptional()
+  @ApiProperty()
+  basicPay: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsEnum(PayTypeEnum)
   payRateType: string;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsEnum(PaymentMethodEnum)
   paymentMethod: string;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsEnum(PayTypeEnum)
   payrollGroup: string;
-  deductionSSS: string;
-  deductPhilhealth: string;
-  deductHMDF: string;
+
+  @IsOptional()
+  @ApiProperty()
+  deductionSSS: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsEnum(PayTypeEnum)
+  deductPhilhealth: number;
+
+  @IsOptional()
+  @ApiProperty()
+  deductHMDF: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsEnum(PayTypeEnum)
   fixedContributionRate: string;
-  deductWithholdingTax: string;
+
+  @IsOptional()
+  @ApiProperty()
+  deductWithholdingTax: number;
+
+  @IsOptional()
+  @ApiProperty()
   allowanceDetails: string;
 
   @ApiProperty()
@@ -204,5 +239,4 @@ export class CreateEmployeeDto {
   @IsEmpty()
   @ApiProperty()
   password: string;
-  ////
 }
