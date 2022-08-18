@@ -27,6 +27,14 @@ export class CreateEmployeeDto {
   @ApiProperty()
   employeeNo: string;
 
+  @ApiProperty({ required: true })
+  isActive: boolean;
+
+  @ApiProperty({ required: true })
+  @IsEnum(UserGroupEnum)
+  @Transform((param) => param.value.toUpperCase())
+  userGroup: UserGroupEnum;
+
   @IsNotEmpty()
   @ApiProperty({ required: true })
   firstName: string;
@@ -40,84 +48,11 @@ export class CreateEmployeeDto {
   @ApiProperty()
   suffix: string;
 
-  @ApiProperty()
-  citizenship: string;
-
-  @ApiProperty({ required: true })
-  @IsEnum(EmployeeEnum)
-  @Transform((param) => param.value.toUpperCase())
-  position: EmployeeEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(RankEnum)
-  @Transform((param) => param.value.toUpperCase())
-  rank: RankEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(DepartmentsEnum)
-  @Transform((param) => param.value.toUpperCase())
-  department: DepartmentsEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(LocationsEnum)
-  @Transform((param) => param.value.toUpperCase())
-  location: LocationsEnum;
-
-  @ApiProperty({ required: true })
-  isActive: boolean;
-
-  @ApiProperty({ required: true })
-  @IsEnum(UserGroupEnum)
-  @Transform((param) => param.value.toUpperCase())
-  userGroup: UserGroupEnum;
-
-  @ApiProperty()
-  reportsTo: string;
-
-  @ApiProperty({ required: true })
-  dateHired: Date;
-
-  @ApiProperty({ required: true })
-  @IsEnum(EmploymentStatusEnum)
-  @Transform((param) => param.value.toUpperCase())
-  employmentStatus: EmploymentStatusEnum;
-
-  @ApiProperty()
-  endOfProbationary: Date;
-
-  @ApiProperty()
-  contractEndDate: Date;
-
-  @ApiProperty({ required: true })
-  gender: string;
-
   @ApiProperty({ required: true })
   birthDate: Date;
 
   @ApiProperty({ required: true })
-  personalContactNumber: string;
-
-  @ApiProperty()
-  companyContactNumber: string;
-
-  @ApiProperty({ required: true })
-  taxExemption: string;
-
-  @ApiProperty({ required: true })
-  @IsEmail()
-  companyEmail: string;
-
-  @ApiProperty({ required: true })
-  @IsEmail()
-  personalEmail: string;
-
-  @ApiProperty()
-  payrollBankAccount: {
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    bankBranch: string;
-  };
+  gender: string;
 
   @ApiProperty({ required: true })
   @IsEnum(CivilStatusEnum)
@@ -125,133 +60,23 @@ export class CreateEmployeeDto {
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
+  citizenship: string;
+
+  @ApiProperty()
   @IsEnum(ReligionEnum)
   @Transform((param) => param.value.toUpperCase())
   religion: ReligionEnum;
 
-  @ApiProperty()
-  NumberOfDependents: number;
-
-  @ApiProperty()
-  sss: string;
-
-  @ApiProperty()
-  philHealth: string;
-
-  @ApiProperty()
-  pagIbig?: string;
-
-  @ApiProperty()
-  tin: string;
-
-  @ApiProperty()
-  presentCity: string;
-
-  @ApiProperty()
-  permanentCity: string;
-
-  @ApiProperty()
-  presentZipCode: string;
-
-  @ApiProperty()
-  permanentZipCode: string;
-
-  @ApiProperty()
-  presentRegion: string;
-
-  @ApiProperty()
-  permanentRegion: string;
-
-  @ApiProperty()
-  permanentResidenceAddress: string;
-
-  @ApiProperty()
-  presentResidenceAddress: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsEnum(HighestEducationalAttainmentEnum)
-  @Transform((param) => param.value.toUpperCase())
-  highestEducationalAttainment?: HighestEducationalAttainmentEnum;
-
-  @ApiProperty()
-  elementaryYrFrom: number;
-
-  @ApiProperty()
-  elementaryYrTo: number;
-
-  @ApiProperty()
-  elementarySchoolAndAddress: string;
-
-  @ApiProperty()
-  elementaryHonors: string;
-
-  @ApiProperty()
-  secondaryYrFrom: number;
-
-  @ApiProperty()
-  secondaryYrTo: number;
-
-  @ApiProperty()
-  secondarySchoolAndAddress: string;
-
-  @ApiProperty()
-  secondaryHonors: string;
-
-  @ApiProperty()
-  tertiaryYrFrom: number;
-
-  @ApiProperty()
-  tertiaryYrTo: number;
-
-  @ApiProperty()
-  tertiarySchoolAndAddress: string;
-
-  @ApiProperty()
-  tertiaryDegree: string;
-
-  @ApiProperty()
-  tertiaryHonors: string;
-
-  @ApiProperty()
-  postGradYrFrom: number;
-
-  @ApiProperty()
-  postGradYrTo: number;
-
-  @ApiProperty()
-  postGradSchoolAndAddress: string;
-
-  @ApiProperty()
-  postGradDegree: string;
-
-  @ApiProperty()
-  postGradHonors: string;
-
-  @ApiProperty()
-  othersYrFrom: number;
-
-  @ApiProperty()
-  othersYrTo: number;
-
-  @ApiProperty()
-  othersSchoolAndAddress: string;
-
-  @ApiProperty()
-  othersDegree: string;
-
-  @ApiProperty()
-  othersHonors: string;
-
-  @ApiProperty()
-  licensure: string;
+  @ApiProperty({ required: true })
+  personalContactNumber: string;
 
   @ApiProperty({ required: true })
-  emergencyContact: {
-    name: string;
-    address: string;
-    phoneNumber: string;
-  };
+  @IsEmail()
+  personalEmail: string;
+
+  presentAddress: string;
+  permanentAddress: string;
+  educationalBackground: string;
 
   @ApiProperty()
   employmentRecords: [
@@ -286,7 +111,98 @@ export class CreateEmployeeDto {
   @Type(() => FamilyBackground)
   familyBackground: FamilyBackground[];
 
+  @ApiProperty({ required: true })
+  emergencyContact: {
+    name: string;
+    address: string;
+    phoneNumber: string;
+  };
+
+  @ApiProperty()
+  companyContactNumber: string;
+
+  @ApiProperty({ required: true })
+  @IsEmail()
+  companyEmail: string;
+
+  @ApiProperty({ required: true })
+  @IsEnum(EmployeeEnum)
+  @Transform((param) => param.value.toUpperCase())
+  position: EmployeeEnum;
+
+  @ApiProperty({ required: true })
+  @IsEnum(DepartmentsEnum)
+  @Transform((param) => param.value.toUpperCase())
+  department: DepartmentsEnum;
+
+  @ApiProperty({ required: true })
+  @IsEnum(LocationsEnum)
+  @Transform((param) => param.value.toUpperCase())
+  location: LocationsEnum;
+
+  @ApiProperty()
+  reportsTo: string;
+
+  @ApiProperty({ required: true })
+  dateHired: Date;
+
+  @ApiProperty()
+  endOfProbationary: Date;
+
+  @ApiProperty()
+  contractEndDate: Date;
+
+  @ApiProperty({ required: true })
+  @IsEnum(RankEnum)
+  @Transform((param) => param.value.toUpperCase())
+  rank: RankEnum;
+
+  @ApiProperty({ required: true })
+  @IsEnum(EmploymentStatusEnum)
+  @Transform((param) => param.value.toUpperCase())
+  employmentStatus: EmploymentStatusEnum;
+
+  employeeBenefits: string;
+
+  @ApiProperty()
+  sss: string;
+
+  @ApiProperty()
+  philHealth: string;
+
+  @ApiProperty()
+  pagIbig: string;
+
+  @ApiProperty()
+  tin: string;
+
+  @ApiProperty()
+  NumberOfDependents: number;
+
+  @ApiProperty({ required: true })
+  taxExemption: string;
+
+  basicPay: string;
+  payRateType: string;
+  paymentMethod: string;
+  payrollGroup: string;
+  deductionSSS: string;
+  deductPhilhealth: string;
+  deductHMDF: string;
+  fixedContributionRate: string;
+  deductWithholdingTax: string;
+  allowanceDetails: string;
+
+  @ApiProperty()
+  payrollBankAccount: {
+    accountName: string;
+    accountNumber: string;
+    bankName: string;
+    bankBranch: string;
+  };
+
   @IsEmpty()
   @ApiProperty()
   password: string;
+  ////
 }

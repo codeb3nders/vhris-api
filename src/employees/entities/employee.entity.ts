@@ -91,6 +91,15 @@ export class Employee {
     },
   ];
 
+  @Prop({ required: true, type: JSON })
+  emergencyContact: [
+    {
+      name: string;
+      address: string;
+      phoneNumber: string;
+    },
+  ];
+
   @Prop()
   companyContactNumber: string;
 
@@ -111,8 +120,6 @@ export class Employee {
 
   @Prop({ required: true })
   dateHired: Date;
-
-  yearsInService: string;
 
   @Prop()
   endOfProbationary: Date;
@@ -145,25 +152,40 @@ export class Employee {
   @Prop({ required: true })
   taxExemption: string;
 
-  basicPay: string;
+  @Prop()
+  basicPay: number;
 
-  payRateType: string;
+  @Prop()
+  payRateType: 'Bi monthly' | 'Weekly';
 
-  paymentMethod: string;
+  @Prop()
+  paymentMethod: 'Cash' | 'Check' | 'Payroll Account';
 
-  payrollGroup: string;
+  @Prop()
+  payrollGroup: 'Bi monthly' | 'Weekly';
 
-  deductionSSS: string;
+  @Prop()
+  deductionSSS: number;
 
-  deductPhilhealth: string;
+  @Prop()
+  deductPhilhealth: number;
 
-  deductHMDF: string;
+  @Prop()
+  deductHMDF: number;
 
-  fixedContributionRate: string;
+  @Prop()
+  fixedContributionRate: 'Bi monthly' | 'Weekly';
 
-  deductWithholdingTax: string;
+  @Prop()
+  deductWithholdingTax: number;
 
-  allowanceDetails: string;
+  @Prop({ type: JSON })
+  allowanceDetails: {
+    accountName: string;
+    accountNumber: string;
+    bankName: string;
+    bankBranch: string;
+  };
 
   @Prop({ type: JSON })
   payrollBankAccount: {
@@ -172,14 +194,6 @@ export class Employee {
     bankName: string;
     bankBranch: string;
   };
-  @Prop({ required: true, type: JSON })
-  emergencyContact: [
-    {
-      name: string;
-      address: string;
-      phoneNumber: string;
-    },
-  ];
 
   @Prop()
   password: string; // USE FOR VALIDATION NOT INCLUDED IN DATABASE
