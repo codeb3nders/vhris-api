@@ -156,13 +156,13 @@ export class Employee {
   basicPay: number;
 
   @Prop()
-  payRateType: 'Bi monthly' | 'Weekly';
+  payRateType: string;
 
   @Prop()
-  paymentMethod: 'Cash' | 'Check' | 'Payroll Account';
+  paymentMethod: string;
 
   @Prop()
-  payrollGroup: 'Bi monthly' | 'Weekly';
+  payrollGroup: string;
 
   @Prop()
   deductionSSS: number;

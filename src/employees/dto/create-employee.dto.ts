@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 
 import {
+  CitizenshipEnum,
   CivilStatusEnum,
   DepartmentsEnum,
   EmployeeEnum,
@@ -61,6 +62,7 @@ export class CreateEmployeeDto {
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
+  @IsEnum(CitizenshipEnum)
   citizenship: string;
 
   @ApiProperty()
@@ -190,6 +192,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @ApiProperty()
   @IsEnum(PayTypeEnum)
+  @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
   @IsOptional()
@@ -200,6 +203,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @ApiProperty()
   @IsEnum(PayTypeEnum)
+  @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
 
   @IsOptional()
@@ -209,6 +213,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @ApiProperty()
   @IsEnum(PayTypeEnum)
+  @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: number;
 
   @IsOptional()
@@ -218,6 +223,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @ApiProperty()
   @IsEnum(PayTypeEnum)
+  @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
 
   @IsOptional()
