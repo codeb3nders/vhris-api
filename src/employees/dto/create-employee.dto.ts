@@ -63,6 +63,7 @@ export class CreateEmployeeDto {
 
   @ApiProperty()
   @IsEnum(CitizenshipEnum)
+  @Transform((param) => param.value.toUpperCase())
   citizenship: string;
 
   @ApiProperty()
@@ -77,7 +78,14 @@ export class CreateEmployeeDto {
   @IsEmail()
   personalEmail: string;
 
-  presentAddress: string;
+  presentAddress: {
+    addressLine: string;
+    city: string;
+    zipCode: string;
+    region: string;
+    country: string;
+  };
+
   permanentAddress: string;
   educationalBackground: string;
 
