@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EnumTablesService } from './enum_tables.service';
 import { CreateEnumTableDto } from './dto/create-enum_table.dto';
@@ -21,25 +22,31 @@ export class EnumTablesController {
   }
 
   @Get()
-  findAll() {
-    return this.enumTablesService.findAll();
+  find(@Query('type') type: string, @Query('code') code: string) {
+    const params = {};
+
+    if (type && code) {
+      params['type'] = { $regex: new RegExp('^' + type.toLowerCase(), 'i') };
+      params['code'] = { $regex: new RegExp('^' + code.toLowerCase(), 'i') };
+    } else if (type) {
+      params['type'] = { $regex: new RegExp('^' + type.toLowerCase(), 'i') };
+    } else if (code) {
+      params['code'] = { $regex: new RegExp('^' + code.toLowerCase(), 'i') };
+    }
+
+    return this.enumTablesService.find(params);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.enumTablesService.findOne(+id);
-  }
-
-  @Patch(':id')
+  @Patch(':code')
   update(
-    @Param('id') id: string,
+    @Param('code') code: string,
     @Body() updateEnumTableDto: UpdateEnumTableDto,
   ) {
-    return this.enumTablesService.update(+id, updateEnumTableDto);
+    return this.enumTablesService.update(code, updateEnumTableDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.enumTablesService.remove(+id);
+  @Delete(':code')
+  remove(@Param('code') code: string) {
+    return this.enumTablesService.remove(code);
   }
 }

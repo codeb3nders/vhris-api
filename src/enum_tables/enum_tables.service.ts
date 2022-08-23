@@ -20,19 +20,20 @@ export class EnumTablesService {
     }
   }
 
-  async findAll() {
-    return await this.enumTableModel.find();
+  async find(params: any) {
+    return await this.enumTableModel.find(params);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} enumTable`;
+  async update(code: string, updateEnumTableDto: UpdateEnumTableDto) {
+    return this.enumTableModel.updateOne(
+      { code },
+      { $set: { ...updateEnumTableDto } },
+    );
   }
 
-  update(id: number, updateEnumTableDto: UpdateEnumTableDto) {
-    return `This action updates a #${id} enumTable`;
-  }
+  async remove(code: string) {
+    const response = await this.enumTableModel.deleteOne({ code });
 
-  remove(id: number) {
-    return `This action removes a #${id} enumTable`;
+    return response;
   }
 }

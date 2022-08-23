@@ -155,6 +155,9 @@ export class CreateEmployeeDto {
   dateHired: Date;
 
   @ApiProperty()
+  dateInactive: Date;
+
+  @ApiProperty()
   endOfProbationary: Date;
 
   @ApiProperty()

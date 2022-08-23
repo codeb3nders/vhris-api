@@ -1,6 +1,5 @@
 import { LeaveRequestResponseHandler } from 'src/leave_requests/response_handler/leave_request.response';
 import { Employee } from '../entities/employee.entity';
-import { EmployeeI } from '../interface/employee.interface';
 
 export const EmployeeResponseHandler = {
   ok: (data: Employee[]) => {
@@ -20,79 +19,59 @@ function returnItem(item) {
   const leaveRequests = item.leave_requests
     ? LeaveRequestResponseHandler.ok(item.leave_requests)
     : null;
-  const toReturn: EmployeeI = {
+  const toReturn: any = {
     employeeNo: item.employeeNo,
+    isActive: item.isActive,
+    userGroup: item.userGroup,
     firstName: item.firstName,
     lastName: item.lastName,
     middleName: item.middleName,
     suffix: item.suffix,
-    citizenship: item.citizenship,
-    position: item.position,
-    rank: item.rank,
-    department: item.department,
-    location: item.location,
-    isActive: item.isActive,
-    userGroup: item.userGroup,
-    reportsTo: item.reportsTo,
-    dateHired: item.dateHired,
-    employmentStatus: item.employmentStatus,
-    endOfProbationary: item.endOfProbationary,
-    contractEndDate: item.contractEndDate,
-    gender: item.gender,
     birthDate: item.birthDate,
     age: getAge(item.birthDate),
-    personalContactNumber: item.personalContactNumber,
-    companyContactNumber: item.companyContactNumber,
-    taxExemption: item.taxExemption,
-    companyEmail: item.companyEmail,
-    personalEmail: item.personalEmail,
-    payrollBankAccount: item.payrollBankAccount,
+    gender: item.gender,
     civilStatus: item.civilStatus,
+    citizenship: item.citizenship,
     religion: item.religion,
-    NumberOfDependents: item.NumberOfDependents,
-    sss: item.sss,
-    philHealth: item.philHealth,
-    pagIbig: item.pagIbig,
-    tin: item.tin,
-    presentCity: item.presentCity,
-    permanentCity: item.permanentCity,
-    presentZipCode: item.presentZipCode,
-    permanentZipCode: item.permanentZipCode,
-    presentRegion: item.presentRegion,
-    permanentRegion: item.permanentRegion,
-    permanentResidenceAddress: item.permanentResidenceAddress,
-    presentResidenceAddress: item.presentResidenceAddress,
-    highestEducationalAttainment: item.highestEducationalAttainment,
-    elementaryYrFrom: item.elementaryYrFrom,
-    elementaryYrTo: item.elementaryYrTo,
-    elementarySchoolAndAddress: item.elementarySchoolAndAddress,
-    elementaryHonors: item.elementaryHonors,
-    secondaryYrFrom: item.secondaryYrFrom,
-    secondaryYrTo: item.secondaryYrTo,
-    secondarySchoolAndAddress: item.secondarySchoolAndAddress,
-    secondaryHonors: item.secondaryHonors,
-    tertiaryYrFrom: item.tertiaryYrFrom,
-    tertiaryYrTo: item.tertiaryYrTo,
-    tertiarySchoolAndAddress: item.tertiarySchoolAndAddress,
-    tertiaryDegree: item.tertiaryDegree,
-    tertiaryHonors: item.tertiaryHonors,
-    postGradYrFrom: item.postGradYrFrom,
-    postGradYrTo: item.postGradYrTo,
-    postGradSchoolAndAddress: item.postGradSchoolAndAddress,
-    postGradDegree: item.postGradDegree,
-    postGradHonors: item.postGradHonors,
-    othersYrFrom: item.othersYrFrom,
-    othersYrTo: item.othersYrTo,
-    othersSchoolAndAddress: item.othersSchoolAndAddress,
-    othersDegree: item.othersDegree,
-    othersHonors: item.othersHonors,
-    licensure: item.licensure,
-    emergencyContact: item.emergencyContact,
+    personalContactNumber: item.personalContactNumber,
+    personalEmail: item.personalEmail,
+    presentAddress: item.presentAddress,
+    educationalBackground: item.educationalBackground,
     employmentRecords: item.employmentRecords,
     govtProfExamsPassed: item.govtProfExamsPassed,
     licensesCertifications: item.licensesCertifications,
     familyBackground: item.familyBackground,
-    leave_requests: item.leave_requests,
+    emergencyContact: item.emergencyContact,
+    companyContactNumber: item.companyContactNumber,
+    companyEmail: item.companyEmail,
+    position: item.position,
+    department: item.department,
+    location: item.location,
+    reportsTo: item.reportsTo,
+    dateHired: item.dateHired,
+    dateInactive: item.dateInactive,
+    yearsInSerVice: getYearsInService(item.dateHired, item.dateInactive),
+    endOfProbationary: item.endOfProbationary,
+    contractEndDate: item.contractEndDate,
+    rank: item.rank,
+    employmentStatus: item.employmentStatus,
+    sss: item.sss,
+    philHealth: item.philHealth,
+    pagIbig: item.pagIbig,
+    tin: item.tin,
+    NumberOfDependents: item.NumberOfDependents,
+    taxExemption: item.taxExemption,
+    basicPay: item.basicPay,
+    payRateType: item.payRateType,
+    paymentMethod: item.paymentMethod,
+    payrollGroup: item.payrollGroup,
+    deductionSSS: item.deductionSSS,
+    deductPhilhealth: item.deductPhilhealth,
+    deductHMDF: item.deductHMDF,
+    fixedContributionRate: item.fixedContributionRate,
+    deductWithholdingTax: item.deductWithholdingTax,
+    allowanceDetails: item.allowanceDetails,
+    payrollBankAccount: item.payrollBankAccount,
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;
@@ -109,4 +88,15 @@ function getAge(dateString) {
     age--;
   }
   return age;
+}
+
+function getYearsInService(dateHired: Date, inActiveDate?: Date | null) {
+  const endDate = inActiveDate ? new Date(inActiveDate) : new Date();
+  const birthDate = new Date(dateHired);
+  let years = endDate.getFullYear() - birthDate.getFullYear();
+  const m = endDate.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && endDate.getDate() < birthDate.getDate())) {
+    years--;
+  }
+  return years;
 }

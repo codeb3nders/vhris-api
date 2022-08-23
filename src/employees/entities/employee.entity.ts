@@ -147,6 +147,9 @@ export class Employee {
   dateHired: Date;
 
   @Prop()
+  dateInactive: Date;
+
+  @Prop()
   endOfProbationary: Date;
 
   @Prop()
