@@ -1,6 +1,10 @@
 import { Transform } from 'class-transformer';
-import { IsEnum } from 'class-validator';
-import { EducationLevelEnum, RelationEnum } from 'src/enums/employee.enum';
+import { IsArray, IsEnum } from 'class-validator';
+import {
+  EducationLevelEnum,
+  LocationsEnum,
+  RelationEnum,
+} from 'src/enums/employee.enum';
 
 export interface EmployeeI {
   employeeNo: string;
@@ -109,4 +113,10 @@ export class LicensesCertifications {
   authorizingEntity: string;
   validUntil: Date;
   licenseCertNo: string;
+}
+
+export class Location {
+  @IsEnum(LocationsEnum)
+  @Transform((param) => param.value.toUpperCase())
+  location: LocationsEnum;
 }

@@ -15,5 +15,6 @@ import { EnumTableSchema, Enum_Table } from './entities/enum_table.entity';
   ],
   controllers: [EnumTablesController],
   providers: [EnumTablesService],
+  exports: [EnumTablesService],
 })
 export class EnumTablesModule {}

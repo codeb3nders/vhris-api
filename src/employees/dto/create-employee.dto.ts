@@ -1,10 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
+  isArray,
+  IsArray,
   IsEmail,
   IsEmpty,
   IsEnum,
   IsOptional,
+  IsString,
   ValidateNested,
 } from 'class-validator';
 
@@ -144,8 +147,9 @@ export class CreateEmployeeDto {
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
-  @IsEnum(LocationsEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @IsEnum(LocationsEnum, { each: true })
+  @IsArray()
+  // @Transform((param) => param.value.toUpperCase())
   location: LocationsEnum;
 
   @ApiProperty()

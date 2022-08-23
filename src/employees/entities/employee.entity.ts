@@ -137,8 +137,8 @@ export class Employee {
   @Prop({ required: true })
   department: string;
 
-  @Prop({ required: true })
-  location: string;
+  @Prop({ required: true, type: JSON })
+  location: string[];
 
   @Prop()
   reportsTo: string;

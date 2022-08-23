@@ -20,7 +20,7 @@ export class EnumTablesService {
     }
   }
 
-  async find(params: any) {
+  async find(params?: any) {
     return await this.enumTableModel.find(params);
   }
 
