@@ -454,3 +454,11 @@ export enum CitizenshipEnum {
   'ZAMBIA',
   'ZIMBABWE',
 }
+
+export enum EducationLevelEnum {
+  'ELEMENTARY',
+  'SECONDARY',
+  'TERTIARY',
+  'POST GRADUATE',
+  'OTHERS',
+}

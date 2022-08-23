@@ -86,8 +86,24 @@ export class CreateEmployeeDto {
     country: string;
   };
 
-  permanentAddress: string;
-  educationalBackground: string;
+  permanentAddress: {
+    addressLine: string;
+    city: string;
+    zipCode: string;
+    region: string;
+    country: string;
+  };
+
+  educationalBackground: [
+    {
+      level: string;
+      yrFrom: number;
+      yrTo: number;
+      schoolAndAddress: string;
+      degree: string;
+      honors: string;
+    },
+  ];
 
   @ApiProperty()
   employmentRecords: [

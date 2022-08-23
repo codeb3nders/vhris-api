@@ -65,14 +65,16 @@ export class Employee {
   };
 
   @Prop({ type: JSON })
-  educationalBackground: {
-    level: string;
-    yrFrom: number;
-    yrTo: number;
-    schoolAndAddress: string;
-    degree: string;
-    honors: string;
-  };
+  educationalBackground: [
+    {
+      level: string;
+      yrFrom: number;
+      yrTo: number;
+      schoolAndAddress: string;
+      degree: string;
+      honors: string;
+    },
+  ];
 
   @Prop({ type: JSON })
   employmentRecords: [
