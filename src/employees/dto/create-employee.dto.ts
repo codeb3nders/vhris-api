@@ -1,10 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
+  isArray,
+  IsArray,
   IsEmail,
   IsEmpty,
   IsEnum,
   IsOptional,
+  IsString,
   ValidateNested,
 } from 'class-validator';
 
@@ -22,7 +25,15 @@ import {
   UserGroupEnum,
 } from 'src/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
-import { FamilyBackground } from '../interface/employee.interface';
+import {
+  Address,
+  EducationalBackground,
+  EmergencyContact,
+  EmploymentRecords,
+  FamilyBackground,
+  GovtProfExamsPassed,
+  LicensesCertifications,
+} from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
   @IsEmpty()
@@ -63,6 +74,7 @@ export class CreateEmployeeDto {
 
   @ApiProperty()
   @IsEnum(CitizenshipEnum)
+  @Transform((param) => param.value.toUpperCase())
   citizenship: string;
 
   @ApiProperty()
@@ -77,37 +89,35 @@ export class CreateEmployeeDto {
   @IsEmail()
   personalEmail: string;
 
-  presentAddress: string;
-  permanentAddress: string;
-  educationalBackground: string;
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  presentAddress: Address[];
 
   @ApiProperty()
-  employmentRecords: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  permanentAddress: Address[];
 
   @ApiProperty()
-  govtProfExamsPassed: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => EducationalBackground)
+  educationalBackground: EducationalBackground[];
 
   @ApiProperty()
-  licensesCertifications: [
-    {
-      name: string;
-      authorizingEntity: string;
-      validUntil: Date;
-      licenseCertNo: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => EmploymentRecords)
+  employmentRecords: EmploymentRecords[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => GovtProfExamsPassed)
+  govtProfExamsPassed: GovtProfExamsPassed[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => LicensesCertifications)
+  licensesCertifications: LicensesCertifications[];
 
   @ApiProperty()
   @ValidateNested({ each: true })
@@ -115,11 +125,9 @@ export class CreateEmployeeDto {
   familyBackground: FamilyBackground[];
 
   @ApiProperty({ required: true })
-  emergencyContact: {
-    name: string;
-    address: string;
-    phoneNumber: string;
-  };
+  @ValidateNested({ each: true })
+  @Type(() => EmergencyContact)
+  emergencyContact: EmergencyContact;
 
   @ApiProperty()
   companyContactNumber: string;
@@ -139,8 +147,9 @@ export class CreateEmployeeDto {
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
-  @IsEnum(LocationsEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @IsEnum(LocationsEnum, { each: true })
+  @IsArray()
+  // @Transform((param) => param.value.toUpperCase())
   location: LocationsEnum;
 
   @ApiProperty()
@@ -148,6 +157,9 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   dateHired: Date;
+
+  @ApiProperty()
+  dateInactive: Date;
 
   @ApiProperty()
   endOfProbationary: Date;

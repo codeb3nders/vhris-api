@@ -1,3 +1,13 @@
+import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
+
+export class EnumClass {
+  private readonly enumTablesService: EnumTablesService;
+
+  async getRankEnum() {
+    return await this.enumTablesService.find();
+  }
+}
+
 export enum EmployeeEnum {
   'ACCOUNTING ASSISTANT',
   'ACCOUNTING SUPERVISOR',
@@ -453,4 +463,12 @@ export enum CitizenshipEnum {
   'YEMEN',
   'ZAMBIA',
   'ZIMBABWE',
+}
+
+export enum EducationLevelEnum {
+  'ELEMENTARY',
+  'SECONDARY',
+  'TERTIARY',
+  'POST GRADUATE',
+  'OTHERS',
 }

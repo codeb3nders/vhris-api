@@ -47,9 +47,34 @@ export class Employee {
   @Prop({ required: true, unique: true })
   personalEmail: string;
 
-  presentAddress: string;
-  permanentAddress: string;
-  educationalBackground: string;
+  @Prop({ type: JSON })
+  presentAddress: {
+    addressLine: string;
+    city: string;
+    zipCode: string;
+    region: string;
+    country: string;
+  };
+
+  permanentAddress: {
+    addressLine: string;
+    city: string;
+    zipCode: string;
+    region: string;
+    country: string;
+  };
+
+  @Prop({ type: JSON })
+  educationalBackground: [
+    {
+      level: string;
+      yrFrom: number;
+      yrTo: number;
+      schoolAndAddress: string;
+      degree: string;
+      honors: string;
+    },
+  ];
 
   @Prop({ type: JSON })
   employmentRecords: [
@@ -112,14 +137,17 @@ export class Employee {
   @Prop({ required: true })
   department: string;
 
-  @Prop({ required: true })
-  location: string;
+  @Prop({ required: true, type: JSON })
+  location: string[];
 
   @Prop()
   reportsTo: string;
 
   @Prop({ required: true })
   dateHired: Date;
+
+  @Prop()
+  dateInactive: Date;
 
   @Prop()
   endOfProbationary: Date;
