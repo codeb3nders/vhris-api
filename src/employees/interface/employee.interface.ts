@@ -1,8 +1,8 @@
 import { Transform } from 'class-transformer';
 import { IsEnum } from 'class-validator';
-import { RelationEnum } from 'src/enums/employee.enum';
+import { EducationLevelEnum, RelationEnum } from 'src/enums/employee.enum';
 
-interface EmployeeI {
+export interface EmployeeI {
   employeeNo: string;
   firstName: string;
   lastName: string;
@@ -77,7 +77,7 @@ interface EmployeeI {
   leave_requests?: any;
 }
 
-class FamilyBackground {
+export class FamilyBackground {
   name: string;
   @IsEnum(RelationEnum)
   @Transform((param) => param.value.toUpperCase())
@@ -87,4 +87,47 @@ class FamilyBackground {
   residence: string;
 }
 
-export { EmployeeI, FamilyBackground };
+export class EmergencyContact {
+  name: string;
+  relation: string;
+  address: string;
+  contactNumber: string;
+}
+
+export class Address {
+  addressLine: string;
+  city: string;
+  zipCode: string;
+  region: string;
+  country: string;
+}
+
+export class EducationalBackground {
+  @IsEnum(EducationLevelEnum)
+  @Transform((param) => param.value.toUpperCase())
+  level: string;
+  yrFrom: number;
+  yrTo: number;
+  schoolAndAddress: string;
+  degree: string;
+  honors: string;
+}
+
+export class EmploymentRecords {
+  examTitle: string;
+  dateTaken: Date;
+  Rating: string;
+}
+
+export class GovtProfExamsPassed {
+  examTitle: string;
+  dateTaken: Date;
+  Rating: string;
+}
+
+export class LicensesCertifications {
+  name: string;
+  authorizingEntity: string;
+  validUntil: Date;
+  licenseCertNo: string;
+}

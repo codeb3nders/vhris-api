@@ -22,7 +22,15 @@ import {
   UserGroupEnum,
 } from 'src/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
-import { FamilyBackground } from '../interface/employee.interface';
+import {
+  Address,
+  EducationalBackground,
+  EmergencyContact,
+  EmploymentRecords,
+  FamilyBackground,
+  GovtProfExamsPassed,
+  LicensesCertifications,
+} from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
   @IsEmpty()
@@ -78,60 +86,35 @@ export class CreateEmployeeDto {
   @IsEmail()
   personalEmail: string;
 
-  presentAddress: {
-    addressLine: string;
-    city: string;
-    zipCode: string;
-    region: string;
-    country: string;
-  };
-
-  permanentAddress: {
-    addressLine: string;
-    city: string;
-    zipCode: string;
-    region: string;
-    country: string;
-  };
-
-  educationalBackground: [
-    {
-      level: string;
-      yrFrom: number;
-      yrTo: number;
-      schoolAndAddress: string;
-      degree: string;
-      honors: string;
-    },
-  ];
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  presentAddress: Address[];
 
   @ApiProperty()
-  employmentRecords: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  permanentAddress: Address[];
 
   @ApiProperty()
-  govtProfExamsPassed: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => EducationalBackground)
+  educationalBackground: EducationalBackground[];
 
   @ApiProperty()
-  licensesCertifications: [
-    {
-      name: string;
-      authorizingEntity: string;
-      validUntil: Date;
-      licenseCertNo: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => EmploymentRecords)
+  employmentRecords: EmploymentRecords[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => GovtProfExamsPassed)
+  govtProfExamsPassed: GovtProfExamsPassed[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => LicensesCertifications)
+  licensesCertifications: LicensesCertifications[];
 
   @ApiProperty()
   @ValidateNested({ each: true })
@@ -139,11 +122,9 @@ export class CreateEmployeeDto {
   familyBackground: FamilyBackground[];
 
   @ApiProperty({ required: true })
-  emergencyContact: {
-    name: string;
-    address: string;
-    phoneNumber: string;
-  };
+  @ValidateNested({ each: true })
+  @Type(() => EmergencyContact)
+  emergencyContact: EmergencyContact;
 
   @ApiProperty()
   companyContactNumber: string;
