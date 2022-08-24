@@ -35,7 +35,7 @@ export class Employee {
   @Prop({ required: true })
   civilStatus: string;
 
-  @Prop({ required: true })
+  @Prop()
   citizenship: string;
 
   @Prop()
@@ -50,18 +50,18 @@ export class Employee {
   @Prop({ type: JSON })
   presentAddress: {
     addressLine: string;
-    city: string;
-    zipCode: string;
+    barangay: string;
+    municipality: string;
+    province: string;
     region: string;
-    country: string;
   };
 
   permanentAddress: {
     addressLine: string;
-    city: string;
-    zipCode: string;
+    barangay: string;
+    municipality: string;
+    province: string;
     region: string;
-    country: string;
   };
 
   @Prop({ type: JSON })
@@ -116,7 +116,7 @@ export class Employee {
     },
   ];
 
-  @Prop({ required: true, type: JSON })
+  @Prop({ type: JSON })
   emergencyContact: [
     {
       name: string;
@@ -140,7 +140,7 @@ export class Employee {
   @Prop({ required: true, type: JSON })
   location: string[];
 
-  @Prop()
+  @Prop({ required: true })
   reportsTo: string;
 
   @Prop({ required: true })
@@ -174,37 +174,37 @@ export class Employee {
   @Prop()
   tin: string;
 
-  @Prop()
+  @Prop({ required: true, default: 0 })
   NumberOfDependents: number;
 
   @Prop({ required: true })
   taxExemption: string;
 
-  @Prop()
+  @Prop({ required: true, default: 0 })
   basicPay: number;
 
-  @Prop()
-  payRateType: string;
+  @Prop({ required: true, default: 'Bi monthly' })
+  payRateType: 'Bi monthly' | 'Weekly';
 
-  @Prop()
+  @Prop({ required: true })
   paymentMethod: string;
 
-  @Prop()
-  payrollGroup: string;
+  @Prop({ required: true, default: 'Bi monthly' })
+  payrollGroup: 'Bi monthly' | 'Weekly';
 
-  @Prop()
+  @Prop({ required: true, default: 0 })
   deductionSSS: number;
 
-  @Prop()
-  deductPhilhealth: number;
+  @Prop({ required: true, default: 'Bi monthly' })
+  deductPhilhealth: 'Bi monthly' | 'Weekly';
 
-  @Prop()
+  @Prop({ required: true, default: 0 })
   deductHMDF: number;
 
-  @Prop()
+  @Prop({ required: true, default: 'Bi monthly' })
   fixedContributionRate: 'Bi monthly' | 'Weekly';
 
-  @Prop()
+  @Prop({ required: true, default: 0 })
   deductWithholdingTax: number;
 
   @Prop({ type: JSON })
