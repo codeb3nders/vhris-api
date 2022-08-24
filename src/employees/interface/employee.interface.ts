@@ -79,10 +79,10 @@ export class EmergencyContact {
 
 export class Address {
   addressLine: string;
-  city: string;
-  zipCode: string;
+  barangay: string;
+  municipality: string;
+  province: string;
   region: string;
-  country: string;
 }
 
 export class EducationalBackground {
