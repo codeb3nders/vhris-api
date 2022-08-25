@@ -174,37 +174,37 @@ export class Employee {
   @Prop()
   tin: string;
 
-  @Prop({ required: true, default: 0 })
+  @Prop({ default: 0 })
   NumberOfDependents: number;
 
   @Prop({ required: true })
   taxExemption: string;
 
-  @Prop({ required: true, default: 0 })
+  @Prop({ default: 0 })
   basicPay: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
+  @Prop({ default: 'Bi monthly' })
   payRateType: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true })
-  paymentMethod: string;
+  @Prop({ default: 'Payroll Account' })
+  paymentMethod: 'Cash' | 'Check' | 'Payroll Account';
 
-  @Prop({ required: true, default: 'Bi monthly' })
+  @Prop({ default: 'Bi monthly' })
   payrollGroup: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true, default: 0 })
+  @Prop({ default: 0 })
   deductionSSS: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
+  @Prop({ default: 'Bi monthly' })
   deductPhilhealth: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true, default: 0 })
+  @Prop({ default: 0 })
   deductHMDF: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
+  @Prop({ default: 'Bi monthly' })
   fixedContributionRate: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true, default: 0 })
+  @Prop({ default: 0 })
   deductWithholdingTax: number;
 
   @Prop({ type: JSON })
