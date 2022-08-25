@@ -21,7 +21,8 @@ export class Leave_request {
   leaveDays: string;
   @Prop()
   returnToWorkDate: string;
-  @Prop()
+
+  @Prop({ required: true })
   fieldLeaveReason: string;
   @Prop()
   immediateSupervisor: string;
