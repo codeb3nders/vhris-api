@@ -16,7 +16,6 @@ export const ResponseHandler = {
 };
 
 function returnItem(item) {
-  console.log('ITEM', item);
   const leaveRequests = item.leave_requests
     ? LeaveRequestResponseHandler.ok(item.leave_requests)
     : null;
@@ -46,9 +45,9 @@ function returnItem(item) {
     companyContactNumber: item.companyContactNumber,
     companyEmail: item.companyEmail,
     position: item.position,
-    department: item.department,
-    location: prepareLocation(item.enum),
-    reportsTo: item.reportsTo,
+    department: prepareDepartment(item.departmentEnum),
+    location: prepareLocation(item.locationEnum),
+    reportsTo: getReportToDetails(item.reportingTo[0]),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
     yearsInSerVice: getYearsInService(item.dateHired, item.dateInactive),
@@ -80,6 +79,12 @@ function returnItem(item) {
   return toReturn;
 }
 
+const prepareDepartment = (item: any) => {
+  return item.map((i: any) => {
+    return { code: i.code, name: i.name };
+  });
+};
+
 const prepareLocation = (item: any) => {
   return item.map((i: any) => {
     return { code: i.code, name: i.name };
@@ -106,4 +111,12 @@ function getYearsInService(dateHired: Date, inActiveDate?: Date | null) {
     years--;
   }
   return years;
+}
+
+function getReportToDetails(items: any) {
+  return {
+    employeeNo: items.employeeNo,
+    employeeName: `${items.firstName} ${items.lastName}`,
+    position: items.position,
+  };
 }
