@@ -51,7 +51,26 @@ export class EmployeesService {
   }
 
   async findAll(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
+    const pipeline = [
+      {
+        $lookup: {
+          from: 'leave_requests',
+          localField: 'employeeNo',
+          foreignField: 'employeeNo',
+          as: 'leave_requests',
+        },
+      },
+      {
+        $lookup: {
+          from: 'enum_tables',
+          localField: 'location',
+          foreignField: 'code',
+          as: 'enum',
+        },
+      },
+    ];
+
+    return this.employeeModel.aggregate(pipeline);
   }
 
   async findAllWithLeaves(): Promise<any> {
@@ -64,6 +83,14 @@ export class EmployeesService {
           as: 'leave_requests',
         },
       },
+      {
+        $lookup: {
+          from: 'enum_tables',
+          localField: 'location',
+          foreignField: 'code',
+          as: 'enum',
+        },
+      },
     ];
 
     return this.employeeModel.aggregate(pipeline);
@@ -73,10 +100,18 @@ export class EmployeesService {
     const pipeline = [
       {
         $lookup: {
-          from: 'l',
+          from: 'leave_requests',
           localField: 'employeeNo',
           foreignField: 'employeeNo',
           as: 'leave_requests',
+        },
+      },
+      {
+        $lookup: {
+          from: 'enum_tables',
+          localField: 'location',
+          foreignField: 'code',
+          as: 'enum',
         },
       },
       {

@@ -16,6 +16,7 @@ export const ResponseHandler = {
 };
 
 function returnItem(item) {
+  console.log('ITEM', item);
   const leaveRequests = item.leave_requests
     ? LeaveRequestResponseHandler.ok(item.leave_requests)
     : null;
@@ -46,7 +47,7 @@ function returnItem(item) {
     companyEmail: item.companyEmail,
     position: item.position,
     department: item.department,
-    location: item.location,
+    location: prepareLocation(item.enum),
     reportsTo: item.reportsTo,
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
@@ -78,6 +79,12 @@ function returnItem(item) {
   }
   return toReturn;
 }
+
+const prepareLocation = (item: any) => {
+  return item.map((i: any) => {
+    return { code: i.code, name: i.name };
+  });
+};
 
 function getAge(dateString) {
   const today = new Date();

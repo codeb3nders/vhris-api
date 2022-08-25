@@ -128,6 +128,8 @@ export enum DepartmentsEnum {
 }
 
 export enum LocationsEnum {
+  'VHO',
+  'VCW',
   'HEAD OFFICE',
   'CENTRAL WAREHOUSE',
   'CLI - MANDTRA RESIDENCES',
