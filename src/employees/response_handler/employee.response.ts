@@ -46,8 +46,8 @@ function returnItem(item) {
     companyEmail: item.companyEmail,
     position: item.position,
     department: prepareDepartment(item.departmentEnum),
-    location: prepareLocation(item.locationEnum),
-    reportsTo: getReportToDetails(item.reportingTo[0]),
+    location: item.locationEnum && prepareLocation(item.locationEnum),
+    reportsTo: item.reportingTo && getReportToDetails(item.reportingTo[0]),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
     yearsInSerVice: getYearsInService(item.dateHired, item.dateInactive),
@@ -80,15 +80,21 @@ function returnItem(item) {
 }
 
 const prepareDepartment = (item: any) => {
-  return item.map((i: any) => {
-    return { code: i.code, name: i.name };
-  });
+  return (
+    item &&
+    item.map((i: any) => {
+      return { code: i.code, name: i.name };
+    })
+  );
 };
 
 const prepareLocation = (item: any) => {
-  return item.map((i: any) => {
-    return { code: i.code, name: i.name };
-  });
+  return (
+    item &&
+    item.map((i: any) => {
+      return { code: i.code, name: i.name };
+    })
+  );
 };
 
 function getAge(dateString) {
