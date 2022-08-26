@@ -45,9 +45,9 @@ function returnItem(item) {
     companyContactNumber: item.companyContactNumber,
     companyEmail: item.companyEmail,
     position: item.position,
-    department: item.department,
-    location: item.location,
-    reportsTo: item.reportsTo,
+    department: prepareDepartment(item.departmentEnum),
+    location: item.locationEnum && prepareLocation(item.locationEnum),
+    reportsTo: item.reportingTo && getReportToDetails(item.reportingTo[0]),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
     yearsInSerVice: getYearsInService(item.dateHired, item.dateInactive),
@@ -79,6 +79,24 @@ function returnItem(item) {
   return toReturn;
 }
 
+const prepareDepartment = (item: any) => {
+  return (
+    item &&
+    item.map((i: any) => {
+      return { code: i.code, name: i.name };
+    })
+  );
+};
+
+const prepareLocation = (item: any) => {
+  return (
+    item &&
+    item.map((i: any) => {
+      return { code: i.code, name: i.name };
+    })
+  );
+};
+
 function getAge(dateString) {
   const today = new Date();
   const birthDate = new Date(dateString);
@@ -99,4 +117,12 @@ function getYearsInService(dateHired: Date, inActiveDate?: Date | null) {
     years--;
   }
   return years;
+}
+
+function getReportToDetails(items: any) {
+  return {
+    employeeNo: items.employeeNo,
+    employeeName: `${items.firstName} ${items.lastName}`,
+    position: items.position,
+  };
 }

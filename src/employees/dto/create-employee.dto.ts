@@ -210,6 +210,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @ApiProperty()
   @IsEnum(PaymentMethodEnum)
+  @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
   @IsOptional()

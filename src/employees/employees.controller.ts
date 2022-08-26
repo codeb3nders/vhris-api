@@ -70,8 +70,9 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/leaves/:employeeNo')
-  findAllLeavesById(@Param('employeeNo') employeeNo: string) {
-    return this.employeesService.findAllLeavesById(employeeNo);
+  async findAllLeavesById(@Param('employeeNo') employeeNo: string) {
+    const response = await this.employeesService.findAllLeavesById(employeeNo);
+    return EmployeeResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
