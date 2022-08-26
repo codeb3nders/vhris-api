@@ -186,8 +186,8 @@ export class Employee {
   @Prop({ required: true, default: 'Bi monthly' })
   payRateType: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true })
-  paymentMethod: string;
+  @Prop({ required: true, default: 'Payroll Account' })
+  paymentMethod: 'Cash' | 'Check' | 'Payroll Account';
 
   @Prop({ required: true, default: 'Bi monthly' })
   payrollGroup: 'Bi monthly' | 'Weekly';

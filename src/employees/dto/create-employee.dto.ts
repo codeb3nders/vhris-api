@@ -197,50 +197,40 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true })
   taxExemption: string;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 0 })
   basicPay: number;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 'Payroll Account' })
   @IsEnum(PaymentMethodEnum)
   @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 0 })
   deductionSSS: number;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: number;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 0 })
   deductHMDF: number;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
 
-  @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: true, default: 0 })
   deductWithholdingTax: number;
 
   @IsOptional()
