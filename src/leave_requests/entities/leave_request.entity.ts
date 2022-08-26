@@ -22,7 +22,7 @@ export class Leave_request {
   @Prop()
   returnToWorkDate: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: 'Vacation' })
   fieldLeaveReason: string;
   @Prop()
   immediateSupervisor: string;
