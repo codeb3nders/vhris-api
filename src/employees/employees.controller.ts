@@ -28,11 +28,15 @@ import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { isAllowedUser, isValidRequest } from './dto/validate.request';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
+import { ValidatorsService } from 'src/validators/validators.service';
 
 @ApiTags('Employees')
 @Controller('employees')
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(
+    private readonly employeesService: EmployeesService,
+    private validatorsService: ValidatorsService,
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -40,6 +44,11 @@ export class EmployeesController {
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<Employee> {
     try {
+      console.log(
+        await this.validatorsService.validateEmployeesPostRequest(
+          createEmployeeDto,
+        ),
+      );
       return await this.employeesService.create(createEmployeeDto);
     } catch (error) {
       ErrorResponse.conflict(error.message || error);

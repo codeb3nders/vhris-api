@@ -16,6 +16,8 @@ import { EmailModule } from './email/email.module';
 import { UserCredentialsModule } from './user_credentials/user_credentials.module';
 import { AuthModule } from './auth/auth.module';
 import { EnumTablesModule } from './enum_tables/enum_tables.module';
+import { ValidatorsService } from './validators/validators.service';
+import { ValidatorsModule } from './validators/validators.module';
 
 @Module({
   imports: [
@@ -45,8 +47,9 @@ import { EnumTablesModule } from './enum_tables/enum_tables.module';
     UserCredentialsModule,
     AuthModule,
     EnumTablesModule,
+    ValidatorsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ValidatorsService],
 })
 export class AppModule {}

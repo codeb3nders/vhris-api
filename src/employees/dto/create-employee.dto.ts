@@ -1,25 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import {
-  isArray,
-  IsArray,
-  IsEmail,
-  IsEmpty,
-  IsEnum,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEmail, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
 
 import {
-  CitizenshipEnum,
   CivilStatusEnum,
   DepartmentsEnum,
   EmployeeEnum,
   EmploymentStatusEnum,
   LocationsEnum,
-  PaymentMethodEnum,
-  PayTypeEnum,
   RankEnum,
   ReligionEnum,
   UserGroupEnum,
@@ -44,8 +32,6 @@ export class CreateEmployeeDto {
   isActive: boolean;
 
   @ApiProperty({ required: true })
-  @IsEnum(UserGroupEnum)
-  @Transform((param) => param.value.toUpperCase())
   userGroup: UserGroupEnum;
 
   @IsNotEmpty()
@@ -68,18 +54,12 @@ export class CreateEmployeeDto {
   gender: string;
 
   @ApiProperty({ required: true })
-  @IsEnum(CivilStatusEnum)
-  @Transform((param) => param.value.toUpperCase())
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @IsEnum(CitizenshipEnum)
-  @Transform((param) => param.value.toUpperCase())
   citizenship: string;
 
   @ApiProperty()
-  @IsEnum(ReligionEnum)
-  @Transform((param) => param.value.toUpperCase())
   religion: ReligionEnum;
 
   @ApiProperty({ required: true })
@@ -137,19 +117,12 @@ export class CreateEmployeeDto {
   companyEmail: string;
 
   @ApiProperty({ required: true })
-  @IsEnum(EmployeeEnum)
-  @Transform((param) => param.value.toUpperCase())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
-  @IsEnum(DepartmentsEnum)
-  @Transform((param) => param.value.toUpperCase())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
-  @IsEnum(LocationsEnum, { each: true })
-  @IsArray()
-  // @Transform((param) => param.value.toUpperCase())
   location: LocationsEnum;
 
   @ApiProperty()
@@ -168,13 +141,9 @@ export class CreateEmployeeDto {
   contractEndDate: Date;
 
   @ApiProperty({ required: true })
-  @IsEnum(RankEnum)
-  @Transform((param) => param.value.toUpperCase())
   rank: RankEnum;
 
   @ApiProperty({ required: true })
-  @IsEnum(EmploymentStatusEnum)
-  @Transform((param) => param.value.toUpperCase())
   employmentStatus: EmploymentStatusEnum;
 
   employeeBenefits: string;
@@ -203,20 +172,14 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
   @IsOptional()
   @ApiProperty()
-  @IsEnum(PaymentMethodEnum)
-  @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
   @IsOptional()
   @ApiProperty()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
 
   @IsOptional()
@@ -225,8 +188,6 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: number;
 
   @IsOptional()
@@ -235,8 +196,6 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
 
   @IsOptional()
