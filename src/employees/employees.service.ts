@@ -11,12 +11,48 @@ import { AutoCredentialEnum } from 'src/enums/employee.enum';
 
 @Injectable()
 export class EmployeesService {
+  private aggregateQry;
   constructor(
     @InjectModel(Employee.name)
     private employeeModel: Model<EmployeeDocument>,
     @Inject(forwardRef(() => UserCredentialsService))
     private userCredentialsService: UserCredentialsService,
-  ) {}
+  ) {
+    this.aggregateQry = [
+      {
+        $lookup: {
+          from: 'leave_requests',
+          localField: 'employeeNo',
+          foreignField: 'employeeNo',
+          as: 'leave_requests',
+        },
+      },
+      {
+        $lookup: {
+          from: 'enum_tables',
+          localField: 'location',
+          foreignField: 'code',
+          as: 'locationEnum',
+        },
+      },
+      {
+        $lookup: {
+          from: 'enum_tables',
+          localField: 'department',
+          foreignField: 'code',
+          as: 'departmentEnum',
+        },
+      },
+      {
+        $lookup: {
+          from: 'employees',
+          localField: 'reportsTo',
+          foreignField: 'employeeNo',
+          as: 'reportingTo',
+        },
+      },
+    ];
+  }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
@@ -51,117 +87,20 @@ export class EmployeesService {
   }
 
   async findAll(): Promise<Employee[]> {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'location',
-          foreignField: 'code',
-          as: 'locationEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'department',
-          foreignField: 'code',
-          as: 'departmentEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'reportsTo',
-          foreignField: 'employeeNo',
-          as: 'reportingTo',
-        },
-      },
-    ];
+    const pipeline = this.aggregateQry;
 
     return this.employeeModel.aggregate(pipeline);
   }
 
   async findAllWithLeaves(): Promise<any> {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'location',
-          foreignField: 'code',
-          as: 'locationEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'department',
-          foreignField: 'code',
-          as: 'departmentEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'reportsTo',
-          foreignField: 'employeeNo',
-          as: 'reportingTo',
-        },
-      },
-    ];
+    const pipeline = this.aggregateQry;
 
     return this.employeeModel.aggregate(pipeline);
   }
 
   async findAllLeavesById(employeeNo: string): Promise<any> {
     const pipeline = [
-      {
-        $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'location',
-          foreignField: 'code',
-          as: 'locationEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'department',
-          foreignField: 'code',
-          as: 'departmentEnum',
-        },
-      },
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'reportsTo',
-          foreignField: 'employeeNo',
-          as: 'reportingTo',
-        },
-      },
+      ...this.aggregateQry,
       {
         $match: {
           employeeNo: employeeNo,
