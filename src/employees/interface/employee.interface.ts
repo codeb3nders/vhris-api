@@ -97,15 +97,16 @@ export class EducationalBackground {
 }
 
 export class EmploymentRecords {
-  examTitle: string;
-  dateTaken: Date;
-  Rating: string;
+  yrFrom: number;
+  yrTo: number;
+  companyName: string;
+  positionHeld: string;
 }
 
 export class GovtProfExamsPassed {
   examTitle: string;
   dateTaken: Date;
-  Rating: string;
+  rating: string;
 }
 
 export class LicensesCertifications {

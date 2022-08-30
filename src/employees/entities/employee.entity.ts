@@ -91,7 +91,7 @@ export class Employee {
     {
       examTitle: string;
       dateTaken: Date;
-      Rating: string;
+      rating: string;
     },
   ];
 
@@ -210,10 +210,8 @@ export class Employee {
 
   @Prop({ type: JSON })
   allowanceDetails: {
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    bankBranch: string;
+    code: string;
+    amount: number;
   };
 
   @Prop({ type: JSON })
