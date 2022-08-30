@@ -16,7 +16,7 @@ export class EmployeesService {
     private employeeModel: Model<EmployeeDocument>,
     @Inject(forwardRef(() => UserCredentialsService))
     private userCredentialsService: UserCredentialsService,
-  ) {}
+  ) { }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);

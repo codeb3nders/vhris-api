@@ -120,6 +120,7 @@ export class Employee {
   emergencyContact: [
     {
       name: string;
+      relation: string;
       address: string;
       phoneNumber: string;
     },

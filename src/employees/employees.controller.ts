@@ -36,7 +36,7 @@ export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,
     private validatorsService: ValidatorsService,
-  ) {}
+  ) { }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
