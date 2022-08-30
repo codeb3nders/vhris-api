@@ -100,23 +100,16 @@ const prepareLocation = (item: any) => {
 function getAge(dateString) {
   const today = new Date();
   const birthDate = new Date(dateString);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
+  let age = today.getDate() - birthDate.getDate();
+  return age / 365.25;
 }
 
-function getYearsInService(dateHired: Date, inActiveDate?: Date | null) {
+function getYearsInService(dateHiredTmp: Date, inActiveDate?: Date | null) {
   const endDate = inActiveDate ? new Date(inActiveDate) : new Date();
-  const birthDate = new Date(dateHired);
-  let years = endDate.getFullYear() - birthDate.getFullYear();
-  const m = endDate.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && endDate.getDate() < birthDate.getDate())) {
-    years--;
-  }
-  return years;
+  const dateHired = new Date(dateHiredTmp);
+  let diff = endDate.getDate() - dateHired.getDate();
+
+  return diff / 365.25;
 }
 
 function getReportToDetails(items: any) {
