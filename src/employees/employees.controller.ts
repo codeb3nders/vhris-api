@@ -85,9 +85,9 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI> {
+  async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo);
-    return ResponseHandler.ok(response);
+    return EmployeeResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -3,9 +3,11 @@ import { Employee } from '../entities/employee.entity';
 
 export const EmployeeResponseHandler = {
   ok: (data: Employee[]) => {
-    return data.map((item: any) => {
-      return returnItem(item);
-    });
+    if (data.length > 0) {
+      return data.map((item: any) => {});
+    } else {
+      return returnItem(data);
+    }
   },
 };
 
