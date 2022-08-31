@@ -45,10 +45,14 @@ export class ValidatorsService {
       }
     });
 
-    throw new HttpException(
-      `Found ${undefinedList.length > 1 ? 'items' : 'item'
-      } that are not defined in enums: [${undefinedList}]`,
-      HttpStatus.BAD_REQUEST,
-    );
+    if (undefinedList.length > 0) {
+      throw new HttpException(
+        `Found ${undefinedList.length > 1 ? 'items' : 'item'
+        } that are not defined in enums: [${undefinedList}]`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return true;
+
   }
 }
