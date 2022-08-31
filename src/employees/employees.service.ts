@@ -45,6 +45,14 @@ export class EmployeesService {
       },
       {
         $lookup: {
+          from: 'enum_tables',
+          localField: 'employmentStatus',
+          foreignField: 'code',
+          as: 'employmentStatusEnum',
+        },
+      },
+      {
+        $lookup: {
           from: 'employees',
           localField: 'reportsTo',
           foreignField: 'employeeNo',

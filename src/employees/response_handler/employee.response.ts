@@ -49,8 +49,8 @@ function returnItem(item) {
     companyContactNumber: item.companyContactNumber,
     companyEmail: item.companyEmail,
     position: item.position,
-    department: prepareDepartment(item.departmentEnum),
-    location: item.locationEnum && prepareLocation(item.locationEnum),
+    department: prepareEnumItem(item.departmentEnum),
+    location: item.locationEnum && prepareEnumItem(item.locationEnum),
     reportsTo: item.reportingTo && getReportToDetails(item.reportingTo[0]),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
@@ -58,7 +58,7 @@ function returnItem(item) {
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
     rank: item.rank,
-    employmentStatus: item.employmentStatus,
+    employmentStatus: prepareEnumItem(item.employmentStatusEnum),
     sss: item.sss,
     philHealth: item.philHealth,
     pagIbig: item.pagIbig,
@@ -83,16 +83,7 @@ function returnItem(item) {
   return toReturn;
 }
 
-const prepareDepartment = (item: any) => {
-  return (
-    item &&
-    item.map((i: any) => {
-      return { code: i.code, name: i.name };
-    })
-  );
-};
-
-const prepareLocation = (item: any) => {
+const prepareEnumItem = (item: any) => {
   return (
     item &&
     item.map((i: any) => {
