@@ -171,17 +171,20 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true, default: 0 })
   basicPay: number;
 
-  @ApiProperty({ required: true, default: 'BI MONTHLY' })
+  @IsOptional()
+  @ApiProperty({ default: 'BI MONTHLY' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
-  @ApiProperty({ required: true, default: 'Payroll Account' })
+  @IsOptional()
+  @ApiProperty({  default: 'Payroll Account' })
   @IsEnum(PaymentMethodEnum)
   @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
-  @ApiProperty({ required: true, default: 'Bi monthly' })
+  @IsOptional()
+  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
@@ -189,7 +192,8 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true, default: 0 })
   deductionSSS: number;
 
-  @ApiProperty({ required: true, default: 'Bi monthly' })
+  @IsOptional()
+  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: string;
@@ -197,7 +201,8 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true, default: 0 })
   deductHMDF: number;
 
-  @ApiProperty({ required: true, default: 'Bi monthly' })
+  @IsOptional()
+  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;

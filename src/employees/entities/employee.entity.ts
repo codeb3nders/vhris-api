@@ -184,26 +184,26 @@ export class Employee {
   @Prop({ required: true, default: 0 })
   basicPay: number;
 
-  @Prop({ required: true, default: 'BI MONTHLY' })
-  payRateType: 'BI MONTHLY' | 'WEEKLY';
+  @Prop()
+  payRateType: string;
 
-  @Prop({ required: true, default: 'Payroll Account' })
-  paymentMethod: 'Cash' | 'Check' | 'Payroll Account';
+  @Prop()
+  paymentMethod: string;
 
-  @Prop({ required: true, default: 'Bi monthly' })
-  payrollGroup: 'Bi monthly' | 'Weekly';
+  @Prop()
+  payrollGroup: string;
 
   @Prop({ required: true, default: 0 })
   deductionSSS: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
-  deductPhilhealth: 'Bi monthly' | 'Weekly';
+  @Prop()
+  deductPhilhealth: string;
 
   @Prop({ required: true, default: 0 })
   deductHMDF: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
-  fixedContributionRate: 'Bi monthly' | 'Weekly';
+  @Prop()
+  fixedContributionRate: string;
 
   @Prop({ required: true, default: 0 })
   deductWithholdingTax: number;

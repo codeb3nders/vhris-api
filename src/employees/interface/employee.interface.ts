@@ -51,7 +51,7 @@ export interface EmployeeI {
   paymentMethod: string;
   payrollGroup: string;
   deductionSSS: number;
-  deductPhilhealth: number;
+  deductPhilhealth: string;
   deductHMDF: number;
   fixedContributionRate: string;
   deductWithholdingTax: number;
