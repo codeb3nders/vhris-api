@@ -4,7 +4,9 @@ import { Employee } from '../entities/employee.entity';
 export const EmployeeResponseHandler = {
   ok: (data: Employee[]) => {
     if (data.length > 0) {
-      return data.map((item: any) => {});
+      return data.map((item: any) => {
+        return returnItem(item);
+      });
     } else {
       return returnItem(data);
     }
