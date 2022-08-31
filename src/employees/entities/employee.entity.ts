@@ -178,14 +178,14 @@ export class Employee {
   @Prop({ required: true, default: 0 })
   NumberOfDependents: number;
 
-  @Prop({ required: true })
+  @Prop()
   taxExemption: string;
 
   @Prop({ required: true, default: 0 })
   basicPay: number;
 
-  @Prop({ required: true, default: 'Bi monthly' })
-  payRateType: 'Bi monthly' | 'Weekly';
+  @Prop({ required: true, default: 'BI MONTHLY' })
+  payRateType: 'BI MONTHLY' | 'WEEKLY';
 
   @Prop({ required: true, default: 'Payroll Account' })
   paymentMethod: 'Cash' | 'Check' | 'Payroll Account';

@@ -165,13 +165,13 @@ export class CreateEmployeeDto {
   @ApiProperty()
   NumberOfDependents: number;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   taxExemption: string;
 
   @ApiProperty({ required: true, default: 0 })
   basicPay: number;
 
-  @ApiProperty({ required: true, default: 'Bi monthly' })
+  @ApiProperty({ required: true, default: 'BI MONTHLY' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payRateType: string;

@@ -3,12 +3,11 @@ import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
 
 @Injectable()
 export class ValidatorsService {
-  constructor(private enumService: EnumTablesService) {}
+  constructor(private enumService: EnumTablesService) { }
 
   async validateEmployeesPostRequest(event) {
     const toCheck = [
       'citizenship',
-      'position',
       'userGroup',
       'civilStatus',
       'religion',
@@ -16,6 +15,7 @@ export class ValidatorsService {
       'department',
       'location',
       'employmentStatus',
+      'rank',
       'paymentMethod',
       'deductPhilhealth',
       'fixedContributionRate',
@@ -46,8 +46,7 @@ export class ValidatorsService {
     });
 
     throw new HttpException(
-      `Found ${
-        undefinedList.length > 1 ? 'items' : 'item'
+      `Found ${undefinedList.length > 1 ? 'items' : 'item'
       } that are not defined in enums: [${undefinedList}]`,
       HttpStatus.BAD_REQUEST,
     );
