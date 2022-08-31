@@ -186,7 +186,7 @@ export class Employee {
   @Prop({ required: true, default: 'Bi monthly' })
   payRateType: 'Bi monthly' | 'Weekly';
 
-  @Prop({ required: true })
+  @Prop()
   paymentMethod: string;
 
   @Prop({ required: true, default: 'Bi monthly' })

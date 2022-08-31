@@ -3,7 +3,7 @@ import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
 
 @Injectable()
 export class ValidatorsService {
-  constructor(private enumService: EnumTablesService) {}
+  constructor(private enumService: EnumTablesService) { }
 
   async validateEmployeesPostRequest(event) {
     const toCheck = [
@@ -45,11 +45,13 @@ export class ValidatorsService {
       }
     });
 
-    throw new HttpException(
-      `Found ${
-        undefinedList.length > 1 ? 'items' : 'item'
-      } that are not defined in enums: [${undefinedList}]`,
-      HttpStatus.BAD_REQUEST,
-    );
+    if (undefinedList.length > 0) {
+      throw new HttpException(
+        `Found ${undefinedList.length > 1 ? 'items' : 'item'
+        } that are not defined in enums: [${undefinedList}]`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return true;
   }
 }
