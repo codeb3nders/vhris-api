@@ -44,11 +44,10 @@ export class EmployeesController {
     @Body() createEmployeeDto: CreateEmployeeDto,
   ): Promise<Employee> {
     try {
-      console.log(
-        await this.validatorsService.validateEmployeesPostRequest(
-          createEmployeeDto,
-        ),
+      await this.validatorsService.validateEmployeesPostRequest(
+        createEmployeeDto,
       );
+
       return await this.employeesService.create(createEmployeeDto);
     } catch (error) {
       ErrorResponse.conflict(error.message || error);
@@ -99,6 +98,9 @@ export class EmployeesController {
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
     isValidRequest(updateEmployeeDto, user);
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateEmployeeDto,
+    );
     const employee = await this.employeesService.findOne(employeeNo);
     if (!employee)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
