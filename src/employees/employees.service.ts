@@ -116,7 +116,20 @@ export class EmployeesService {
   }
 
   async findOne(employeeNo: string) {
-    return this.employeeModel.findOne({ employeeNo });
+    const pipeline = [
+      ...this.aggregateQry,
+      {
+        $match: {
+          employeeNo: employeeNo,
+        },
+      },
+      {
+        $limit: 1,
+      },
+    ];
+
+    const response = await this.employeeModel.aggregate(pipeline);
+    return response[0];
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
