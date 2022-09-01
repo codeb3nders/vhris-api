@@ -40,6 +40,7 @@ export interface EmployeeI {
   contractEndDate: Date;
   rank: string;
   employmentStatus: string;
+  employmentType: string;
   sss: string;
   philHealth: string;
   pagIbig: string;

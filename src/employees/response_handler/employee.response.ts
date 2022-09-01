@@ -58,6 +58,7 @@ function returnItem(item) {
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
     rank: item.rank,
+    employmentType: prepareEnumItem(item.employmentTypeEnum),
     employmentStatus: prepareEnumItem(item.employmentStatusEnum),
     sss: item.sss,
     philHealth: item.philHealth,

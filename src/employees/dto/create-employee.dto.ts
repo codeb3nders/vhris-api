@@ -7,6 +7,7 @@ import {
   DepartmentsEnum,
   EmployeeEnum,
   EmploymentStatusEnum,
+  EmploymentTypeEnum,
   LocationsEnum,
   RankEnum,
   ReligionEnum,
@@ -145,6 +146,9 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   employmentStatus: EmploymentStatusEnum;
+
+  @ApiProperty({ required: true })
+  employmentType: EmploymentTypeEnum;
 
   employeeBenefits: string;
 

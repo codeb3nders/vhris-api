@@ -15,6 +15,7 @@ export class ValidatorsService {
       'department',
       'location',
       'employmentStatus',
+      'employmentType',
       'rank',
       'paymentMethod',
       'deductPhilhealth',

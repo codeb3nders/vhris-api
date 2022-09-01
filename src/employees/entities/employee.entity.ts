@@ -162,6 +162,9 @@ export class Employee {
   @Prop({ required: true })
   employmentStatus: string;
 
+  @Prop({ required: true })
+  employmentType: string;
+
   employeeBenefits: string;
   @Prop()
   sss: string;

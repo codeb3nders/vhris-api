@@ -145,13 +145,16 @@ export enum LocationsEnum {
 }
 
 export enum EmploymentStatusEnum {
-  'REGULAR',
-  'PROJECT EMPLOYEE',
   'PROBATIONARY',
   'RESIGNED',
   'TERMINATED',
   'LEAVE OF ABSENCE',
   'SEPARATED',
+}
+
+export enum EmploymentTypeEnum {
+  'REGULAR',
+  'PROJECT EMPLOYEE'
 }
 
 export enum CivilStatusEnum {
