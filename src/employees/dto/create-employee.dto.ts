@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsEmail, IsEmpty, IsEnum, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEmail, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
 
 import {
   CivilStatusEnum,
@@ -8,8 +8,6 @@ import {
   EmployeeEnum,
   EmploymentStatusEnum,
   LocationsEnum,
-  PaymentMethodEnum,
-  PayTypeEnum,
   RankEnum,
   ReligionEnum,
   UserGroupEnum,
@@ -165,44 +163,43 @@ export class CreateEmployeeDto {
   @ApiProperty()
   NumberOfDependents: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   taxExemption: string;
 
-  @ApiProperty({ required: true, default: 0 })
+  @IsOptional()
+  @ApiProperty()
   basicPay: number;
 
   @IsOptional()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @ApiProperty()
   payRateType: string;
 
   @IsOptional()
-  @IsEnum(PaymentMethodEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @ApiProperty()
   paymentMethod: string;
 
   @IsOptional()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @ApiProperty()
   payrollGroup: string;
 
-  @ApiProperty({ required: true, default: 0 })
+  @IsOptional()
+  @ApiProperty()
   deductionSSS: number;
 
   @IsOptional()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @ApiProperty()
   deductPhilhealth: string;
 
-  @ApiProperty({ required: true, default: 0 })
+  @IsOptional()
+  @ApiProperty()
   deductHMDF: number;
 
   @IsOptional()
-  @IsEnum(PayTypeEnum)
-  @Transform((param) => param.value.toUpperCase())
+  @ApiProperty()
   fixedContributionRate: string;
 
-  @ApiProperty({ required: true, default: 0 })
+  @IsOptional()
+  @ApiProperty()
   deductWithholdingTax: number;
 
   @IsOptional()
