@@ -172,19 +172,16 @@ export class CreateEmployeeDto {
   basicPay: number;
 
   @IsOptional()
-  @ApiProperty({ default: 'BI MONTHLY' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
   @IsOptional()
-  @ApiProperty({  default: 'Payroll Account' })
   @IsEnum(PaymentMethodEnum)
   @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
   @IsOptional()
-  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
@@ -193,7 +190,6 @@ export class CreateEmployeeDto {
   deductionSSS: number;
 
   @IsOptional()
-  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: string;
@@ -202,7 +198,6 @@ export class CreateEmployeeDto {
   deductHMDF: number;
 
   @IsOptional()
-  @ApiProperty({ default: 'Bi monthly' })
   @IsEnum(PayTypeEnum)
   @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
