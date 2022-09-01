@@ -94,18 +94,25 @@ const prepareEnumItem = (item: any) => {
 };
 
 function getAge(dateString) {
-  const today = new Date();
-  const birthDate = new Date(dateString);
-  let age = today.getDate() - birthDate.getDate();
-  return age / 365.25;
+  var today = new Date();
+  var birthDate = new Date(dateString);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 }
 
 function getYearsInService(dateHiredTmp: Date, inActiveDate?: Date | null) {
   const endDate = inActiveDate ? new Date(inActiveDate) : new Date();
   const dateHired = new Date(dateHiredTmp);
-  let diff = endDate.getDate() - dateHired.getDate();
-
-  return diff / 365.25;
+  var yearsInService = endDate.getFullYear() - dateHired.getFullYear();
+  var m = endDate.getMonth() - dateHired.getMonth();
+  if (m < 0 || (m === 0 && endDate.getDate() < dateHired.getDate())) {
+    yearsInService--;
+  }
+  return yearsInService;
 }
 
 function getReportToDetails(items: any) {
