@@ -10,7 +10,9 @@ export class EmailService {
   ) {}
   async sendEmail(data: any, tempPassword: string) {
     const { personalEmail } = data;
-    const message = `Hi ${data.firstName} ${data.lastName},
+    const message = `
+    Hi ${data.firstName} ${data.lastName},
+
     Here is your Account Credentials.
     Username: ${data.employeeNo}
     Password: ${tempPassword}
@@ -20,15 +22,19 @@ export class EmailService {
     Thank you.
     `;
 
+    const emailDetails = {
+      to: personalEmail,
+      from: `${process.env.EMAIL_DOMAIN}`,
+      subject: 'VHRIS Account Access.',
+      text: message,
+    };
+
+    console.log('Email Details', emailDetails);
+
     try {
-      return await this.mailService.sendMail({
-        to: personalEmail,
-        from: `${process.env.EMAIL_DOMAIN}`,
-        subject: 'VHRIS Account Access.',
-        text: message,
-      });
+      return await this.mailService.sendMail(emailDetails);
     } catch (error) {
-      throw new HttpException('User Not Found!', HttpStatus.NOT_FOUND);
+      return error.message || error;
     }
   }
 }

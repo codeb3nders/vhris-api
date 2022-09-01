@@ -52,8 +52,7 @@ export class UserCredentialsService {
     const response = await createUserCredential.save();
 
     if (response) {
-      // TODO: MAKE SEND EMAIL WORKING
-      //this.emailService.sendEmail(employee, rawPassword);
+      this.emailService.sendEmail(employee, rawPassword);
       response.password = rawPassword; // TODO: to be remove
       return response;
     }
