@@ -10,16 +10,16 @@ export class ValidatorsService {
       'citizenship',
       'userGroup',
       'civilStatus',
-      'religion',
+      // 'religion',
       'position',
       'department',
       'location',
       'employmentStatus',
       'employmentType',
       'rank',
-      'paymentMethod',
-      'deductPhilhealth',
-      'fixedContributionRate',
+      // 'paymentMethod',
+      // 'deductPhilhealth',
+      // 'fixedContributionRate',
     ];
     const undefinedList = [];
     const response = await this.enumService.find();
@@ -37,11 +37,11 @@ export class ValidatorsService {
         if (typeof event[e] === 'object') {
           event[e].forEach((i) => {
             const res = findIt(response, i, e);
-            if (!res) undefinedList.push(event[e]);
+            if (!res && event[e]) undefinedList.push(event[e]);
           });
         } else {
           const res = findIt(response, event[e], e);
-          if (!res) undefinedList.push(event[e]);
+          if (!res && event[e]) undefinedList.push(event[e]);
         }
       }
     });
