@@ -50,7 +50,7 @@ function returnItem(item) {
     companyEmail: item.companyEmail,
     position: item.position,
     department: prepareEnumItem(item.departmentEnum),
-    location: item.locationEnum && prepareEnumItem(item.locationEnum),
+    location: item.locationEnum && prepareEnumItem(item.locationEnum, true),
     reportsTo: item.reportingTo && getReportToDetails(item.reportingTo[0]),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
@@ -84,13 +84,19 @@ function returnItem(item) {
   return toReturn;
 }
 
-const prepareEnumItem = (item: any) => {
-  return (
-    item &&
-    item.map((i: any) => {
-      return { code: i.code, name: i.name };
-    })
-  );
+const prepareEnumItem = (item: any, isArray = false) => {
+  if (isArray) {
+    return item &&
+      item.map((i: any) => {
+        return { code: i.code, name: i.name };
+      })
+  } else {
+    const data = item &&
+      item.map((i: any) => {
+        return { code: i.code, name: i.name };
+      });
+    return data[0];
+  }
 };
 
 function getAge(dateString) {
