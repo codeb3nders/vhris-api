@@ -50,8 +50,8 @@ function returnItem(item) {
     companyEmail: item.companyEmail,
     position: item.position,
     department: prepareEnumItem(item.departmentEnum),
-    location: item.locationEnum && prepareEnumItem(item.locationEnum, true),
-    reportsTo: item.reportingTo && getReportToDetails(item.reportingTo),
+    location: prepareEnumItem(item.locationEnum, true),
+    reportsTo: getReportToDetails(item.reportingTo),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
     yearsInSerVice: item.yearsInService,
@@ -103,9 +103,15 @@ const prepareEnumItem = (item: any, isArray = false) => {
 };
 
 function getReportToDetails(items: any) {
+  let item;
+  if (Array.isArray(items)) {
+    item = items[0];
+  } else {
+    item = items;
+  }
   return {
-    employeeNo: items.employeeNo,
-    employeeName: `${items.firstName} ${items.lastName}`,
-    position: items.position,
+    employeeNo: item.employeeNo,
+    employeeName: `${item.firstName} ${item.lastName}`,
+    position: item.position,
   };
 }

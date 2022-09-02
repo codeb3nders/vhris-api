@@ -60,6 +60,7 @@ export class EmployeesController {
   async findAll(@Query() params): Promise<EmployeeI[]> {
     try {
       const response = await this.employeesService.findAll(params);
+
       if (!response || response.length < 1) {
         throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
       }

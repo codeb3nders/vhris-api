@@ -169,7 +169,6 @@ export class EmployeesService {
     };
 
     const pLine = [...pipeline, prams];
-    console.log('PIPELINE', params.isActive, pLine);
     return this.employeeModel.aggregate(pLine);
   }
 
