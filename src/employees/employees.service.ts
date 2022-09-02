@@ -67,6 +67,52 @@ export class EmployeesService {
           as: 'reportingTo',
         },
       },
+      {
+        $set: {
+          yearsInService: {
+            $subtract: [
+              {
+                $year: {
+                  $ifNull: ['$contractEndDate', '$$NOW'],
+                },
+              },
+              {
+                $year: '$dateHired',
+              },
+            ],
+          },
+          age: {
+            $subtract: [
+              {
+                $subtract: [
+                  {
+                    $year: '$$NOW',
+                  },
+                  {
+                    $year: '$birthDate',
+                  },
+                ],
+              },
+              {
+                $cond: [
+                  {
+                    $lt: [
+                      {
+                        $dayOfYear: '$birthday',
+                      },
+                      {
+                        $dayOfYear: '$$NOW',
+                      },
+                    ],
+                  },
+                  0,
+                  1,
+                ],
+              },
+            ],
+          },
+        },
+      },
     ];
   }
 
@@ -102,10 +148,28 @@ export class EmployeesService {
     return response;
   }
 
-  async findAll(): Promise<Employee[]> {
+  async findAll(params?: any): Promise<Employee[]> {
     const pipeline = this.aggregateQry;
 
-    return this.employeeModel.aggregate(pipeline);
+    let key,
+      keys = Object.keys(params);
+    let n = keys.length;
+    let newOject: any = {};
+    while (n--) {
+      key = keys[n];
+      newOject[key] = isNaN(params[key]) ? params[key] : Number(params[key]);
+    }
+
+    if (newOject.isActive) {
+      newOject.isActive = newOject.isActive === 'true';
+    }
+
+    const prams = {
+      $match: newOject,
+    };
+
+    const pLine = [...pipeline, prams];
+    return this.employeeModel.aggregate(pLine);
   }
 
   async findAllWithLeaves(): Promise<any> {

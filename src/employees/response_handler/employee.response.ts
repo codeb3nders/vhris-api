@@ -32,7 +32,7 @@ function returnItem(item) {
     middleName: item.middleName,
     suffix: item.suffix,
     birthDate: item.birthDate,
-    age: getAge(item.birthDate),
+    age: item.age,
     gender: item.gender,
     civilStatus: item.civilStatus,
     citizenship: item.citizenship,
@@ -50,11 +50,11 @@ function returnItem(item) {
     companyEmail: item.companyEmail,
     position: item.position,
     department: prepareEnumItem(item.departmentEnum),
-    location: item.locationEnum && prepareEnumItem(item.locationEnum, true),
-    reportsTo: item.reportingTo && getReportToDetails(item.reportingTo[0]),
+    location: prepareEnumItem(item.locationEnum, true),
+    reportsTo: getReportToDetails(item.reportingTo),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
-    yearsInSerVice: getYearsInService(item.dateHired, item.dateInactive),
+    yearsInSerVice: item.yearsInService,
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
     rank: item.rank,
@@ -86,12 +86,15 @@ function returnItem(item) {
 
 const prepareEnumItem = (item: any, isArray = false) => {
   if (isArray) {
-    return item &&
+    return (
+      item &&
       item.map((i: any) => {
         return { code: i.code, name: i.name };
       })
+    );
   } else {
-    const data = item &&
+    const data =
+      item &&
       item.map((i: any) => {
         return { code: i.code, name: i.name };
       });
@@ -99,29 +102,13 @@ const prepareEnumItem = (item: any, isArray = false) => {
   }
 };
 
-function getAge(dateString) {
-  var today = new Date();
-  var birthDate = new Date(dateString);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-}
-
-function getYearsInService(dateHiredTmp: Date, inActiveDate?: Date | null) {
-  const endDate = inActiveDate ? new Date(inActiveDate) : new Date();
-  const dateHired = new Date(dateHiredTmp);
-  var yearsInService = endDate.getFullYear() - dateHired.getFullYear();
-  var m = endDate.getMonth() - dateHired.getMonth();
-  if (m < 0 || (m === 0 && endDate.getDate() < dateHired.getDate())) {
-    yearsInService--;
-  }
-  return yearsInService;
-}
-
 function getReportToDetails(items: any) {
+  let item;
+  if (Array.isArray(items)) {
+    item = items[0];
+  } else {
+    item = items;
+  }
   return {
     ...items,
     employeeName: `${items.firstName} ${items.lastName}`
