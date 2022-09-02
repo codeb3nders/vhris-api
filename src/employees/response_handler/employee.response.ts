@@ -123,8 +123,7 @@ function getYearsInService(dateHiredTmp: Date, inActiveDate?: Date | null) {
 
 function getReportToDetails(items: any) {
   return {
-    employeeNo: items.employeeNo,
-    employeeName: `${items.firstName} ${items.lastName}`,
-    position: items.position,
+    ...items,
+    employeeName: `${items.firstName} ${items.lastName}`
   };
 }
