@@ -29,8 +29,6 @@ export class EmailService {
       text: message,
     };
 
-    console.log('Email Details', emailDetails);
-
     try {
       return await this.mailService.sendMail(emailDetails);
     } catch (error) {

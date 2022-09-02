@@ -11,6 +11,7 @@ import {
   ValidationPipe,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -36,7 +37,7 @@ export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,
     private validatorsService: ValidatorsService,
-  ) { }
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -56,9 +57,12 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(): Promise<EmployeeI[]> {
+  async findAll(@Query() params): Promise<EmployeeI[]> {
     try {
-      const response = await this.employeesService.findAll();
+      const response = await this.employeesService.findAll(params);
+      if (!response || response.length < 1) {
+        throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+      }
       return EmployeeResponseHandler.ok(response);
     } catch (error) {
       ErrorResponse.badRequest(error.message || error);
