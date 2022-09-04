@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import {
   EducationLevelEnum,
   LocationsEnum,
@@ -62,102 +62,140 @@ export interface EmployeeI {
 }
 
 export class PayrollBankAccount {
+  @IsNotEmpty()
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   accountName: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   accountNumber: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   bankName: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   bankBranch: string;
 }
 
 export class FamilyBackground {
+  @IsOptional()
   name: string;
   @IsEnum(RelationEnum)
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   relation: RelationEnum;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   occupation: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   company: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   residence: string;
 }
 
 export class EmergencyContact {
+  @IsNotEmpty()
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   name: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   relation: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   address: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   contactNumber: string;
 }
 
 export class Address {
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   addressLine: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   barangay: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   municipality: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   province: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   region: string;
 }
 
 export class EducationalBackground {
   @IsEnum(EducationLevelEnum)
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   level: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   yrFrom: number;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   yrTo: number;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   schoolAndAddress: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   degree: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   honors: string;
 }
 
 export class EmploymentRecords {
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   yrFrom: number;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   yrTo: number;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   companyName: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   positionHeld: string;
 }
 
 export class GovtProfExamsPassed {
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   examTitle: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   dateTaken: Date;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   rating: string;
 }
 
 export class LicensesCertifications {
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   name: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   authorizingEntity: string;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   validUntil: Date;
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   licenseCertNo: string;
 }
 
 export class Location {
   @IsEnum(LocationsEnum)
   @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
   location: LocationsEnum;
 }

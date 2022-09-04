@@ -27,6 +27,7 @@ import { isAllowedUser, isValidRequest } from './dto/validate.request';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
+import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 
 @ApiTags('Employees')
 @Controller('employees')
@@ -70,7 +71,7 @@ export class EmployeesController {
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
   async findOne(
-    @Query() params,
+    @Query() params: FindOneEmployeeDto,
     @Param('employeeNo') employeeNo: string,
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
