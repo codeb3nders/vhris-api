@@ -190,24 +190,26 @@ export class EmployeesService {
   }
 
   async findOne(employeeNo: string, _params?: any) {
-    const relations = _params.relations;
-    delete _params.relations;
-
     const _relations = [];
 
-    if (relations) {
-      const rel = JSON.parse(relations);
+    if (_params) {
+      const relations = _params.relations;
+      delete _params.relations;
 
-      rel.forEach((r) => {
-        _relations.push({
-          $lookup: {
-            from: `${r}`,
-            localField: 'employeeNo',
-            foreignField: 'employeeNo',
-            as: `${r}`,
-          },
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
         });
-      });
+      }
     }
 
     const pipeline = [
