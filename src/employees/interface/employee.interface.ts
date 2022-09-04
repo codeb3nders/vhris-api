@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsArray, IsEnum } from 'class-validator';
+import { IsEnum } from 'class-validator';
 import {
   EducationLevelEnum,
   LocationsEnum,

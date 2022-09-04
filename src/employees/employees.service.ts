@@ -147,10 +147,10 @@ export class EmployeesService {
     delete _params.relations;
     const params = _params;
 
-    let key,
-      keys = Object.keys(params);
+    let key;
+    const keys = Object.keys(params);
     let n = keys.length;
-    let newOject: any = {};
+    const newOject: any = {};
     while (n--) {
       key = keys[n];
       newOject[key] = isNaN(params[key]) ? params[key] : Number(params[key]);
@@ -192,7 +192,6 @@ export class EmployeesService {
   async findOne(employeeNo: string, _params?: any) {
     const relations = _params.relations;
     delete _params.relations;
-    const params = _params;
 
     const _relations = [];
 

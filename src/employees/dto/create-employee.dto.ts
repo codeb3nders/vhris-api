@@ -1,12 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import {
-  IsArray,
-  IsEmail,
-  IsEmpty,
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
+import { IsEmail, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
 
 import {
   CivilStatusEnum,

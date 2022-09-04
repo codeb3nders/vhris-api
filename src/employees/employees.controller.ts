@@ -19,10 +19,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
-import {
-  EmployeeResponseHandler,
-  ResponseHandler,
-} from './response_handler/employee.response';
+import { EmployeeResponseHandler } from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
