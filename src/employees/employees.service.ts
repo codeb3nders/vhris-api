@@ -21,14 +21,6 @@ export class EmployeesService {
     this.aggregateQry = [
       {
         $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $lookup: {
           from: 'enum_tables',
           localField: 'location',
           foreignField: 'code',
@@ -148,8 +140,12 @@ export class EmployeesService {
     return response;
   }
 
-  async findAll(params?: any): Promise<Employee[]> {
+  async findAll(_params?: any): Promise<Employee[]> {
     const pipeline = this.aggregateQry;
+
+    const relations = _params.relations;
+    delete _params.relations;
+    const params = _params;
 
     let key,
       keys = Object.keys(params);
@@ -168,34 +164,53 @@ export class EmployeesService {
       $match: newOject,
     };
 
-    const pLine = [...pipeline, prams];
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, prams, ..._relations];
     return this.employeeModel.aggregate(pLine);
-  }
-
-  async findAllWithLeaves(): Promise<any> {
-    const pipeline = this.aggregateQry;
-
-    return this.employeeModel.aggregate(pipeline);
-  }
-
-  async findAllLeavesById(employeeNo: string): Promise<any> {
-    const pipeline = [
-      ...this.aggregateQry,
-      {
-        $match: {
-          employeeNo: employeeNo,
-        },
-      },
-    ];
-
-    return this.employeeModel.aggregate(pipeline);
   }
 
   async findLast() {
     return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 
-  async findOne(employeeNo: string) {
+  async findOne(employeeNo: string, _params?: any) {
+    const relations = _params.relations;
+    delete _params.relations;
+    const params = _params;
+
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
     const pipeline = [
       ...this.aggregateQry,
       {
@@ -206,6 +221,7 @@ export class EmployeesService {
       {
         $limit: 1,
       },
+      ..._relations,
     ];
 
     const response = await this.employeeModel.aggregate(pipeline);

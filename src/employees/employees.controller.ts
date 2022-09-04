@@ -71,27 +71,12 @@ export class EmployeesController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/leaves/')
-  async findAllLeaves(): Promise<EmployeeI[]> {
-    try {
-      const response = await this.employeesService.findAllWithLeaves();
-      return EmployeeResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
-    }
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/leaves/:employeeNo')
-  async findAllLeavesById(@Param('employeeNo') employeeNo: string) {
-    const response = await this.employeesService.findAllLeavesById(employeeNo);
-    return EmployeeResponseHandler.ok(response);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI[]> {
-    const response = await this.employeesService.findOne(employeeNo);
+  async findOne(
+    @Query() params,
+    @Param('employeeNo') employeeNo: string,
+  ): Promise<EmployeeI[]> {
+    const response = await this.employeesService.findOne(employeeNo, params);
     return EmployeeResponseHandler.ok(response);
   }
 

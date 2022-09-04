@@ -20,7 +20,8 @@ export const ResponseHandler = {
 };
 
 function returnItem(item) {
-  const leaveRequests = item.leave_requests
+  const leaveRequests = item.leave_requests;
+  const employeeLeaves = item.employee_leaves
     ? LeaveRequestResponseHandler.ok(item.leave_requests)
     : null;
   const toReturn: any = {
@@ -80,6 +81,9 @@ function returnItem(item) {
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;
+  }
+  if (employeeLeaves) {
+    toReturn.employee_leaves = employeeLeaves;
   }
   return toReturn;
 }
