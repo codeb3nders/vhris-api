@@ -126,7 +126,7 @@ export class EmployeesService {
 
     if (
       response &&
-      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
+      AutoCredentialEnum[response.userGroup.toLowerCase()] !== undefined
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
