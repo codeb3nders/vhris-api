@@ -78,6 +78,7 @@ function returnItem(item) {
     deductWithholdingTax: item.deductWithholdingTax,
     allowanceDetails: item.allowanceDetails,
     payrollBankAccount: item.payrollBankAccount,
+    bday: item.bday,
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;

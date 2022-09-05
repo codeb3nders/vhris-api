@@ -61,15 +61,16 @@ export class EmployeesService {
       },
       {
         $set: {
+          bday: { $toDate: '$birthDate' },
           yearsInService: {
             $subtract: [
               {
                 $year: {
-                  $ifNull: ['$contractEndDate', '$$NOW'],
+                  $ifNull: ['$inactiveDate', '$$NOW'],
                 },
               },
               {
-                $year: '$dateHired',
+                $year: { $toDate: '$dateHired' },
               },
             ],
           },
@@ -81,7 +82,7 @@ export class EmployeesService {
                     $year: '$$NOW',
                   },
                   {
-                    $year: '$birthDate',
+                    $year: { $toDate: '$birthDate' },
                   },
                 ],
               },

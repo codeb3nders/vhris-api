@@ -1,4 +1,34 @@
 [
+
+    {
+        "employeeNo": "1154",
+        "isActive": "true",
+        "lastName": "AGDAN",
+        "firstName": "LIANI EMI",
+        "middleName": "PASCUAL",
+        "birthDate": 144720000000,
+        "gender": "FEMALE",
+        "civilStatus": "Single",
+        "citizenship": "Philippines",
+        "personalContactNumber": "9185355631",
+        "personalEmail": "_lianiemiagdan@gmail.com",
+        "companyContactNumber": "639185355631",
+        "companyEmail": "x_lianiemiagdan@gmail.com",
+        "position": "SOFTWARE DEVELOPER MANAGER",
+        "department": "ITD",
+        "location": [
+            "VHO"
+        ],
+        "reportsTo": "0001",
+        "dateHired": 1585137600000,
+        "endOfProbationary":1638288000000,
+        "rank": "Manager",
+        "employmentType": "Regular",
+        "employmentStatus": "Active",
+        "userGroup": "EMPLOYEE"
+    },
+
+
     {
         "employeeNo": "1154",
         "isActive": "true",

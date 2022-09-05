@@ -27,7 +27,7 @@ export class Employee {
   suffix: string;
 
   @Prop({ required: true })
-  birthDate: Date;
+  birthDate: Number;
 
   @Prop({ required: true })
   gender: string;
@@ -145,13 +145,13 @@ export class Employee {
   reportsTo: string;
 
   @Prop({ required: true })
-  dateHired: Date;
+  dateHired: Number;
 
   @Prop()
   dateInactive: Date;
 
   @Prop()
-  endOfProbationary: Date;
+  endOfProbationary: Number;
 
   @Prop()
   contractEndDate: Date;

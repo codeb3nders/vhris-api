@@ -26,7 +26,7 @@ import {
 } from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
-  @IsEmpty()
+  @IsOptional()
   @ApiProperty()
   @Transform((param) => param.value.toLowerCase())
   employeeNo: string;
@@ -37,6 +37,7 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  @Transform((param) => param.value.toLowerCase())
   userGroup: UserGroupEnum;
 
   @ApiProperty({ required: true })
@@ -60,9 +61,9 @@ export class CreateEmployeeDto {
   suffix: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
-  birthDate: Date;
+  birthDate: Number;
 
   @ApiProperty({ required: true })
   @Transform((param) => param.value.toLowerCase())
@@ -140,7 +141,7 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true })
   @ValidateNested({ each: true })
   @Type(() => EmergencyContact)
-  @IsNotEmpty()
+  @IsOptional()
   emergencyContact: EmergencyContact;
 
   @ApiProperty()
@@ -156,14 +157,17 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  @Transform((param) => param.value.toLowerCase())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  @Transform((param) => param.value.toLowerCase())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  //@Transform((param) => param.value.toLowerCase())
   location: LocationsEnum;
 
   @ApiProperty()
@@ -172,9 +176,9 @@ export class CreateEmployeeDto {
   reportsTo: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
-  dateHired: Date;
+  dateHired: Number;
 
   @ApiProperty()
   @Transform((param) => param.value.toLowerCase())
@@ -182,9 +186,9 @@ export class CreateEmployeeDto {
   dateInactive: Date;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  // @Transform((param) => param.value.toLowerCase())
   @IsOptional()
-  endOfProbationary: Date;
+  endOfProbationary: Number;
 
   @ApiProperty()
   @Transform((param) => param.value.toLowerCase())
@@ -233,7 +237,7 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @Transform((param) => param.value.toLowerCase())
-  @IsNotEmpty()
+  @IsOptional()
   taxExemption: string;
 
   @IsOptional()
