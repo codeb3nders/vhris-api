@@ -21,9 +21,9 @@ export const ResponseHandler = {
 
 function returnItem(item) {
   const leaveRequests = item.leave_requests;
-  const employeeLeaves = item.employee_leaves
-    ? LeaveRequestResponseHandler.ok(item.leave_requests)
-    : null;
+  const employeeLeaves = item.employee_leaves;
+  // ? LeaveRequestResponseHandler.ok(item.leave_requests)
+  // : null;
   const toReturn: any = {
     employeeNo: item.employeeNo,
     isActive: item.isActive,
@@ -107,6 +107,10 @@ const prepareEnumItem = (item: any, isArray = false) => {
 };
 
 function getReportToDetails(items: any) {
+  if (!items || items.length < 1) {
+    return null;
+  }
+
   let item;
   if (Array.isArray(items)) {
     item = items[0];
