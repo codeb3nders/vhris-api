@@ -63,7 +63,7 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: true })
   // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
-  birthDate: Number;
+  birthDate: number;
 
   @ApiProperty({ required: true })
   @Transform((param) => param.value.toLowerCase())
@@ -167,7 +167,7 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  //@Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.map((item) => item.toLowerCase()))
   location: LocationsEnum;
 
   @ApiProperty()
@@ -176,22 +176,18 @@ export class CreateEmployeeDto {
   reportsTo: string;
 
   @ApiProperty({ required: true })
-  // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
-  dateHired: Number;
+  dateHired: number;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   @IsOptional()
-  dateInactive: Date;
+  dateInactive: number;
 
   @ApiProperty()
-  // @Transform((param) => param.value.toLowerCase())
   @IsOptional()
-  endOfProbationary: Number;
+  endOfProbationary: number;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   @IsOptional()
   contractEndDate: Date;
 
