@@ -56,6 +56,7 @@ export class Employee {
     region: string;
   };
 
+  @Prop({ type: JSON })
   permanentAddress: {
     addressLine: string;
     barangay: string;

@@ -22,6 +22,7 @@ export interface EmployeeI {
   personalContactNumber: string;
   personalEmail: string;
   presentAddress: JSON;
+  permanentAddress: JSON;
   educationalBackground: JSON;
   employmentRecords: JSON;
   govtProfExamsPassed: JSON;

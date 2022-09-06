@@ -41,6 +41,7 @@ function returnItem(item) {
     personalContactNumber: item.personalContactNumber,
     personalEmail: item.personalEmail,
     presentAddress: item.presentAddress,
+    permanentAddress: item.permanentAddress,
     educationalBackground: item.educationalBackground,
     employmentRecords: item.employmentRecords,
     govtProfExamsPassed: item.govtProfExamsPassed,
@@ -90,6 +91,7 @@ function returnItem(item) {
 }
 
 const prepareEnumItem = (item: any, isArray = false) => {
+  if (!item || item.length < 1) return null;
   if (isArray) {
     return (
       item &&

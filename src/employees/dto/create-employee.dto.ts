@@ -26,7 +26,7 @@ import {
 } from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
-  @IsOptional()
+  @IsEmpty()
   @ApiProperty()
   @Transform((param) => param.value.toLowerCase())
   employeeNo: string;
