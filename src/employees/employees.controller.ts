@@ -19,10 +19,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
-import {
-  EmployeeResponseHandler,
-  ResponseHandler,
-} from './response_handler/employee.response';
+import { EmployeeResponseHandler } from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
@@ -30,6 +27,7 @@ import { isAllowedUser, isValidRequest } from './dto/validate.request';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
+import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 
 @ApiTags('Employees')
 @Controller('employees')
@@ -71,27 +69,12 @@ export class EmployeesController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/leaves/')
-  async findAllLeaves(): Promise<EmployeeI[]> {
-    try {
-      const response = await this.employeesService.findAllWithLeaves();
-      return EmployeeResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
-    }
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/leaves/:employeeNo')
-  async findAllLeavesById(@Param('employeeNo') employeeNo: string) {
-    const response = await this.employeesService.findAllLeavesById(employeeNo);
-    return EmployeeResponseHandler.ok(response);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  async findOne(@Param('employeeNo') employeeNo: string): Promise<EmployeeI[]> {
-    const response = await this.employeesService.findOne(employeeNo);
+  async findOne(
+    @Query() params: FindOneEmployeeDto,
+    @Param('employeeNo') employeeNo: string,
+  ): Promise<EmployeeI[]> {
+    const response = await this.employeesService.findOne(employeeNo, params);
     return EmployeeResponseHandler.ok(response);
   }
 

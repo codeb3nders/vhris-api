@@ -20,9 +20,10 @@ export const ResponseHandler = {
 };
 
 function returnItem(item) {
-  const leaveRequests = item.leave_requests
-    ? LeaveRequestResponseHandler.ok(item.leave_requests)
-    : null;
+  const leaveRequests = item.leave_requests;
+  const employeeLeaves = item.employee_leaves;
+  // ? LeaveRequestResponseHandler.ok(item.leave_requests)
+  // : null;
   const toReturn: any = {
     employeeNo: item.employeeNo,
     isActive: item.isActive,
@@ -77,9 +78,13 @@ function returnItem(item) {
     deductWithholdingTax: item.deductWithholdingTax,
     allowanceDetails: item.allowanceDetails,
     payrollBankAccount: item.payrollBankAccount,
+    bday: item.bday,
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;
+  }
+  if (employeeLeaves) {
+    toReturn.employee_leaves = employeeLeaves;
   }
   return toReturn;
 }
@@ -103,6 +108,10 @@ const prepareEnumItem = (item: any, isArray = false) => {
 };
 
 function getReportToDetails(items: any) {
+  if (!items || items.length < 1) {
+    return null;
+  }
+
   let item;
   if (Array.isArray(items)) {
     item = items[0];

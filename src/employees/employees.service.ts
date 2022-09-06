@@ -21,14 +21,6 @@ export class EmployeesService {
     this.aggregateQry = [
       {
         $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $lookup: {
           from: 'enum_tables',
           localField: 'location',
           foreignField: 'code',
@@ -69,15 +61,16 @@ export class EmployeesService {
       },
       {
         $set: {
+          bday: { $toDate: '$birthDate' },
           yearsInService: {
             $subtract: [
               {
                 $year: {
-                  $ifNull: ['$contractEndDate', '$$NOW'],
+                  $ifNull: ['$inactiveDate', '$$NOW'],
                 },
               },
               {
-                $year: '$dateHired',
+                $year: { $toDate: '$dateHired' },
               },
             ],
           },
@@ -89,7 +82,7 @@ export class EmployeesService {
                     $year: '$$NOW',
                   },
                   {
-                    $year: '$birthDate',
+                    $year: { $toDate: '$birthDate' },
                   },
                 ],
               },
@@ -126,7 +119,7 @@ export class EmployeesService {
 
     if (
       response &&
-      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
+      AutoCredentialEnum[response.userGroup.toLowerCase()] !== undefined
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
@@ -148,13 +141,17 @@ export class EmployeesService {
     return response;
   }
 
-  async findAll(params?: any): Promise<Employee[]> {
+  async findAll(_params?: any): Promise<Employee[]> {
     const pipeline = this.aggregateQry;
 
-    let key,
-      keys = Object.keys(params);
+    const relations = _params.relations;
+    delete _params.relations;
+    const params = _params;
+
+    let key;
+    const keys = Object.keys(params);
     let n = keys.length;
-    let newOject: any = {};
+    const newOject: any = {};
     while (n--) {
       key = keys[n];
       newOject[key] = isNaN(params[key]) ? params[key] : Number(params[key]);
@@ -168,34 +165,54 @@ export class EmployeesService {
       $match: newOject,
     };
 
-    const pLine = [...pipeline, prams];
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, prams, ..._relations];
     return this.employeeModel.aggregate(pLine);
-  }
-
-  async findAllWithLeaves(): Promise<any> {
-    const pipeline = this.aggregateQry;
-
-    return this.employeeModel.aggregate(pipeline);
-  }
-
-  async findAllLeavesById(employeeNo: string): Promise<any> {
-    const pipeline = [
-      ...this.aggregateQry,
-      {
-        $match: {
-          employeeNo: employeeNo,
-        },
-      },
-    ];
-
-    return this.employeeModel.aggregate(pipeline);
   }
 
   async findLast() {
     return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 
-  async findOne(employeeNo: string) {
+  async findOne(employeeNo: string, _params?: any) {
+    const _relations = [];
+
+    if (_params) {
+      const relations = _params.relations;
+      delete _params.relations;
+
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
+        });
+      }
+    }
+
     const pipeline = [
       ...this.aggregateQry,
       {
@@ -206,6 +223,7 @@ export class EmployeesService {
       {
         $limit: 1,
       },
+      ..._relations,
     ];
 
     const response = await this.employeeModel.aggregate(pipeline);
