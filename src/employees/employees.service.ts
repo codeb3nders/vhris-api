@@ -8,10 +8,12 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
+import { EmployeeFields } from './dto/fields-employe';
 
 @Injectable()
 export class EmployeesService {
   private aggregateQry;
+  private fields;
   constructor(
     @InjectModel(Employee.name)
     private employeeModel: Model<EmployeeDocument>,
@@ -22,34 +24,32 @@ export class EmployeesService {
       {
         $lookup: {
           from: 'enum_tables',
-          localField: 'location',
-          foreignField: 'code',
+          let: { field: '$location' },
+          pipeline: [
+            { $addFields: { code: { $toLower: '$code' } } },
+            { $match: { $expr: { $in: ['$code', '$$field'] } } },
+          ],
           as: 'locationEnum',
         },
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'department',
-          foreignField: 'code',
-          as: 'departmentEnum',
-        },
+        $lookup: lookUp('enum_tables', 'department', 'code', 'departmentEnum'),
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'employmentStatus',
-          foreignField: 'code',
-          as: 'employmentStatusEnum',
-        },
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentStatus',
+          'code',
+          'employmentStatusEnum',
+        ),
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'employmentType',
-          foreignField: 'code',
-          as: 'employmentTypeEnum',
-        },
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentType',
+          'code',
+          'employmentTypeEnum',
+        ),
       },
       {
         $lookup: {
@@ -61,7 +61,7 @@ export class EmployeesService {
       },
       {
         $set: {
-          bday: { $toDate: '$birthDate' },
+          birthDate: { $toDate: '$birthDate' },
           yearsInService: {
             $subtract: [
               {
@@ -107,6 +107,9 @@ export class EmployeesService {
         },
       },
     ];
+
+    // TODO: apply aggregation $project to transform output data to lowercase
+    this.fields = EmployeeFields;
   }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
@@ -142,7 +145,7 @@ export class EmployeesService {
   }
 
   async findAll(_params?: any): Promise<Employee[]> {
-    const pipeline = this.aggregateQry;
+    const pipeline = [...this.aggregateQry];
 
     const relations = _params.relations;
     delete _params.relations;
@@ -154,7 +157,9 @@ export class EmployeesService {
     const newOject: any = {};
     while (n--) {
       key = keys[n];
-      newOject[key] = isNaN(params[key]) ? params[key] : Number(params[key]);
+      newOject[key] = isNaN(params[key])
+        ? params[key].toLowerCase()
+        : Number(params[key]);
     }
 
     if (newOject.isActive) {
@@ -245,3 +250,32 @@ export class EmployeesService {
     return response;
   }
 }
+
+const lookUp = (
+  tableName: string,
+  localField: string,
+  foreignField: string,
+  asName: string,
+) => {
+  return {
+    from: `${tableName}`,
+    let: { field: `$${localField}` },
+    pipeline: [
+      { $addFields: { [`${foreignField}`]: { $toLower: `$${foreignField}` } } },
+      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
+    ],
+    as: asName,
+  };
+};
+
+const look2 = () => {
+  return {
+    from: 'enum_tables',
+    let: { field: '$location' },
+    pipeline: [
+      { $addFields: { code: { $toLower: '$code' } } },
+      { $match: { $expr: { $eq: ['$code', '$$field'] } } },
+    ],
+    as: 'departmentEnum',
+  };
+};
