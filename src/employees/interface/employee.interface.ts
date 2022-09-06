@@ -46,7 +46,7 @@ export interface EmployeeI {
   philHealth: string;
   pagIbig: string;
   tin: string;
-  NumberOfDependents: number;
+  numberOfDependents: number;
   taxExemption: string;
   basicPay: number;
   payRateType: string;
@@ -63,7 +63,7 @@ export interface EmployeeI {
 }
 
 export class PayrollBankAccount {
-  @IsNotEmpty()
+  @IsOptional()
   @Transform((param) => param.value.toLowerCase())
   @IsOptional()
   accountName: string;

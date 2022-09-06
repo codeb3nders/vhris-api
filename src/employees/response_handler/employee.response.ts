@@ -66,7 +66,7 @@ function returnItem(item) {
     philHealth: item.philHealth,
     pagIbig: item.pagIbig,
     tin: item.tin,
-    NumberOfDependents: item.NumberOfDependents,
+    numberOfDependents: item.numberOfDependents,
     taxExemption: item.taxExemption,
     basicPay: item.basicPay,
     payRateType: item.payRateType,
@@ -122,6 +122,6 @@ function getReportToDetails(items: any) {
   }
   return {
     ...items,
-    employeeName: `${items.firstName} ${items.lastName}`
+    employeeName: `${items.firstName} ${items.lastName}`,
   };
 }

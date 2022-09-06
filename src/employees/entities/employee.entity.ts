@@ -180,7 +180,7 @@ export class Employee {
   tin: string;
 
   @Prop({ required: true, default: 0 })
-  NumberOfDependents: number;
+  numberOfDependents: number;
 
   @Prop()
   taxExemption: string;

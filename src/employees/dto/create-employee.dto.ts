@@ -61,8 +61,8 @@ export class CreateEmployeeDto {
   suffix: string;
 
   @ApiProperty({ required: true })
-  // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
   birthDate: number;
 
   @ApiProperty({ required: true })
@@ -177,19 +177,23 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
   dateHired: number;
 
   @ApiProperty()
   @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
   dateInactive: number;
 
   @ApiProperty()
   @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
   endOfProbationary: number;
 
   @ApiProperty()
   @IsOptional()
-  contractEndDate: Date;
+  @Transform((param) => new Date(param.value).getTime())
+  contractEndDate: number;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
@@ -227,9 +231,8 @@ export class CreateEmployeeDto {
   tin: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   @IsOptional()
-  NumberOfDependents: number;
+  numberOfDependents: number;
 
   @ApiProperty({ required: true })
   @Transform((param) => param.value.toLowerCase())
@@ -238,7 +241,6 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   basicPay: number;
 
   @IsOptional()
@@ -258,7 +260,6 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductionSSS: number;
 
   @IsOptional()
@@ -268,7 +269,6 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductHMDF: number;
 
   @IsOptional()
@@ -278,12 +278,11 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductWithholdingTax: number;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.map((item) => item.toLowerCase()))
   allowanceDetails: string;
 
   @ApiProperty()

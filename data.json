@@ -159,7 +159,7 @@
         "philHealth": "030255293113",
         "pagIbig": "121233972057",
         "tin": "440996953",
-        "NumberOfDependents": 3,
+        "numberOfDependents": 3,
         "taxExemption": "married",
         "basicPay": 0,
         "paymentMethod": "cashs",

@@ -358,7 +358,7 @@ export const EmployeeFields = [
       tin: {
         $toLower: '$tin',
       },
-      NumberOfDependents: '$NumberOfDependents',
+      numberOfDependents: '$numberOfDependents',
       taxExemption: {
         $toLower: '$taxExemption',
       },
