@@ -50,7 +50,7 @@ function returnItem(item) {
     emergencyContact: item.emergencyContact,
     companyContactNumber: item.companyContactNumber,
     companyEmail: item.companyEmail,
-    position: item.position,
+    position: prepareEnumItem(item.positionEnum),
     department: prepareEnumItem(item.departmentEnum),
     location: prepareEnumItem(item.locationEnum, true),
     reportsTo: getReportToDetails(item.reportingTo),
@@ -59,7 +59,7 @@ function returnItem(item) {
     yearsInSerVice: item.yearsInService,
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
-    rank: item.rank,
+    rank: prepareEnumItem(item.rankEnum),
     employmentType: prepareEnumItem(item.employmentTypeEnum),
     employmentStatus: prepareEnumItem(item.employmentStatusEnum),
     sss: item.sss,
@@ -121,7 +121,7 @@ function getReportToDetails(items: any) {
     item = items;
   }
   return {
-    ...items,
-    employeeName: `${items.firstName} ${items.lastName}`,
+    // ...item,
+    employeeName: `${item.firstName} ${item.lastName}`,
   };
 }

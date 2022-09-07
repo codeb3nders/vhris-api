@@ -33,6 +33,14 @@ export class EmployeesService {
         },
       },
       {
+        $lookup: lookUp('enum_tables', 'position', 'code', 'positionEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'rank', 'code', 'rankEnum'),
+      },
+
+      {
         $lookup: lookUp('enum_tables', 'department', 'code', 'departmentEnum'),
       },
       {
@@ -259,23 +267,11 @@ const lookUp = (
 ) => {
   return {
     from: `${tableName}`,
-    let: { field: `$${localField}` },
+    let: { field: { $toLower: `$${localField}` } },
     pipeline: [
       { $addFields: { [`${foreignField}`]: { $toLower: `$${foreignField}` } } },
       { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
     ],
     as: asName,
-  };
-};
-
-const look2 = () => {
-  return {
-    from: 'enum_tables',
-    let: { field: '$location' },
-    pipeline: [
-      { $addFields: { code: { $toLower: '$code' } } },
-      { $match: { $expr: { $eq: ['$code', '$$field'] } } },
-    ],
-    as: 'departmentEnum',
   };
 };
