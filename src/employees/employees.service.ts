@@ -134,6 +134,7 @@ export class EmployeesService {
           'employmentTypeEnum',
         ),
       },
+
       {
         $lookup: {
           from: 'employees',
@@ -147,6 +148,7 @@ export class EmployeesService {
           dateInactive: formatDate('dateInactive'),
           endOfProbationary: formatDate('endOfProbationary'),
           dateHired: formatDate('dateHired'),
+          contractEndDate: formatDate('contractEndDate'),
           birthDate: {
             $dateToString: {
               format: '%Y-%m-%d',
