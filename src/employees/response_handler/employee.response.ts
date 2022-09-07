@@ -22,22 +22,21 @@ export const ResponseHandler = {
 function returnItem(item) {
   const leaveRequests = item.leave_requests;
   const employeeLeaves = item.employee_leaves;
-  // ? LeaveRequestResponseHandler.ok(item.leave_requests)
-  // : null;
+
   const toReturn: any = {
     employeeNo: item.employeeNo,
     isActive: item.isActive,
-    userGroup: item.userGroup,
+    userGroup: prepareEnumItem(item.userGroupEnum),
     firstName: item.firstName,
     lastName: item.lastName,
     middleName: item.middleName,
     suffix: item.suffix,
     birthDate: item.birthDate,
     age: item.age,
-    gender: item.gender,
-    civilStatus: item.civilStatus,
-    citizenship: item.citizenship,
-    religion: item.religion,
+    gender: prepareEnumItem(item.genderEnum),
+    civilStatus: prepareEnumItem(item.civilStatusEnum),
+    citizenship: prepareEnumItem(item.citizenshipEnum),
+    religion: prepareEnumItem(item.religionEnum),
     personalContactNumber: item.personalContactNumber,
     personalEmail: item.personalEmail,
     presentAddress: item.presentAddress,
@@ -69,13 +68,14 @@ function returnItem(item) {
     numberOfDependents: item.numberOfDependents,
     taxExemption: item.taxExemption,
     basicPay: item.basicPay,
-    payRateType: item.payRateType,
-    paymentMethod: item.paymentMethod,
-    payrollGroup: item.payrollGroup,
+    payRateType: prepareEnumItem(item.payRateTypeEnum),
+    paymentMethod: prepareEnumItem(item.paymentMethodEnum),
+    payrollGroup: prepareEnumItem(item.payrollGroupEnum),
+
     deductionSSS: item.deductionSSS,
-    deductPhilhealth: item.deductPhilhealth,
+    deductPhilhealth: prepareEnumItem(item.deductPhilhealthEnum),
     deductHMDF: item.deductHMDF,
-    fixedContributionRate: item.fixedContributionRate,
+    fixedContributionRate: prepareEnumItem(item.fixedContributionRateEnum),
     deductWithholdingTax: item.deductWithholdingTax,
     allowanceDetails: item.allowanceDetails,
     payrollBankAccount: item.payrollBankAccount,
@@ -121,7 +121,7 @@ function getReportToDetails(items: any) {
     item = items;
   }
   return {
-    // ...item,
+    ...item,
     employeeName: `${item.firstName} ${item.lastName}`,
   };
 }

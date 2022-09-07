@@ -53,7 +53,7 @@ const aggregateQry = [
         $subtract: [
           {
             $year: {
-              $ifNull: ['$inactiveDate', '$$NOW'],
+              $ifNull: ['$dateInactive', '$$NOW'],
             },
           },
           {

@@ -155,7 +155,7 @@ export class Employee {
   endOfProbationary: number;
 
   @Prop()
-  contractEndDate: Date;
+  contractEndDate: number;
 
   @Prop({ required: true })
   rank: string;

@@ -33,6 +33,81 @@ export class EmployeesService {
         },
       },
       {
+        $lookup: lookUp('enum_tables', 'userGroup', 'code', 'userGroupEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'gender', 'code', 'genderEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'civilStatus',
+          'code',
+          'civilStatusEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'citizenship',
+          'code',
+          'citizenshipEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'religion', 'code', 'religionEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payRateType',
+          'code',
+          'payRateTypeEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payrollGroup',
+          'code',
+          'payrollGroupEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'deductPhilhealth',
+          'code',
+          'deductPhilhealthEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'fixedContributionRate',
+          'code',
+          'fixedContributionRateEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'paymentMethod',
+          'code',
+          'paymentMethodEnum',
+        ),
+      },
+
+      {
         $lookup: lookUp('enum_tables', 'position', 'code', 'positionEnum'),
       },
 
@@ -69,12 +144,20 @@ export class EmployeesService {
       },
       {
         $set: {
-          birthDate: { $toDate: '$birthDate' },
+          dateInactive: formatDate('dateInactive'),
+          endOfProbationary: formatDate('endOfProbationary'),
+          dateHired: formatDate('dateHired'),
+          birthDate: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: { $toDate: '$dateHired' },
+            },
+          },
           yearsInService: {
             $subtract: [
               {
                 $year: {
-                  $ifNull: ['$inactiveDate', '$$NOW'],
+                  $ifNull: [{ $toDate: '$dateInactive' }, '$$NOW'],
                 },
               },
               {
@@ -273,5 +356,14 @@ const lookUp = (
       { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
     ],
     as: asName,
+  };
+};
+
+const formatDate = (date: string) => {
+  return {
+    $dateToString: {
+      format: '%Y-%m-%d',
+      date: { $toDate: `$${date}` },
+    },
   };
 };
