@@ -41,12 +41,12 @@ export class CreateEmployeeDto {
   userGroup: UserGroupEnum;
 
   @ApiProperty({ required: true })
-  // @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   firstName: string;
 
   @ApiProperty({ required: true })
-  // @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   lastName: string;
 
