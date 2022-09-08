@@ -248,20 +248,29 @@ export class EmployeesService {
     const keys = Object.keys(params);
     let n = keys.length;
     const newOject: any = {};
+    let toMatch = [];
     while (n--) {
-      key = keys[n];
-      newOject[key] = isNaN(params[key])
-        ? params[key].toUpperCase()
-        : Number(params[key]);
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toLowerCase()
+        : Number(params[keys[n]]);
+
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        toMatch.push({
+          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
+        });
+      }
     }
 
-    if (newOject.isActive) {
-      newOject.isActive = newOject.isActive === 'true';
-    }
-
-    const prams = {
-      $match: newOject,
-    };
+    const match = toMatch.map((i) => {
+      return { $match: i };
+    });
 
     const _relations = [];
 
@@ -280,7 +289,7 @@ export class EmployeesService {
       });
     }
 
-    const pLine = [...pipeline, prams, ..._relations];
+    const pLine = [...pipeline, ...match, ..._relations];
     return this.employeeModel.aggregate(pLine);
   }
 
