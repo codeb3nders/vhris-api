@@ -226,6 +226,18 @@ export class Employee {
     bankBranch: string;
   };
 
+  @Prop({ default: Date.now() })
+  dateCreated: Date;
+
+  @Prop()
+  employmentLastUpdate?: Date;
+
+  @Prop()
+  jobLastUpdate?: Date;
+
+  @Prop()
+  lastModifiedDate?: Date;
+
   @Prop()
   password: string; // USE FOR VALIDATION NOT INCLUDED IN DATABASE
 }

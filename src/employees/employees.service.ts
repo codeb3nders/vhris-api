@@ -338,6 +338,7 @@ export class EmployeesService {
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
+    updateEmployeeDto['lastModifiedDate'] = Date.now();
     return this.employeeModel.updateOne(
       { employeeNo },
       { $set: { ...updateEmployeeDto } },

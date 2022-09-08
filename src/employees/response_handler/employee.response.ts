@@ -80,6 +80,11 @@ function returnItem(item) {
     allowanceDetails: item.allowanceDetails,
     payrollBankAccount: item.payrollBankAccount,
     bday: item.bday,
+
+    employmentLastUpdate: item.employmentLastUpdate,
+    jobLastUpdate: item.jobLastUpdate,
+    dateCreated: item.dateCreated,
+    lastModifiedDate: item.lastModifiedDate,
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;

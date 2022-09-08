@@ -291,6 +291,14 @@ export class CreateEmployeeDto {
   @IsOptional()
   payrollBankAccount: PayrollBankAccount;
 
+  @ApiProperty()
+  @IsOptional()
+  employmentLastUpdate: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  jobLastUpdate: Date;
+
   @IsEmpty()
   @ApiProperty()
   @Transform((param) => param.value.toUpperCase())
