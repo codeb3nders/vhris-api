@@ -51,7 +51,7 @@ export class CreateEmployeeDto {
   lastName: string;
 
   @ApiProperty()
-  // @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   middleName: string;
 
