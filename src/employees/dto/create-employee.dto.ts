@@ -28,7 +28,7 @@ import {
 export class CreateEmployeeDto {
   @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   employeeNo: string;
 
   @ApiProperty({ required: true })
@@ -37,26 +37,26 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   userGroup: UserGroupEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   firstName: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   lastName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   middleName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   suffix: string;
 
@@ -66,32 +66,32 @@ export class CreateEmployeeDto {
   birthDate: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   gender: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   citizenship: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   religion: ReligionEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   personalContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsEmail()
   @IsNotEmpty()
   personalEmail: string;
@@ -145,33 +145,33 @@ export class CreateEmployeeDto {
   emergencyContact: EmergencyContact;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   companyContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsEmail()
   @IsNotEmpty()
   companyEmail: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.map((item) => item.toLowerCase()))
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
   location: LocationsEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   reportsTo: string;
 
@@ -211,22 +211,22 @@ export class CreateEmployeeDto {
   employeeBenefits: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   sss: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   philHealth: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   pagIbig: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   tin: string;
 
@@ -235,7 +235,7 @@ export class CreateEmployeeDto {
   numberOfDependents: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   taxExemption: string;
 
@@ -245,17 +245,17 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
 
   @IsOptional()
@@ -264,7 +264,7 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: string;
 
   @IsOptional()
@@ -273,7 +273,7 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
 
   @IsOptional()
@@ -282,7 +282,7 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.map((item) => item.toLowerCase()))
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
   allowanceDetails: string;
 
   @ApiProperty()
@@ -293,7 +293,7 @@ export class CreateEmployeeDto {
 
   @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   password: string;
 }

@@ -26,7 +26,7 @@ export class EmployeesService {
           from: 'enum_tables',
           let: { field: '$location' },
           pipeline: [
-            { $addFields: { code: { $toLower: '$code' } } },
+            { $addFields: { code: { $toUpper: '$code' } } },
             { $match: { $expr: { $in: ['$code', '$$field'] } } },
           ],
           as: 'locationEnum',
@@ -215,7 +215,7 @@ export class EmployeesService {
 
     if (
       response &&
-      AutoCredentialEnum[response.userGroup.toLowerCase()] !== undefined
+      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
@@ -251,7 +251,7 @@ export class EmployeesService {
     while (n--) {
       key = keys[n];
       newOject[key] = isNaN(params[key])
-        ? params[key].toLowerCase()
+        ? params[key].toUpperCase()
         : Number(params[key]);
     }
 
@@ -352,9 +352,9 @@ const lookUp = (
 ) => {
   return {
     from: `${tableName}`,
-    let: { field: { $toLower: `$${localField}` } },
+    let: { field: { $toUpper: `$${localField}` } },
     pipeline: [
-      { $addFields: { [`${foreignField}`]: { $toLower: `$${foreignField}` } } },
+      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
       { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
     ],
     as: asName,

@@ -45,7 +45,7 @@ const aggregateQry = [
       //   $map: {
       //     input: '$location',
       //     as: 'item',
-      //     in: { $toLower: '$$item' },
+      //     in: { $toUpper: '$$item' },
       //   },
       // },
       birthDate: { $toDate: '$birthDate' },
@@ -104,7 +104,7 @@ export const EmployeeFields = [
           input: '$location',
           as: 'item',
           in: {
-            $toLower: '$$item',
+            $toUpper: '$$item',
           },
         },
       },
@@ -117,12 +117,12 @@ export const EmployeeFields = [
               '$$arrayElems',
               {
                 level: {
-                  $toLower: '$$arrayElems.level',
+                  $toUpper: '$$arrayElems.level',
                 },
               },
               {
                 degree: {
-                  $toLower: '$$arrayElems.degree',
+                  $toUpper: '$$arrayElems.degree',
                 },
               },
             ],
@@ -138,12 +138,12 @@ export const EmployeeFields = [
               '$$arrayElems',
               {
                 addressLine: {
-                  $toLower: '$$arrayElems.addressLine',
+                  $toUpper: '$$arrayElems.addressLine',
                 },
               },
               {
                 barangay: {
-                  $toLower: '$$arrayElems.barangay',
+                  $toUpper: '$$arrayElems.barangay',
                 },
               },
             ],
@@ -159,12 +159,12 @@ export const EmployeeFields = [
               '$$arrayElems',
               {
                 addressLine: {
-                  $toLower: '$$arrayElems.addressLine',
+                  $toUpper: '$$arrayElems.addressLine',
                 },
               },
               {
                 barangay: {
-                  $toLower: '$$arrayElems.barangay',
+                  $toUpper: '$$arrayElems.barangay',
                 },
               },
             ],
@@ -180,7 +180,7 @@ export const EmployeeFields = [
               '$$arrayElems',
               {
                 code: {
-                  $toLower: '$$arrayElems.addressLine',
+                  $toUpper: '$$arrayElems.addressLine',
                 },
               },
             ],
@@ -192,12 +192,12 @@ export const EmployeeFields = [
           '$payrollBankAccount',
           {
             bankName: {
-              $toLower: '$payrollBankAccount.bankName',
+              $toUpper: '$payrollBankAccount.bankName',
             },
           },
           {
             accountName: {
-              $toLower: '$payrollBankAccount.accountName',
+              $toUpper: '$payrollBankAccount.accountName',
             },
           },
         ],
@@ -210,7 +210,7 @@ export const EmployeeFields = [
           },
           {
             companyName: {
-              $toLower: '$payrollBankAccount.companyName',
+              $toUpper: '$payrollBankAccount.companyName',
             },
           },
         ],
@@ -223,7 +223,7 @@ export const EmployeeFields = [
           },
           {
             examTitle: {
-              $toLower: '$govtProfExamsPassed.examTitle',
+              $toUpper: '$govtProfExamsPassed.examTitle',
             },
           },
         ],
@@ -236,7 +236,7 @@ export const EmployeeFields = [
           },
           {
             authorizingEntity: {
-              $toLower: '$licensesCertifications.authorizingEntity',
+              $toUpper: '$licensesCertifications.authorizingEntity',
             },
           },
         ],
@@ -246,12 +246,12 @@ export const EmployeeFields = [
           '$emergencyContact',
           {
             name: {
-              $toLower: '$emergencyContact.name',
+              $toUpper: '$emergencyContact.name',
             },
           },
           {
             relation: {
-              $toLower: '$emergencyContact.relation',
+              $toUpper: '$emergencyContact.relation',
             },
           },
         ],
@@ -265,12 +265,12 @@ export const EmployeeFields = [
               '$$arrayElems',
               {
                 name: {
-                  $toLower: '$$arrayElems.name',
+                  $toUpper: '$$arrayElems.name',
                 },
               },
               {
                 relation: {
-                  $toLower: '$$arrayElems.relation',
+                  $toUpper: '$$arrayElems.relation',
                 },
               },
             ],
@@ -278,112 +278,112 @@ export const EmployeeFields = [
         },
       },
       employeeNo: {
-        $toLower: '$employeeNo',
+        $toUpper: '$employeeNo',
       },
       isActive: '$isActive',
       userGroup: {
-        $toLower: '$userGroup',
+        $toUpper: '$userGroup',
       },
       firstName: {
-        $toLower: '$firstName',
+        $toUpper: '$firstName',
       },
       lastName: {
-        $toLower: '$lastName',
+        $toUpper: '$lastName',
       },
       middleName: {
-        $toLower: '$middleName',
+        $toUpper: '$middleName',
       },
       suffix: {
-        $toLower: '$suffix',
+        $toUpper: '$suffix',
       },
       birthDate: '$birthDate',
       gender: {
-        $toLower: '$gender',
+        $toUpper: '$gender',
       },
       civilStatus: {
-        $toLower: '$civilStatus',
+        $toUpper: '$civilStatus',
       },
       citizenship: {
-        $toLower: '$citizenship',
+        $toUpper: '$citizenship',
       },
       religion: {
-        $toLower: '$religion',
+        $toUpper: '$religion',
       },
       personalContactNumber: {
-        $toLower: '$personalContactNumber',
+        $toUpper: '$personalContactNumber',
       },
       personalEmail: {
-        $toLower: '$personalEmail',
+        $toUpper: '$personalEmail',
       },
       companyContactNumber: {
-        $toLower: '$companyContactNumber',
+        $toUpper: '$companyContactNumber',
       },
       companyEmail: {
-        $toLower: '$companyEmail',
+        $toUpper: '$companyEmail',
       },
       position: {
-        $toLower: '$position',
+        $toUpper: '$position',
       },
       department: {
-        $toLower: '$department',
+        $toUpper: '$department',
       },
       reportsTo: {
-        $toLower: '$reportsTo',
+        $toUpper: '$reportsTo',
       },
       dateHired: '$dateHired',
       dateInactive: '$dateInactive',
       endOfProbationary: '$endOfProbationary',
       contractEndDate: '$contractEndDate',
       rank: {
-        $toLower: '$rank',
+        $toUpper: '$rank',
       },
       employmentStatus: {
-        $toLower: '$employmentStatus',
+        $toUpper: '$employmentStatus',
       },
       employmentType: {
-        $toLower: '$employmentType',
+        $toUpper: '$employmentType',
       },
       employeeBenefits: {
-        $toLower: '$employeeBenefits',
+        $toUpper: '$employeeBenefits',
       },
       sss: {
-        $toLower: '$sss',
+        $toUpper: '$sss',
       },
       philHealth: {
-        $toLower: '$philHealth',
+        $toUpper: '$philHealth',
       },
       pagIbig: {
-        $toLower: '$pagIbig',
+        $toUpper: '$pagIbig',
       },
       tin: {
-        $toLower: '$tin',
+        $toUpper: '$tin',
       },
       numberOfDependents: '$numberOfDependents',
       taxExemption: {
-        $toLower: '$taxExemption',
+        $toUpper: '$taxExemption',
       },
       basicPay: '$basicPay',
       payRateType: '$payRateType',
       paymentMethod: {
-        $toLower: '$paymentMethod',
+        $toUpper: '$paymentMethod',
       },
       payrollGroup: {
-        $toLower: '$payrollGroup',
+        $toUpper: '$payrollGroup',
       },
       deductionSSS: {
-        $toLower: '$deductionSSS',
+        $toUpper: '$deductionSSS',
       },
       deductPhilhealth: {
-        $toLower: '$deductPhilhealth',
+        $toUpper: '$deductPhilhealth',
       },
       deductHMDF: {
-        $toLower: '$deductHMDF',
+        $toUpper: '$deductHMDF',
       },
       fixedContributionRate: {
-        $toLower: '$fixedContributionRate',
+        $toUpper: '$fixedContributionRate',
       },
       deductWithholdingTax: {
-        $toLower: '$deductWithholdingTax',
+        $toUpper: '$deductWithholdingTax',
       },
     },
   },
