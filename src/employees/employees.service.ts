@@ -149,6 +149,9 @@ export class EmployeesService {
           endOfProbationary: formatDate('endOfProbationary'),
           dateHired: formatDate('dateHired'),
           contractEndDate: formatDate('contractEndDate'),
+          jobLastUpdate: formatDate('jobLastUpdate'),
+          employmentLastUpdate: formatDate('employmentLastUpdate'),
+          dateCreated: formatDate('dateCreated'),
           birthDate: {
             $dateToString: {
               format: '%Y-%m-%d',
