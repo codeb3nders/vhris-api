@@ -142,7 +142,7 @@ export class Employee {
   @Prop({ required: true, type: JSON })
   location: string[];
 
-  @Prop({ required: true })
+  @Prop()
   reportsTo: string;
 
   @Prop({ required: true })
