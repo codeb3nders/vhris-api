@@ -55,7 +55,7 @@ function returnItem(item) {
     reportsTo: getReportToDetails(item.reportingTo),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
-    yearsInSerVice: item.yearsInService,
+    yearsInService: item.yearsInService,
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
     rank: prepareEnumItem(item.rankEnum),
