@@ -152,7 +152,7 @@ export class EmployeesService {
           birthDate: {
             $dateToString: {
               format: '%Y-%m-%d',
-              date: { $toDate: '$dateHired' },
+              date: { $toDate: '$birthDate' },
             },
           },
           yearsInService: {
