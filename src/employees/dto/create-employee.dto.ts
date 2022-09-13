@@ -26,9 +26,9 @@ import {
 } from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
-  @IsOptional()
+  @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   employeeNo: string;
 
   @ApiProperty({ required: true })
@@ -37,61 +37,61 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   userGroup: UserGroupEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   firstName: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   lastName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   middleName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   suffix: string;
 
   @ApiProperty({ required: true })
-  // @Transform((param) => param.value.toLowerCase())
   @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
   birthDate: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   gender: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   citizenship: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   religion: ReligionEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsNotEmpty()
   personalContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsEmail()
   @IsNotEmpty()
   personalEmail: string;
@@ -145,51 +145,55 @@ export class CreateEmployeeDto {
   emergencyContact: EmergencyContact;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   companyContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsEmail()
   @IsNotEmpty()
   companyEmail: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.map((item) => item.toLowerCase()))
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
   location: LocationsEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   reportsTo: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
   dateHired: number;
 
   @ApiProperty()
   @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
   dateInactive: number;
 
   @ApiProperty()
   @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
   endOfProbationary: number;
 
   @ApiProperty()
   @IsOptional()
-  contractEndDate: Date;
+  @Transform((param) => new Date(param.value).getTime())
+  contractEndDate: number;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
@@ -207,83 +211,78 @@ export class CreateEmployeeDto {
   employeeBenefits: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   sss: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   philHealth: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   pagIbig: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   tin: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   @IsOptional()
-  NumberOfDependents: number;
+  numberOfDependents: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   taxExemption: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   basicPay: number;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   payRateType: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   paymentMethod: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   payrollGroup: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductionSSS: number;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   deductPhilhealth: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductHMDF: number;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   fixedContributionRate: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
   deductWithholdingTax: number;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
   allowanceDetails: string;
 
   @ApiProperty()
@@ -292,9 +291,20 @@ export class CreateEmployeeDto {
   @IsOptional()
   payrollBankAccount: PayrollBankAccount;
 
+  @ApiProperty()
+  @IsOptional()
+  employmentLastUpdate: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  jobLastUpdate: Date;
+
+  @IsOptional()
+  type?: 'string';
+
   @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   password: string;
 }

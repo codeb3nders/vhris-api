@@ -22,6 +22,7 @@ export interface EmployeeI {
   personalContactNumber: string;
   personalEmail: string;
   presentAddress: JSON;
+  permanentAddress: JSON;
   educationalBackground: JSON;
   employmentRecords: JSON;
   govtProfExamsPassed: JSON;
@@ -45,7 +46,7 @@ export interface EmployeeI {
   philHealth: string;
   pagIbig: string;
   tin: string;
-  NumberOfDependents: number;
+  numberOfDependents: number;
   taxExemption: string;
   basicPay: number;
   payRateType: string;
@@ -62,17 +63,17 @@ export interface EmployeeI {
 }
 
 export class PayrollBankAccount {
-  @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @IsOptional()
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   accountName: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   accountNumber: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   bankName: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   bankBranch: string;
 }
@@ -81,121 +82,121 @@ export class FamilyBackground {
   @IsOptional()
   name: string;
   @IsEnum(RelationEnum)
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   relation: RelationEnum;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   occupation: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   company: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   residence: string;
 }
 
 export class EmergencyContact {
   @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   name: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   relation: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   address: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   contactNumber: string;
 }
 
 export class Address {
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   addressLine: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   barangay: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   municipality: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   province: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   region: string;
 }
 
 export class EducationalBackground {
   @IsEnum(EducationLevelEnum)
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   level: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrFrom: number;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrTo: number;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   schoolAndAddress: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   degree: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   honors: string;
 }
 
 export class EmploymentRecords {
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrFrom: number;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrTo: number;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   companyName: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   positionHeld: string;
 }
 
 export class GovtProfExamsPassed {
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   examTitle: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   dateTaken: Date;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   rating: string;
 }
 
 export class LicensesCertifications {
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   name: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   authorizingEntity: string;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   validUntil: Date;
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   licenseCertNo: string;
 }
 
 export class Location {
   @IsEnum(LocationsEnum)
-  @Transform((param) => param.value.toLowerCase())
+  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   location: LocationsEnum;
 }

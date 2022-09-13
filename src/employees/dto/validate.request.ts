@@ -9,12 +9,12 @@ export const isValidRequest = (
 ) => {
   Object.keys(updateEmployeeDto).forEach((item: any) => {
     const accessGroup = user.accessGroup
-      ? user.accessGroup.toLowerCase()
+      ? user.accessGroup.toUpperCase()
       : null;
 
     if (accessGroup === CONSTANTS.HR_ADMIN) return true;
 
-    if (NotAllowedToEdit[item.toLowerCase()] !== undefined) {
+    if (NotAllowedToEdit[item.toUpperCase()] !== undefined) {
       throw new HttpException('Not Acceptable!', HttpStatus.NOT_ACCEPTABLE);
     }
   });
@@ -23,9 +23,9 @@ export const isValidRequest = (
 };
 
 export const isAllowedUser = (user: any, access: string) => {
-  const accessGroup = user.accessGroup ? user.accessGroup.toLowerCase() : null;
+  const accessGroup = user.accessGroup ? user.accessGroup.toUpperCase() : null;
 
-  if (accessGroup === access.toLowerCase()) {
+  if (accessGroup === access.toUpperCase()) {
     return true;
   }
 

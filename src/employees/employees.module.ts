@@ -8,11 +8,13 @@ import { EmailService } from 'src/email/email.service';
 import { UserCredentialsModule } from 'src/user_credentials/user_credentials.module';
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
+import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
 
 @Module({
   imports: [
     UserCredentialsModule,
     ValidatorsModule,
+    EmployeeHistoryModule,
     MongooseModule.forFeature([
       {
         name: Employee.name,

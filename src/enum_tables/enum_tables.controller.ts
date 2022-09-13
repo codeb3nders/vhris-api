@@ -26,12 +26,12 @@ export class EnumTablesController {
     const params = {};
 
     if (type && code) {
-      params['type'] = { $regex: new RegExp('^' + type.toLowerCase(), 'i') };
-      params['code'] = { $regex: new RegExp('^' + code.toLowerCase(), 'i') };
+      params['type'] = { $regex: new RegExp('^' + type.toUpperCase(), 'i') };
+      params['code'] = { $regex: new RegExp('^' + code.toUpperCase(), 'i') };
     } else if (type) {
-      params['type'] = { $regex: new RegExp('^' + type.toLowerCase(), 'i') };
+      params['type'] = { $regex: new RegExp('^' + type.toUpperCase(), 'i') };
     } else if (code) {
-      params['code'] = { $regex: new RegExp('^' + code.toLowerCase(), 'i') };
+      params['code'] = { $regex: new RegExp('^' + code.toUpperCase(), 'i') };
     }
 
     return this.enumTablesService.find(params);

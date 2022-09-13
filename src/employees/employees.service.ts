@@ -8,10 +8,12 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
+import { EmployeeFields } from './dto/fields-employe';
 
 @Injectable()
 export class EmployeesService {
   private aggregateQry;
+  private fields;
   constructor(
     @InjectModel(Employee.name)
     private employeeModel: Model<EmployeeDocument>,
@@ -22,35 +24,117 @@ export class EmployeesService {
       {
         $lookup: {
           from: 'enum_tables',
-          localField: 'location',
-          foreignField: 'code',
+          let: { field: '$location' },
+          pipeline: [
+            { $addFields: { code: { $toUpper: '$code' } } },
+            { $match: { $expr: { $in: ['$code', '$$field'] } } },
+          ],
           as: 'locationEnum',
         },
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'department',
-          foreignField: 'code',
-          as: 'departmentEnum',
-        },
+        $lookup: lookUp('enum_tables', 'userGroup', 'code', 'userGroupEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'gender', 'code', 'genderEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'civilStatus',
+          'code',
+          'civilStatusEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'citizenship',
+          'code',
+          'citizenshipEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'religion', 'code', 'religionEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payRateType',
+          'code',
+          'payRateTypeEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payrollGroup',
+          'code',
+          'payrollGroupEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'deductPhilhealth',
+          'code',
+          'deductPhilhealthEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'fixedContributionRate',
+          'code',
+          'fixedContributionRateEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'paymentMethod',
+          'code',
+          'paymentMethodEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'position', 'code', 'positionEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'rank', 'code', 'rankEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'department', 'code', 'departmentEnum'),
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'employmentStatus',
-          foreignField: 'code',
-          as: 'employmentStatusEnum',
-        },
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentStatus',
+          'code',
+          'employmentStatusEnum',
+        ),
       },
       {
-        $lookup: {
-          from: 'enum_tables',
-          localField: 'employmentType',
-          foreignField: 'code',
-          as: 'employmentTypeEnum',
-        },
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentType',
+          'code',
+          'employmentTypeEnum',
+        ),
       },
+
       {
         $lookup: {
           from: 'employees',
@@ -61,12 +145,24 @@ export class EmployeesService {
       },
       {
         $set: {
-          bday: { $toDate: '$birthDate' },
+          dateInactive: formatDate('dateInactive'),
+          endOfProbationary: formatDate('endOfProbationary'),
+          dateHired: formatDate('dateHired'),
+          contractEndDate: formatDate('contractEndDate'),
+          jobLastUpdate: formatDate('jobLastUpdate'),
+          employmentLastUpdate: formatDate('employmentLastUpdate'),
+          dateCreated: formatDate('dateCreated'),
+          birthDate: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: { $toDate: '$birthDate' },
+            },
+          },
           yearsInService: {
             $subtract: [
               {
                 $year: {
-                  $ifNull: ['$inactiveDate', '$$NOW'],
+                  $ifNull: [{ $toDate: '$dateInactive' }, '$$NOW'],
                 },
               },
               {
@@ -107,6 +203,9 @@ export class EmployeesService {
         },
       },
     ];
+
+    // TODO: apply aggregation $project to transform output data to lowercase
+    this.fields = EmployeeFields;
   }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
@@ -119,7 +218,7 @@ export class EmployeesService {
 
     if (
       response &&
-      AutoCredentialEnum[response.userGroup.toLowerCase()] !== undefined
+      AutoCredentialEnum[response.userGroup.toUpperCase()] !== undefined
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
@@ -142,7 +241,7 @@ export class EmployeesService {
   }
 
   async findAll(_params?: any): Promise<Employee[]> {
-    const pipeline = this.aggregateQry;
+    const pipeline = [...this.aggregateQry];
 
     const relations = _params.relations;
     delete _params.relations;
@@ -152,18 +251,29 @@ export class EmployeesService {
     const keys = Object.keys(params);
     let n = keys.length;
     const newOject: any = {};
+    let toMatch = [];
     while (n--) {
-      key = keys[n];
-      newOject[key] = isNaN(params[key]) ? params[key] : Number(params[key]);
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toLowerCase()
+        : Number(params[keys[n]]);
+
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        toMatch.push({
+          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
+        });
+      }
     }
 
-    if (newOject.isActive) {
-      newOject.isActive = newOject.isActive === 'true';
-    }
-
-    const prams = {
-      $match: newOject,
-    };
+    const match = toMatch.map((i) => {
+      return { $match: i };
+    });
 
     const _relations = [];
 
@@ -182,7 +292,7 @@ export class EmployeesService {
       });
     }
 
-    const pLine = [...pipeline, prams, ..._relations];
+    const pLine = [...pipeline, ...match, ..._relations];
     return this.employeeModel.aggregate(pLine);
   }
 
@@ -231,6 +341,7 @@ export class EmployeesService {
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
+    updateEmployeeDto['lastModifiedDate'] = Date.now();
     return this.employeeModel.updateOne(
       { employeeNo },
       { $set: { ...updateEmployeeDto } },
@@ -245,3 +356,29 @@ export class EmployeesService {
     return response;
   }
 }
+
+const lookUp = (
+  tableName: string,
+  localField: string,
+  foreignField: string,
+  asName: string,
+) => {
+  return {
+    from: `${tableName}`,
+    let: { field: { $toUpper: `$${localField}` } },
+    pipeline: [
+      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
+      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
+    ],
+    as: asName,
+  };
+};
+
+const formatDate = (date: string) => {
+  return {
+    $dateToString: {
+      format: '%Y-%m-%d',
+      date: { $toDate: `$${date}` },
+    },
+  };
+};

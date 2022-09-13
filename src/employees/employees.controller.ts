@@ -28,6 +28,7 @@ import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
+import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
 
 @ApiTags('Employees')
 @Controller('employees')
@@ -35,6 +36,7 @@ export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,
     private validatorsService: ValidatorsService,
+    private employeeHistoryService: EmployeeHistoryService,
   ) {}
 
   @Post()
@@ -89,10 +91,42 @@ export class EmployeesController {
     await this.validatorsService.validateEmployeesPostRequest(
       updateEmployeeDto,
     );
+    const type = updateEmployeeDto.type;
+
+    if (!type)
+      throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
+
     const employee = await this.employeesService.findOne(employeeNo);
     if (!employee)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
-    return await this.employeesService.update(employeeNo, updateEmployeeDto);
+    const response = await this.employeesService.update(
+      employeeNo,
+      updateEmployeeDto,
+    );
+    if (response) {
+      const previousValue = { type: type };
+
+      Object.keys(updateEmployeeDto).forEach((item) => {
+        if (item !== 'lastModifiedDate' && item !== 'type') {
+          previousValue[item] = employee[item];
+        }
+      });
+
+      const history = {
+        employeeNo: employeeNo,
+        type: type,
+        details: previousValue,
+      };
+      try {
+        this.employeeHistoryService.create(history);
+      } catch (error) {
+        throw new HttpException(
+          'History Saving failed!',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
+    return { response };
   }
 
   @UseGuards(JwtAuthGuard)

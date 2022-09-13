@@ -18,6 +18,7 @@ export class EmployeeHistoryService {
     const createEmployeeHistory = new this.employeeHistoryModel(
       createEmployeeHistoryDto,
     );
+    // return { createEmployeeHistoryDto };
     return await createEmployeeHistory.save();
   }
 

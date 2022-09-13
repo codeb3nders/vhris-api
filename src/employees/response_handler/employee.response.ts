@@ -22,25 +22,25 @@ export const ResponseHandler = {
 function returnItem(item) {
   const leaveRequests = item.leave_requests;
   const employeeLeaves = item.employee_leaves;
-  // ? LeaveRequestResponseHandler.ok(item.leave_requests)
-  // : null;
+
   const toReturn: any = {
     employeeNo: item.employeeNo,
     isActive: item.isActive,
-    userGroup: item.userGroup,
+    userGroup: prepareEnumItem(item.userGroupEnum),
     firstName: item.firstName,
     lastName: item.lastName,
     middleName: item.middleName,
     suffix: item.suffix,
     birthDate: item.birthDate,
     age: item.age,
-    gender: item.gender,
-    civilStatus: item.civilStatus,
-    citizenship: item.citizenship,
-    religion: item.religion,
+    gender: prepareEnumItem(item.genderEnum),
+    civilStatus: prepareEnumItem(item.civilStatusEnum),
+    citizenship: prepareEnumItem(item.citizenshipEnum),
+    religion: prepareEnumItem(item.religionEnum),
     personalContactNumber: item.personalContactNumber,
     personalEmail: item.personalEmail,
     presentAddress: item.presentAddress,
+    permanentAddress: item.permanentAddress,
     educationalBackground: item.educationalBackground,
     employmentRecords: item.employmentRecords,
     govtProfExamsPassed: item.govtProfExamsPassed,
@@ -49,36 +49,42 @@ function returnItem(item) {
     emergencyContact: item.emergencyContact,
     companyContactNumber: item.companyContactNumber,
     companyEmail: item.companyEmail,
-    position: item.position,
+    position: prepareEnumItem(item.positionEnum),
     department: prepareEnumItem(item.departmentEnum),
     location: prepareEnumItem(item.locationEnum, true),
     reportsTo: getReportToDetails(item.reportingTo),
     dateHired: item.dateHired,
     dateInactive: item.dateInactive,
-    yearsInSerVice: item.yearsInService,
+    yearsInService: item.yearsInService,
     endOfProbationary: item.endOfProbationary,
     contractEndDate: item.contractEndDate,
-    rank: item.rank,
+    rank: prepareEnumItem(item.rankEnum),
     employmentType: prepareEnumItem(item.employmentTypeEnum),
     employmentStatus: prepareEnumItem(item.employmentStatusEnum),
     sss: item.sss,
     philHealth: item.philHealth,
     pagIbig: item.pagIbig,
     tin: item.tin,
-    NumberOfDependents: item.NumberOfDependents,
+    numberOfDependents: item.numberOfDependents,
     taxExemption: item.taxExemption,
     basicPay: item.basicPay,
-    payRateType: item.payRateType,
-    paymentMethod: item.paymentMethod,
-    payrollGroup: item.payrollGroup,
+    payRateType: prepareEnumItem(item.payRateTypeEnum),
+    paymentMethod: prepareEnumItem(item.paymentMethodEnum),
+    payrollGroup: prepareEnumItem(item.payrollGroupEnum),
+
     deductionSSS: item.deductionSSS,
-    deductPhilhealth: item.deductPhilhealth,
+    deductPhilhealth: prepareEnumItem(item.deductPhilhealthEnum),
     deductHMDF: item.deductHMDF,
-    fixedContributionRate: item.fixedContributionRate,
+    fixedContributionRate: prepareEnumItem(item.fixedContributionRateEnum),
     deductWithholdingTax: item.deductWithholdingTax,
     allowanceDetails: item.allowanceDetails,
     payrollBankAccount: item.payrollBankAccount,
     bday: item.bday,
+
+    employmentLastUpdate: item.employmentLastUpdate,
+    jobLastUpdate: item.jobLastUpdate,
+    dateCreated: item.dateCreated,
+    lastModifiedDate: item.lastModifiedDate,
   };
   if (leaveRequests) {
     toReturn.leave_requests = leaveRequests;
@@ -90,6 +96,7 @@ function returnItem(item) {
 }
 
 const prepareEnumItem = (item: any, isArray = false) => {
+  if (!item || item.length < 1) return null;
   if (isArray) {
     return (
       item &&
@@ -119,7 +126,7 @@ function getReportToDetails(items: any) {
     item = items;
   }
   return {
-    ...items,
-    employeeName: `${items.firstName} ${items.lastName}`
+    ...item,
+    employeeName: `${item.firstName} ${item.lastName}`,
   };
 }

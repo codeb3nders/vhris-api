@@ -56,6 +56,7 @@ export class Employee {
     region: string;
   };
 
+  @Prop({ type: JSON })
   permanentAddress: {
     addressLine: string;
     barangay: string;
@@ -141,7 +142,7 @@ export class Employee {
   @Prop({ required: true, type: JSON })
   location: string[];
 
-  @Prop({ required: true })
+  @Prop()
   reportsTo: string;
 
   @Prop({ required: true })
@@ -154,7 +155,7 @@ export class Employee {
   endOfProbationary: number;
 
   @Prop()
-  contractEndDate: Date;
+  contractEndDate: number;
 
   @Prop({ required: true })
   rank: string;
@@ -179,7 +180,7 @@ export class Employee {
   tin: string;
 
   @Prop({ required: true, default: 0 })
-  NumberOfDependents: number;
+  numberOfDependents: number;
 
   @Prop()
   taxExemption: string;
@@ -224,6 +225,18 @@ export class Employee {
     bankName: string;
     bankBranch: string;
   };
+
+  @Prop({ default: Date.now() })
+  dateCreated: Date;
+
+  @Prop()
+  employmentLastUpdate?: Date;
+
+  @Prop()
+  jobLastUpdate?: Date;
+
+  @Prop()
+  lastModifiedDate?: Date;
 
   @Prop()
   password: string; // USE FOR VALIDATION NOT INCLUDED IN DATABASE

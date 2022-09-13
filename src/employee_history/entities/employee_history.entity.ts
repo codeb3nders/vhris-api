@@ -5,10 +5,17 @@ export type EmployeeHistoryDocument = Employee_history & Document;
 
 @Schema({ strict: false })
 export class Employee_history {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   employeeNo: string;
+
   @Prop({ default: Date.now() })
-  timeStamp: Date;
+  lastModifiedDate: Date;
+
+  @Prop()
+  type: string;
+
+  @Prop({ type: JSON })
+  details: {};
 }
 
 export const EmployeeHistorySchema =
