@@ -104,7 +104,7 @@ export class EmployeesController {
       updateEmployeeDto,
     );
     if (response) {
-      const previousValue = { type: type };
+      const previousValue = {};
 
       Object.keys(updateEmployeeDto).forEach((item) => {
         if (item !== 'lastModifiedDate' && item !== 'type') {

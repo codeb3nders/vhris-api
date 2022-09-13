@@ -9,7 +9,7 @@ export class Employee_history {
   employeeNo: string;
 
   @Prop({ default: Date.now() })
-  lastModifiedDate: Date;
+  timestamp: Date;
 
   @Prop()
   type: string;
