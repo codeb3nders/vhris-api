@@ -18,5 +18,6 @@ import {
   ],
   controllers: [EmployeeHistoryController],
   providers: [EmployeeHistoryService],
+  exports: [EmployeeHistoryService],
 })
 export class EmployeeHistoryModule {}

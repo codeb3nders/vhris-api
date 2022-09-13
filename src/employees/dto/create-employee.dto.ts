@@ -299,6 +299,9 @@ export class CreateEmployeeDto {
   @IsOptional()
   jobLastUpdate: Date;
 
+  @IsOptional()
+  type?: 'string';
+
   @IsEmpty()
   @ApiProperty()
   @Transform((param) => param.value.toUpperCase())
