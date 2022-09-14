@@ -135,10 +135,10 @@ export class EducationalBackground {
   @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   level: string;
-  @Transform((param) => param.value.toUpperCase())
+  // @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrFrom: number;
-  @Transform((param) => param.value.toUpperCase())
+  // @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrTo: number;
   @Transform((param) => param.value.toUpperCase())
