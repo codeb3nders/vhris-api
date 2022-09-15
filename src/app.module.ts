@@ -18,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
 import { EnumTablesModule } from './enum_tables/enum_tables.module';
 import { ValidatorsService } from './validators/validators.service';
 import { ValidatorsModule } from './validators/validators.module';
+import { LearningDevelopmentModule } from './learning_development/learning_development.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ValidatorsModule } from './validators/validators.module';
     AuthModule,
     EnumTablesModule,
     ValidatorsModule,
+    LearningDevelopmentModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],
