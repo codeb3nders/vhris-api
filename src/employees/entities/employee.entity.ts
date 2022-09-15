@@ -83,6 +83,7 @@ export class Employee {
       yrFrom: number;
       yrTo: number;
       companyName: string;
+      companyAddress: string;
       positionHeld: string;
     },
   ];

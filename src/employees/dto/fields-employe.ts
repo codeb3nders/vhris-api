@@ -210,7 +210,17 @@ export const EmployeeFields = [
           },
           {
             companyName: {
-              $toUpper: '$payrollBankAccount.companyName',
+              $toUpper: '$employmentRecords.companyName',
+            },
+          },
+          {
+            companyAddress: {
+              $toUpper: '$employmentRecords.companyAddress',
+            },
+          },
+          {
+            positionHeld: {
+              $toUpper: '$employmentRecords.positionHeld',
             },
           },
         ],
