@@ -12,6 +12,9 @@ export class Employee_history {
   timestamp: Date;
 
   @Prop()
+  effectiveDate: Date;
+
+  @Prop()
   type: string;
 
   @Prop({ type: JSON })

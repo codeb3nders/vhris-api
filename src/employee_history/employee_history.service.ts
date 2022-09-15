@@ -27,7 +27,7 @@ export class EmployeeHistoryService {
   }
 
   findOne(employeeNo: string) {
-    return this.employeeHistoryModel.findOne({ employeeNo });
+    return this.employeeHistoryModel.find({ employeeNo });
   }
 
   update(

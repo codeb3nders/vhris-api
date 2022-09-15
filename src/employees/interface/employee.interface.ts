@@ -153,15 +153,16 @@ export class EducationalBackground {
 }
 
 export class EmploymentRecords {
-  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrFrom: number;
-  @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   yrTo: number;
   @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   companyName: string;
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  companyAddress: string;
   @Transform((param) => param.value.toUpperCase())
   @IsOptional()
   positionHeld: string;

@@ -8,6 +8,10 @@ export class CreateEmployeeHistoryDto {
 
   @IsNotEmpty()
   @ApiProperty()
+  effectiveDate: Date;
+
+  @IsNotEmpty()
+  @ApiProperty()
   type: string;
 
   @IsNotEmpty()

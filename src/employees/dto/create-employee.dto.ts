@@ -302,6 +302,9 @@ export class CreateEmployeeDto {
   @IsOptional()
   type?: 'string';
 
+  @IsOptional()
+  effectiveDate?: Date;
+
   @IsEmpty()
   @ApiProperty()
   @Transform((param) => param.value.toUpperCase())

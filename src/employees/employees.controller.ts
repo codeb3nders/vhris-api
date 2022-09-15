@@ -92,9 +92,10 @@ export class EmployeesController {
       updateEmployeeDto,
     );
     const type = updateEmployeeDto.type;
+    const effectiveDate = updateEmployeeDto.effectiveDate;
 
-    if (!type)
-      throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
+    // if (!type)
+    //   throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
 
     const employee = await this.employeesService.findOne(employeeNo);
     if (!employee)
@@ -111,19 +112,21 @@ export class EmployeesController {
           previousValue[item] = employee[item];
         }
       });
-
-      const history = {
-        employeeNo: employeeNo,
-        type: type,
-        details: previousValue,
-      };
-      try {
-        this.employeeHistoryService.create(history);
-      } catch (error) {
-        throw new HttpException(
-          'History Saving failed!',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
+      if (type) {
+        const history = {
+          employeeNo: employeeNo,
+          type: type,
+          effectiveDate,
+          details: previousValue,
+        };
+        try {
+          this.employeeHistoryService.create(history);
+        } catch (error) {
+          throw new HttpException(
+            'History Saving failed!',
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
+        }
       }
     }
     return { response };
