@@ -22,6 +22,3 @@ import { EmployeesModule } from 'src/employees/employees.module';
   exports: [AuthService],
 })
 export class AuthModule {}
-
-// console.log('VALIDATE');
-// console.log('=========', this.configService.get('SECRET'), process.env.SECRET);

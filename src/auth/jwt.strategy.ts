@@ -21,7 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return {
       isActive: payload.isActive,
       accessGroup: payload.accessGroup,
-      xxx: this.configService.get('SECRET'),
     };
   }
 }
