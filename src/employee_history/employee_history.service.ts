@@ -18,15 +18,14 @@ export class EmployeeHistoryService {
     const createEmployeeHistory = new this.employeeHistoryModel(
       createEmployeeHistoryDto,
     );
-    // return { createEmployeeHistoryDto };
     return await createEmployeeHistory.save();
   }
 
-  findAll() {
-    return this.employeeHistoryModel.find();
+  async findAll() {
+    return await this.employeeHistoryModel.find();
   }
 
-  findOne(employeeNo: string) {
+  async find(employeeNo?: string) {
     return this.employeeHistoryModel.find({ employeeNo });
   }
 
