@@ -21,12 +21,12 @@ export class EmployeeHistoryService {
     return await createEmployeeHistory.save();
   }
 
-  findAll() {
-    return this.employeeHistoryModel.find();
+  async findAll() {
+    return await this.employeeHistoryModel.find();
   }
 
-  findOne(employeeNo: string) {
-    return this.employeeHistoryModel.findOne({ employeeNo });
+  async find(employeeNo?: string) {
+    return this.employeeHistoryModel.find({ employeeNo });
   }
 
   update(

@@ -1,292 +1,313 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import {
-  IsEmail,
-  IsEmpty,
-  IsEnum,
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
+import { IsEmail, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
 
 import {
   CivilStatusEnum,
   DepartmentsEnum,
   EmployeeEnum,
   EmploymentStatusEnum,
-  HighestEducationalAttainmentEnum,
+  EmploymentTypeEnum,
   LocationsEnum,
   RankEnum,
   ReligionEnum,
   UserGroupEnum,
 } from 'src/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
-import { FamilyBackground } from '../interface/employee.interface';
+import {
+  Address,
+  EducationalBackground,
+  EmergencyContact,
+  EmploymentRecords,
+  FamilyBackground,
+  GovtProfExamsPassed,
+  LicensesCertifications,
+  PayrollBankAccount,
+} from '../interface/employee.interface';
 
 export class CreateEmployeeDto {
   @IsEmpty()
   @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
   employeeNo: string;
 
+  @ApiProperty({ required: true })
   @IsNotEmpty()
-  @ApiProperty({ required: true })
-  firstName: string;
-
-  @ApiProperty({ required: true })
-  lastName: string;
-
-  @ApiProperty()
-  middleName: string;
-
-  @ApiProperty()
-  suffix: string;
-
-  @ApiProperty()
-  citizenship: string;
-
-  @ApiProperty({ required: true })
-  @IsEnum(EmployeeEnum)
-  @Transform((param) => param.value.toUpperCase())
-  position: EmployeeEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(RankEnum)
-  @Transform((param) => param.value.toUpperCase())
-  rank: RankEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(DepartmentsEnum)
-  @Transform((param) => param.value.toUpperCase())
-  department: DepartmentsEnum;
-
-  @ApiProperty({ required: true })
-  @IsEnum(LocationsEnum)
-  @Transform((param) => param.value.toUpperCase())
-  location: LocationsEnum;
-
-  @ApiProperty({ required: true })
   isActive: boolean;
 
   @ApiProperty({ required: true })
-  @IsEnum(UserGroupEnum)
+  @IsNotEmpty()
   @Transform((param) => param.value.toUpperCase())
   userGroup: UserGroupEnum;
 
-  @ApiProperty()
-  reportsTo: string;
-
   @ApiProperty({ required: true })
-  dateHired: Date;
-
-  @ApiProperty({ required: true })
-  @IsEnum(EmploymentStatusEnum)
   @Transform((param) => param.value.toUpperCase())
-  employmentStatus: EmploymentStatusEnum;
-
-  @ApiProperty()
-  endOfProbationary: Date;
-
-  @ApiProperty()
-  contractEndDate: Date;
+  @IsNotEmpty()
+  firstName: string;
 
   @ApiProperty({ required: true })
+  @Transform((param) => param.value.toUpperCase())
+  @IsNotEmpty()
+  lastName: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  middleName: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  suffix: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
+  birthDate: number;
+
+  @ApiProperty({ required: true })
+  @Transform((param) => param.value.toUpperCase())
+  @IsNotEmpty()
   gender: string;
 
   @ApiProperty({ required: true })
-  birthDate: Date;
-
-  @ApiProperty({ required: true })
-  personalContactNumber: string;
-
-  @ApiProperty()
-  companyContactNumber: string;
-
-  @ApiProperty({ required: true })
-  taxExemption: string;
-
-  @ApiProperty({ required: true })
-  @IsEmail()
-  companyEmail: string;
-
-  @ApiProperty({ required: true })
-  @IsEmail()
-  personalEmail: string;
-
-  @ApiProperty()
-  payrollBankAccount: {
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    bankBranch: string;
-  };
-
-  @ApiProperty({ required: true })
-  @IsEnum(CivilStatusEnum)
   @Transform((param) => param.value.toUpperCase())
+  @IsNotEmpty()
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @IsEnum(ReligionEnum)
   @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  citizenship: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
   religion: ReligionEnum;
 
-  @ApiProperty()
-  NumberOfDependents: number;
-
-  @ApiProperty()
-  sss: string;
-
-  @ApiProperty()
-  philHealth: string;
-
-  @ApiProperty()
-  pagIbig?: string;
-
-  @ApiProperty()
-  tin: string;
-
-  @ApiProperty()
-  presentCity: string;
-
-  @ApiProperty()
-  permanentCity: string;
-
-  @ApiProperty()
-  presentZipCode: string;
-
-  @ApiProperty()
-  permanentZipCode: string;
-
-  @ApiProperty()
-  presentRegion: string;
-
-  @ApiProperty()
-  permanentRegion: string;
-
-  @ApiProperty()
-  permanentResidenceAddress: string;
-
-  @ApiProperty()
-  presentResidenceAddress: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsEnum(HighestEducationalAttainmentEnum)
+  @ApiProperty({ required: true })
   @Transform((param) => param.value.toUpperCase())
-  highestEducationalAttainment?: HighestEducationalAttainmentEnum;
-
-  @ApiProperty()
-  elementaryYrFrom: number;
-
-  @ApiProperty()
-  elementaryYrTo: number;
-
-  @ApiProperty()
-  elementarySchoolAndAddress: string;
-
-  @ApiProperty()
-  elementaryHonors: string;
-
-  @ApiProperty()
-  secondaryYrFrom: number;
-
-  @ApiProperty()
-  secondaryYrTo: number;
-
-  @ApiProperty()
-  secondarySchoolAndAddress: string;
-
-  @ApiProperty()
-  secondaryHonors: string;
-
-  @ApiProperty()
-  tertiaryYrFrom: number;
-
-  @ApiProperty()
-  tertiaryYrTo: number;
-
-  @ApiProperty()
-  tertiarySchoolAndAddress: string;
-
-  @ApiProperty()
-  tertiaryDegree: string;
-
-  @ApiProperty()
-  tertiaryHonors: string;
-
-  @ApiProperty()
-  postGradYrFrom: number;
-
-  @ApiProperty()
-  postGradYrTo: number;
-
-  @ApiProperty()
-  postGradSchoolAndAddress: string;
-
-  @ApiProperty()
-  postGradDegree: string;
-
-  @ApiProperty()
-  postGradHonors: string;
-
-  @ApiProperty()
-  othersYrFrom: number;
-
-  @ApiProperty()
-  othersYrTo: number;
-
-  @ApiProperty()
-  othersSchoolAndAddress: string;
-
-  @ApiProperty()
-  othersDegree: string;
-
-  @ApiProperty()
-  othersHonors: string;
-
-  @ApiProperty()
-  licensure: string;
+  @IsNotEmpty()
+  personalContactNumber: string;
 
   @ApiProperty({ required: true })
-  emergencyContact: {
-    name: string;
-    address: string;
-    phoneNumber: string;
-  };
+  @Transform((param) => param.value.toUpperCase())
+  @IsEmail()
+  @IsNotEmpty()
+  personalEmail: string;
 
   @ApiProperty()
-  employmentRecords: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  @IsOptional()
+  presentAddress: Address[];
 
   @ApiProperty()
-  govtProfExamsPassed: [
-    {
-      examTitle: string;
-      dateTaken: Date;
-      Rating: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => Address)
+  @IsOptional()
+  permanentAddress: Address[];
 
   @ApiProperty()
-  licensesCertifications: [
-    {
-      name: string;
-      authorizingEntity: string;
-      validUntil: Date;
-      licenseCertNo: string;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => EducationalBackground)
+  @IsOptional()
+  educationalBackground: EducationalBackground[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => EmploymentRecords)
+  @IsOptional()
+  employmentRecords: EmploymentRecords[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => GovtProfExamsPassed)
+  @IsOptional()
+  govtProfExamsPassed: GovtProfExamsPassed[];
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => LicensesCertifications)
+  @IsOptional()
+  licensesCertifications: LicensesCertifications[];
 
   @ApiProperty()
   @ValidateNested({ each: true })
   @Type(() => FamilyBackground)
+  @IsOptional()
   familyBackground: FamilyBackground[];
+
+  @ApiProperty({ required: true })
+  @ValidateNested({ each: true })
+  @Type(() => EmergencyContact)
+  @IsOptional()
+  emergencyContact: EmergencyContact;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  companyContactNumber: string;
+
+  @ApiProperty({ required: true })
+  @Transform((param) => param.value.toUpperCase())
+  @IsEmail()
+  @IsNotEmpty()
+  companyEmail: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase())
+  position: EmployeeEnum;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase())
+  department: DepartmentsEnum;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
+  location: LocationsEnum;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  reportsTo: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @Transform((param) => new Date(param.value).getTime())
+  dateHired: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
+  dateInactive: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
+  endOfProbationary: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Transform((param) => new Date(param.value).getTime())
+  contractEndDate: number;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  rank: RankEnum;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  employmentStatus: EmploymentStatusEnum;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  employmentType: EmploymentTypeEnum;
+
+  @IsOptional()
+  employeeBenefits: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  sss: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  philHealth: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  pagIbig: string;
+
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  tin: string;
+
+  @ApiProperty()
+  @IsOptional()
+  numberOfDependents: number;
+
+  @ApiProperty({ required: true })
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
+  taxExemption: string;
+
+  @IsOptional()
+  @ApiProperty()
+  basicPay: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  payRateType: string;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  paymentMethod: string;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  payrollGroup: string;
+
+  @IsOptional()
+  @ApiProperty()
+  deductionSSS: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  deductPhilhealth: string;
+
+  @IsOptional()
+  @ApiProperty()
+  deductHMDF: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  fixedContributionRate: string;
+
+  @IsOptional()
+  @ApiProperty()
+  deductWithholdingTax: number;
+
+  @IsOptional()
+  @ApiProperty()
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
+  allowanceDetails: string;
+
+  @ApiProperty()
+  @ValidateNested({ each: true })
+  @Type(() => PayrollBankAccount)
+  @IsOptional()
+  payrollBankAccount: PayrollBankAccount;
+
+  @ApiProperty()
+  @IsOptional()
+  employmentLastUpdate: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  jobLastUpdate: Date;
+
+  @IsOptional()
+  type?: 'string';
+
+  @IsOptional()
+  effectiveDate?: Date;
 
   @IsEmpty()
   @ApiProperty()
+  @Transform((param) => param.value.toUpperCase())
+  @IsOptional()
   password: string;
 }

@@ -25,7 +25,7 @@ export class CreateLeaveRequestDto {
   @ApiProperty()
   returnToWorkDate: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   fieldLeaveReason: string;
 
   @ApiProperty()

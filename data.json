@@ -1,0 +1,178 @@
+[
+
+    {
+        "employeeNo": "1154",
+        "isActive": "true",
+        "lastName": "AGDAN",
+        "firstName": "LIANI EMI",
+        "middleName": "PASCUAL",
+        "birthDate": 144720000000,
+        "gender": "FEMALE",
+        "civilStatus": "Single",
+        "citizenship": "Philippines",
+        "personalContactNumber": "9185355631",
+        "personalEmail": "_lianiemiagdan@gmail.com",
+        "companyContactNumber": "639185355631",
+        "companyEmail": "x_lianiemiagdan@gmail.com",
+        "position": "SOFTWARE DEVELOPER MANAGER",
+        "department": "ITD",
+        "location": [
+            "VHO"
+        ],
+        "reportsTo": "0001",
+        "dateHired": 1585137600000,
+        "endOfProbationary":1638288000000,
+        "rank": "Manager",
+        "employmentType": "Regular",
+        "employmentStatus": "Active",
+        "userGroup": "EMPLOYEE"
+    },
+
+
+    {
+        "employeeNo": "1154",
+        "isActive": "true",
+        "lastName": "AGDAN",
+        "firstName": "LIANI EMI",
+        "middleName": "PASCUAL",
+        "birthDate": {
+            "$date": {
+              "$numberLong": "144720000000"
+            }
+          },
+        "gender": "FEMALE",
+        "civilStatus": "Single",
+        "citizenship": "Philippines",
+        "personalContactNumber": "9185355631",
+        "personalEmail": "_lianiemiagdan@gmail.com",
+        "companyContactNumber": "639185355631",
+        "companyEmail": "x_lianiemiagdan@gmail.com",
+        "position": "SOFTWARE DEVELOPER MANAGER",
+        "department": "ITD",
+        "location": [
+            "VHO"
+        ],
+        "reportsTo": "0001",
+        "dateHired": {
+            "$date": {
+              "$numberLong": "1585137600000"
+            }
+          },
+          "endOfProbationary": {
+            "$date": {
+              "$numberLong": "1638288000000"
+            }
+          },
+        "rank": "Manager",
+        "employmentType": "Regular",
+        "employmentStatus": "Active",
+        "userGroup": "EMPLOYEE"
+    },
+
+
+    {
+        "_id": {
+          "$oid": "6315bdc037e2a24f403a088d"
+        },
+        "isActive": true,
+        "userGroup": "approver",
+        "firstName": "randy",
+        "lastName": "gomez",
+        "middleName": "alegre",
+        "birthDate": {
+          "$date": {
+            "$numberLong": "144720000000"
+          }
+        },
+        "gender": "male",
+        "civilStatus": "married",
+        "citizenship": "philippines",
+        "religion": "ang dating daan",
+        "personalContactNumber": "9064195953",
+        "personalEmail": "p1662369217@gmail.com",
+        "educationalBackground": [
+          {
+            "level": "elementary",
+            "yrFrom": "2000",
+            "yrTo": "2002",
+            "schoolAndAddress": "string",
+            "degree": "string",
+            "honors": "string"
+          },
+          {
+            "level": "secondary",
+            "yrFrom": "2002",
+            "yrTo": "2003",
+            "schoolAndAddress": "string",
+            "degree": "string",
+            "honors": "string"
+          }
+        ],
+        "familyBackground": [
+          {
+            "name": "Johny Tan",
+            "relation": "parents",
+            "occupation": "string",
+            "company": "string",
+            "residence": "string"
+          },
+          {
+            "name": "Jenny Tan",
+            "relation": "parents",
+            "occupation": "n/a",
+            "company": "string",
+            "residence": "string"
+          }
+        ],
+        "emergencyContact": {
+          "name": "jane doe",
+          "address": "higway 54",
+          "contactNumber": "+63123459"
+        },
+        "companyEmail": "c1662369217@gmail.com",
+        "position": "accounting assistant",
+        "department": "ceo",
+        "location": [
+          "vho",
+          "vcw"
+        ],
+        "reportsTo": "0001",
+        "dateHired": {
+          "$date": {
+            "$numberLong": "1585137600000"
+          }
+        },
+        "endOfProbationary": {
+          "$date": {
+            "$numberLong": "1638288000000"
+          }
+        },
+        "contractEndDate": {
+          "$date": {
+            "$numberLong": "1701360000000"
+          }
+        },
+        "rank": "manager",
+        "employmentStatus": "active",
+        "employmentType": "regular",
+        "sss": "3443240796",
+        "philHealth": "030255293113",
+        "pagIbig": "121233972057",
+        "tin": "440996953",
+        "numberOfDependents": 3,
+        "taxExemption": "married",
+        "basicPay": 0,
+        "paymentMethod": "cashs",
+        "deductionSSS": 0,
+        "deductHMDF": 0,
+        "deductWithholdingTax": 0,
+        "payrollBankAccount": {
+          "accountName": "john doe",
+          "accountNumber": "1234afasfs",
+          "bankName": "bcd",
+          "bankBranch": "antipolo"
+        },
+        "employeeNo": "0001",
+        "__v": 0
+      }
+]

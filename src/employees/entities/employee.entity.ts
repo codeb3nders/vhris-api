@@ -9,6 +9,12 @@ export class Employee {
   employeeNo: string;
 
   @Prop({ required: true })
+  isActive: boolean;
+
+  @Prop({ required: true })
+  userGroup: string;
+
+  @Prop({ required: true })
   firstName: string;
 
   @Prop({ required: true })
@@ -21,196 +27,53 @@ export class Employee {
   suffix: string;
 
   @Prop({ required: true })
-  citizenship: string;
-
-  @Prop({ required: true })
-  position: string;
-
-  @Prop({ required: true })
-  rank: string;
-
-  @Prop({ required: true })
-  department: string;
-
-  @Prop({ required: true })
-  location: string;
-
-  @Prop({ required: true })
-  isActive: boolean;
-
-  @Prop({ required: true })
-  userGroup: string;
-
-  @Prop()
-  reportsTo: string;
-
-  @Prop({ required: true })
-  dateHired: Date;
-
-  @Prop({ required: true })
-  employmentStatus: string;
-
-  @Prop()
-  endOfProbationary: Date;
-
-  @Prop()
-  contractEndDate: Date;
+  birthDate: number;
 
   @Prop({ required: true })
   gender: string;
 
   @Prop({ required: true })
-  birthDate: Date;
+  civilStatus: string;
+
+  @Prop()
+  citizenship: string;
+
+  @Prop()
+  religion: string;
 
   @Prop({ required: true })
   personalContactNumber: string;
-
-  @Prop()
-  companyContactNumber: string;
-
-  @Prop({ required: true })
-  taxExemption: string;
-
-  @Prop({ required: true, unique: true })
-  companyEmail: string;
 
   @Prop({ required: true, unique: true })
   personalEmail: string;
 
   @Prop({ type: JSON })
-  payrollBankAccount: {
-    accountName: string;
-    accountNumber: string;
-    bankName: string;
-    bankBranch: string;
+  presentAddress: {
+    addressLine: string;
+    barangay: string;
+    municipality: string;
+    province: string;
+    region: string;
   };
 
-  @Prop({ required: true })
-  civilStatus: string;
+  @Prop({ type: JSON })
+  permanentAddress: {
+    addressLine: string;
+    barangay: string;
+    municipality: string;
+    province: string;
+    region: string;
+  };
 
-  @Prop()
-  religion: string;
-
-  @Prop()
-  NumberOfDependents: number;
-
-  @Prop()
-  sss: string;
-
-  @Prop()
-  philHealth: string;
-
-  @Prop()
-  pagIbig: string;
-
-  @Prop()
-  tin: string;
-
-  @Prop()
-  presentCity: string;
-
-  @Prop()
-  permanentCity: string;
-
-  @Prop()
-  presentZipCode: string;
-
-  @Prop()
-  permanentZipCode: string;
-
-  @Prop()
-  presentRegion: string;
-
-  @Prop()
-  permanentRegion: string;
-
-  @Prop()
-  permanentResidenceAddress: string;
-
-  @Prop()
-  presentResidenceAddress: string;
-
-  @Prop()
-  highestEducationalAttainment: string;
-
-  @Prop()
-  elementaryYrFrom: number;
-
-  @Prop()
-  elementaryYrTo: number;
-
-  @Prop()
-  elementarySchoolAndAddress: string;
-
-  @Prop()
-  elementaryHonors: string;
-
-  @Prop()
-  secondaryYrFrom: number;
-
-  @Prop()
-  secondaryYrTo: number;
-
-  @Prop()
-  secondarySchoolAndAddress: string;
-
-  @Prop()
-  secondaryHonors: string;
-
-  @Prop()
-  tertiaryYrFrom: number;
-
-  @Prop()
-  tertiaryYrTo: number;
-
-  @Prop()
-  tertiarySchoolAndAddress: string;
-
-  @Prop()
-  tertiaryDegree: string;
-
-  @Prop()
-  tertiaryHonors: string;
-
-  @Prop()
-  postGradYrFrom: number;
-
-  @Prop()
-  postGradYrTo: number;
-
-  @Prop()
-  postGradSchoolAndAddress: string;
-
-  @Prop()
-  postGradDegree: string;
-
-  @Prop()
-  postGradHonors: string;
-
-  @Prop()
-  othersYrFrom: number;
-
-  @Prop()
-  othersYrTo: number;
-
-  @Prop()
-  othersSchoolAndAddress: string;
-
-  @Prop()
-  othersDegree: string;
-
-  @Prop()
-  othersHonors: string;
-
-  @Prop()
-  licensure: string;
-
-  @Prop({ required: true, type: JSON })
-  emergencyContact: [
+  @Prop({ type: JSON })
+  educationalBackground: [
     {
-      name: string;
-      address: string;
-      phoneNumber: string;
+      level: string;
+      yrFrom: number;
+      yrTo: number;
+      schoolAndAddress: string;
+      degree: string;
+      honors: string;
     },
   ];
 
@@ -220,6 +83,7 @@ export class Employee {
       yrFrom: number;
       yrTo: number;
       companyName: string;
+      companyAddress: string;
       positionHeld: string;
     },
   ];
@@ -229,7 +93,7 @@ export class Employee {
     {
       examTitle: string;
       dateTaken: Date;
-      Rating: string;
+      rating: string;
     },
   ];
 
@@ -253,6 +117,127 @@ export class Employee {
       residence: string;
     },
   ];
+
+  @Prop({ type: JSON })
+  emergencyContact: [
+    {
+      name: string;
+      relation: string;
+      address: string;
+      phoneNumber: string;
+    },
+  ];
+
+  @Prop()
+  companyContactNumber: string;
+
+  @Prop({ required: true, unique: true })
+  companyEmail: string;
+
+  @Prop({ required: true })
+  position: string;
+
+  @Prop({ required: true })
+  department: string;
+
+  @Prop({ required: true, type: JSON })
+  location: string[];
+
+  @Prop()
+  reportsTo: string;
+
+  @Prop({ required: true })
+  dateHired: number;
+
+  @Prop()
+  dateInactive: number;
+
+  @Prop()
+  endOfProbationary: number;
+
+  @Prop()
+  contractEndDate: number;
+
+  @Prop({ required: true })
+  rank: string;
+
+  @Prop({ required: true })
+  employmentStatus: string;
+
+  @Prop({ required: true })
+  employmentType: string;
+
+  employeeBenefits: string;
+  @Prop()
+  sss: string;
+
+  @Prop()
+  philHealth: string;
+
+  @Prop()
+  pagIbig: string;
+
+  @Prop()
+  tin: string;
+
+  @Prop({ required: true, default: 0 })
+  numberOfDependents: number;
+
+  @Prop()
+  taxExemption: string;
+
+  @Prop({ required: true, default: 0 })
+  basicPay: number;
+
+  @Prop()
+  payRateType: string;
+
+  @Prop()
+  paymentMethod: string;
+
+  @Prop()
+  payrollGroup: string;
+
+  @Prop({ required: true, default: 0 })
+  deductionSSS: number;
+
+  @Prop()
+  deductPhilhealth: string;
+
+  @Prop({ required: true, default: 0 })
+  deductHMDF: number;
+
+  @Prop()
+  fixedContributionRate: string;
+
+  @Prop({ required: true, default: 0 })
+  deductWithholdingTax: number;
+
+  @Prop({ type: JSON })
+  allowanceDetails: {
+    code: string;
+    amount: number;
+  };
+
+  @Prop({ type: JSON })
+  payrollBankAccount: {
+    accountName: string;
+    accountNumber: string;
+    bankName: string;
+    bankBranch: string;
+  };
+
+  @Prop({ default: Date.now() })
+  dateCreated: Date;
+
+  @Prop()
+  employmentLastUpdate?: Date;
+
+  @Prop()
+  jobLastUpdate?: Date;
+
+  @Prop()
+  lastModifiedDate?: Date;
 
   @Prop()
   password: string; // USE FOR VALIDATION NOT INCLUDED IN DATABASE

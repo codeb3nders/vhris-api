@@ -12,9 +12,10 @@ import { EmployeesModule } from 'src/employees/employees.module';
     EmployeesModule,
     UserCredentialsModule,
     PassportModule,
-    JwtModule.register({
-      secret: 'SECRET', // TODO: to put in env variables
-      signOptions: { expiresIn: '60S' }, // TODO: put in config
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.SECRET,
+      }),
     }),
   ],
   providers: [AuthService, localStrategy, JwtStrategy],

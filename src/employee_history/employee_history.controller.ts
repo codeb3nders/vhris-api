@@ -28,8 +28,8 @@ export class EmployeeHistoryController {
   }
 
   @Get(':employeeNo')
-  findOne(@Param('employeeNo') employeeNo: string) {
-    return this.employeeHistoryService.findOne(employeeNo);
+  find(@Param('employeeNo') employeeNo?: string) {
+    return this.employeeHistoryService.find(employeeNo);
   }
 
   @Patch(':employeeNo')

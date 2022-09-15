@@ -8,15 +8,205 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
+import { EmployeeFields } from './dto/fields-employe';
 
 @Injectable()
 export class EmployeesService {
+  private aggregateQry;
+  private fields;
   constructor(
     @InjectModel(Employee.name)
     private employeeModel: Model<EmployeeDocument>,
     @Inject(forwardRef(() => UserCredentialsService))
     private userCredentialsService: UserCredentialsService,
-  ) {}
+  ) {
+    this.aggregateQry = [
+      {
+        $lookup: {
+          from: 'enum_tables',
+          let: { field: '$location' },
+          pipeline: [
+            { $addFields: { code: { $toUpper: '$code' } } },
+            { $match: { $expr: { $in: ['$code', '$$field'] } } },
+          ],
+          as: 'locationEnum',
+        },
+      },
+      {
+        $lookup: lookUp('enum_tables', 'userGroup', 'code', 'userGroupEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'gender', 'code', 'genderEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'civilStatus',
+          'code',
+          'civilStatusEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'citizenship',
+          'code',
+          'citizenshipEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'religion', 'code', 'religionEnum'),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payRateType',
+          'code',
+          'payRateTypeEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'payrollGroup',
+          'code',
+          'payrollGroupEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'deductPhilhealth',
+          'code',
+          'deductPhilhealthEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'fixedContributionRate',
+          'code',
+          'fixedContributionRateEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'paymentMethod',
+          'code',
+          'paymentMethodEnum',
+        ),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'position', 'code', 'positionEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'rank', 'code', 'rankEnum'),
+      },
+
+      {
+        $lookup: lookUp('enum_tables', 'department', 'code', 'departmentEnum'),
+      },
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentStatus',
+          'code',
+          'employmentStatusEnum',
+        ),
+      },
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'employmentType',
+          'code',
+          'employmentTypeEnum',
+        ),
+      },
+
+      {
+        $lookup: {
+          from: 'employees',
+          localField: 'reportsTo',
+          foreignField: 'employeeNo',
+          as: 'reportingTo',
+        },
+      },
+      {
+        $set: {
+          dateInactive: formatDate('dateInactive'),
+          endOfProbationary: formatDate('endOfProbationary'),
+          dateHired: formatDate('dateHired'),
+          contractEndDate: formatDate('contractEndDate'),
+          jobLastUpdate: formatDate('jobLastUpdate'),
+          employmentLastUpdate: formatDate('employmentLastUpdate'),
+          dateCreated: formatDate('dateCreated'),
+          birthDate: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: { $toDate: '$birthDate' },
+            },
+          },
+          yearsInService: {
+            $subtract: [
+              {
+                $year: {
+                  $ifNull: [{ $toDate: '$dateInactive' }, '$$NOW'],
+                },
+              },
+              {
+                $year: { $toDate: '$dateHired' },
+              },
+            ],
+          },
+          age: {
+            $subtract: [
+              {
+                $subtract: [
+                  {
+                    $year: '$$NOW',
+                  },
+                  {
+                    $year: { $toDate: '$birthDate' },
+                  },
+                ],
+              },
+              {
+                $cond: [
+                  {
+                    $lt: [
+                      {
+                        $dayOfYear: '$birthday',
+                      },
+                      {
+                        $dayOfYear: '$$NOW',
+                      },
+                    ],
+                  },
+                  0,
+                  1,
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ];
+
+    // TODO: apply aggregation $project to transform output data to lowercase
+    this.fields = EmployeeFields;
+  }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);
@@ -50,54 +240,108 @@ export class EmployeesService {
     return response;
   }
 
-  async findAll(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
-  }
+  async findAll(_params?: any): Promise<Employee[]> {
+    const pipeline = [...this.aggregateQry];
 
-  async findAllWithLeaves(): Promise<any> {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'leave_requests',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-    ];
+    const relations = _params.relations;
+    delete _params.relations;
+    const params = _params;
 
-    return this.employeeModel.aggregate(pipeline);
-  }
+    let key;
+    const keys = Object.keys(params);
+    let n = keys.length;
+    const newOject: any = {};
+    let toMatch = [];
+    while (n--) {
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toLowerCase()
+        : Number(params[keys[n]]);
 
-  async findAllLeavesById(employeeNo: string): Promise<any> {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'l',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'leave_requests',
-        },
-      },
-      {
-        $match: {
-          employeeNo: employeeNo,
-        },
-      },
-    ];
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        toMatch.push({
+          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
+        });
+      }
+    }
 
-    return this.employeeModel.aggregate(pipeline);
+    const match = toMatch.map((i) => {
+      return { $match: i };
+    });
+
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, ...match, ..._relations];
+    return this.employeeModel.aggregate(pLine);
   }
 
   async findLast() {
     return this.employeeModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 
-  async findOne(employeeNo: string) {
-    return this.employeeModel.findOne({ employeeNo });
+  async findOne(employeeNo: string, _params?: any) {
+    const _relations = [];
+
+    if (_params) {
+      const relations = _params.relations;
+      delete _params.relations;
+
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
+        });
+      }
+    }
+
+    const pipeline = [
+      ...this.aggregateQry,
+      {
+        $match: {
+          employeeNo: employeeNo,
+        },
+      },
+      {
+        $limit: 1,
+      },
+      ..._relations,
+    ];
+
+    const response = await this.employeeModel.aggregate(pipeline);
+    return response[0];
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
+    updateEmployeeDto['lastModifiedDate'] = Date.now();
     return this.employeeModel.updateOne(
       { employeeNo },
       { $set: { ...updateEmployeeDto } },
@@ -112,3 +356,29 @@ export class EmployeesService {
     return response;
   }
 }
+
+const lookUp = (
+  tableName: string,
+  localField: string,
+  foreignField: string,
+  asName: string,
+) => {
+  return {
+    from: `${tableName}`,
+    let: { field: { $toUpper: `$${localField}` } },
+    pipeline: [
+      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
+      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
+    ],
+    as: asName,
+  };
+};
+
+const formatDate = (date: string) => {
+  return {
+    $dateToString: {
+      format: '%Y-%m-%d',
+      date: { $toDate: `$${date}` },
+    },
+  };
+};
