@@ -12,12 +12,16 @@ import { EmployeesModule } from 'src/employees/employees.module';
     EmployeesModule,
     UserCredentialsModule,
     PassportModule,
-    JwtModule.register({
-      secret: `SeCR3TK3YF0RAp1@vhris`,
-      //signOptions: { expiresIn: '60S' }, // TODO: put in config
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.SECRET,
+      }),
     }),
   ],
   providers: [AuthService, localStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
+
+// console.log('VALIDATE');
+// console.log('=========', this.configService.get('SECRET'), process.env.SECRET);
