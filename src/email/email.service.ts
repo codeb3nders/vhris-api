@@ -8,9 +8,11 @@ export class EmailService {
     private mailService: MailerService,
     private configService: ConfigService,
   ) {}
-  async sendEmail(data: any, tempPassword: string) {
+  async sendEmail(data: any, tempPassword: string, message?: any) {
     const { personalEmail } = data;
-    const message = `
+    const emailMessage = message
+      ? message
+      : `
     Hi ${data.firstName} ${data.lastName},
 
     Here is your Account Credentials.
@@ -26,7 +28,7 @@ export class EmailService {
       to: personalEmail,
       from: `${process.env.EMAIL_DOMAIN}`,
       subject: 'VHRIS Account Access.',
-      text: message,
+      text: emailMessage,
     };
 
     try {
