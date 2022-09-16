@@ -244,7 +244,6 @@ export enum NotAllowedToEdit {
   'LOCATION',
   'USERGROUP',
   'EMPLOYMENTSTATUS',
-  'CIVILSTATUS',
 }
 
 export enum PayTypeEnum {

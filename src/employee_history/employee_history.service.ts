@@ -10,10 +10,33 @@ import {
 
 @Injectable()
 export class EmployeeHistoryService {
+  private aggregateQry;
   constructor(
     @InjectModel(Employee_history.name)
     private employeeHistoryModel: Model<EmployeeHistoryDocument>,
-  ) {}
+  ) {
+    this.aggregateQry = [
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'details.paymentMethod',
+          'code',
+          'paymentMethodEnum',
+        ),
+      },
+      {
+        $lookup: lookUp(
+          'enum_tables',
+          'details.employmentType',
+          'code',
+          'employmentTypeEnum',
+        ),
+      },
+      {
+        $lookup: lookUp('enum_tables', 'details.gender', 'code', 'genderEnum'),
+      },
+    ];
+  }
   async create(createEmployeeHistoryDto: CreateEmployeeHistoryDto) {
     const createEmployeeHistory = new this.employeeHistoryModel(
       createEmployeeHistoryDto,
@@ -26,7 +49,9 @@ export class EmployeeHistoryService {
   }
 
   async find(employeeNo?: string) {
-    return this.employeeHistoryModel.find({ employeeNo });
+    const pipeline = [...this.aggregateQry];
+    const response = await this.employeeHistoryModel.aggregate(pipeline);
+    return response;
   }
 
   update(
@@ -43,3 +68,20 @@ export class EmployeeHistoryService {
     return this.employeeHistoryModel.deleteOne({ employeeNo });
   }
 }
+
+const lookUp = (
+  tableName: string,
+  localField: string,
+  foreignField: string,
+  asName: string,
+) => {
+  return {
+    from: `${tableName}`,
+    let: { field: { $toUpper: `$${localField}` } },
+    pipeline: [
+      { $addFields: { code: { $toUpper: `$${foreignField}` } } },
+      { $match: { $expr: { $eq: [`$${foreignField}`, '$$field'] } } },
+    ],
+    as: asName,
+  };
+};
