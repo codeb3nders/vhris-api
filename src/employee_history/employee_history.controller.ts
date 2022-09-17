@@ -10,6 +10,7 @@ import {
 import { EmployeeHistoryService } from './employee_history.service';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
+import { EmployeeHistoryResponseHandler } from './response_handler/employee_history.response';
 
 @Controller('employee-history')
 export class EmployeeHistoryController {
@@ -28,8 +29,9 @@ export class EmployeeHistoryController {
   }
 
   @Get(':employeeNo')
-  find(@Param('employeeNo') employeeNo?: string) {
-    return this.employeeHistoryService.find(employeeNo);
+  async find(@Param('employeeNo') employeeNo?: string) {
+    const response = await this.employeeHistoryService.find(employeeNo);
+    return EmployeeHistoryResponseHandler.ok(response);
   }
 
   @Patch(':employeeNo')
