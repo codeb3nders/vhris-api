@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { isNotEmpty, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateEmployeeHistoryDto {
   @IsNotEmpty()
@@ -17,4 +17,8 @@ export class CreateEmployeeHistoryDto {
   @IsNotEmpty()
   @ApiProperty()
   details: {};
+
+  @IsOptional()
+  @ApiProperty()
+  remarks: {};
 }

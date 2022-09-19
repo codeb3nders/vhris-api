@@ -93,6 +93,7 @@ export class EmployeesController {
     );
     const type = updateEmployeeDto.type;
     const effectiveDate = updateEmployeeDto.effectiveDate;
+    const remarks = updateEmployeeDto?.remarks || null;
 
     // if (!type)
     //   throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
@@ -117,6 +118,7 @@ export class EmployeesController {
           employeeNo: employeeNo,
           type: type,
           effectiveDate,
+          remarks,
           details: previousValue,
         };
         try {
