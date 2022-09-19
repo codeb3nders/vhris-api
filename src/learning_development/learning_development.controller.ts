@@ -28,7 +28,7 @@ export class LearningDevelopmentController {
   }
 
   @Get(':employeeNo')
-  findOne(@Param('employeeNo') employeeNo: string) {
-    return this.learningDevelopmentService.findOne(employeeNo);
+  find(@Param('employeeNo') employeeNo: string) {
+    return this.learningDevelopmentService.find(employeeNo);
   }
 }

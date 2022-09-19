@@ -23,7 +23,7 @@ export class LearningDevelopmentService {
     return await this.learningDevelopment.find();
   }
 
-  async findOne(employeeNo: string) {
-    return this.learningDevelopment.findOne({ employeeNo });
+  async find(employeeNo: string) {
+    return this.learningDevelopment.find({ employeeNo });
   }
 }

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EmployeeHistoryService } from './employee_history.service';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
@@ -24,8 +25,8 @@ export class EmployeeHistoryController {
   }
 
   @Get()
-  findAll() {
-    return this.employeeHistoryService.findAll();
+  findAll(@Query() params) {
+    return this.employeeHistoryService.findAll(params);
   }
 
   @Get(':employeeNo')
