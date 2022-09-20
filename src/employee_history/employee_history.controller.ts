@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { EmployeeHistoryService } from './employee_history.service';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
@@ -25,13 +27,21 @@ export class EmployeeHistoryController {
   }
 
   @Get()
-  findAll(@Query() params) {
-    return this.employeeHistoryService.findAll(params);
+  async findAll(@Query() params) {
+    const response = await this.employeeHistoryService.findAll(params);
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+    }
+    return EmployeeHistoryResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
   async find(@Param('employeeNo') employeeNo?: string) {
     const response = await this.employeeHistoryService.find(employeeNo);
+
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+    }
     return EmployeeHistoryResponseHandler.ok(response);
   }
 

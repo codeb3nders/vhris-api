@@ -77,6 +77,9 @@ export class EmployeesController {
     @Param('employeeNo') employeeNo: string,
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+    }
     return EmployeeResponseHandler.ok(response);
   }
 

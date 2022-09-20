@@ -106,12 +106,6 @@ export class EmployeeHistoryService {
     return this.employeeHistoryModel.aggregate(pLine);
   }
 
-  // async find(employeeNo?: string) {
-  //   const pipeline = [...this.aggregateQry];
-  //   const response = await this.employeeHistoryModel.aggregate(pipeline);
-  //   return response;
-  // }
-
   async find(employeeNo: string, _params?: any) {
     const _relations = [];
 
@@ -142,14 +136,10 @@ export class EmployeeHistoryService {
           employeeNo: employeeNo,
         },
       },
-      {
-        $limit: 1,
-      },
       ..._relations,
     ];
 
-    const response = await this.employeeHistoryModel.aggregate(pipeline);
-    return response[0];
+    return await this.employeeHistoryModel.aggregate(pipeline);
   }
 
   update(
