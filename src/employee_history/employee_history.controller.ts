@@ -30,7 +30,7 @@ export class EmployeeHistoryController {
   async findAll(@Query() params) {
     const response = await this.employeeHistoryService.findAll(params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+      throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
     }
     return EmployeeHistoryResponseHandler.ok(response);
   }
@@ -40,7 +40,7 @@ export class EmployeeHistoryController {
     const response = await this.employeeHistoryService.find(employeeNo);
 
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+      throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
     }
     return EmployeeHistoryResponseHandler.ok(response);
   }

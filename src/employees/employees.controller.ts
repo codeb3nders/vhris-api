@@ -62,7 +62,7 @@ export class EmployeesController {
       const response = await this.employeesService.findAll(params);
 
       if (!response || response.length < 1) {
-        throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+        throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
       }
       return EmployeeResponseHandler.ok(response);
     } catch (error) {
@@ -78,7 +78,7 @@ export class EmployeesController {
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.NOT_FOUND);
+      throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
     }
     return EmployeeResponseHandler.ok(response);
   }
