@@ -61,7 +61,6 @@ export class EmployeesController {
     const response = await this.employeesService.findAll(params);
 
     if (!response || response.length < 1) {
-      console.log(HttpStatus.OK);
       throw new HttpException('No Record found!', HttpStatus.OK);
     }
     return EmployeeResponseHandler.ok(response);

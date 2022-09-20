@@ -71,7 +71,7 @@ function returnItem(item) {
     payRateType: prepareEnumItem(item.payRateTypeEnum),
     paymentMethod: prepareEnumItem(item.paymentMethodEnum),
     payrollGroup: prepareEnumItem(item.payrollGroupEnum),
-
+    employeeBenefits: item.employeeBenefits,
     deductionSSS: item.deductionSSS,
     deductPhilhealth: prepareEnumItem(item.deductPhilhealthEnum),
     deductHMDF: item.deductHMDF,

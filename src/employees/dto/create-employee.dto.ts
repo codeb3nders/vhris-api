@@ -208,7 +208,7 @@ export class CreateEmployeeDto {
   employmentType: EmploymentTypeEnum;
 
   @IsOptional()
-  employeeBenefits: string;
+  employeeBenefits: string[];
 
   @ApiProperty()
   @Transform((param) => param.value.toUpperCase())
