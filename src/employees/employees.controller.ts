@@ -58,16 +58,13 @@ export class EmployeesController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query() params): Promise<EmployeeI[]> {
-    try {
-      const response = await this.employeesService.findAll(params);
+    const response = await this.employeesService.findAll(params);
 
-      if (!response || response.length < 1) {
-        throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
-      }
-      return EmployeeResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
+    if (!response || response.length < 1) {
+      console.log(HttpStatus.OK);
+      throw new HttpException('No Record found!', HttpStatus.OK);
     }
+    return EmployeeResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -78,7 +75,7 @@ export class EmployeesController {
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('No Record found!', HttpStatus.OK);
     }
     return EmployeeResponseHandler.ok(response);
   }
