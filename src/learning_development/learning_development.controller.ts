@@ -31,4 +31,20 @@ export class LearningDevelopmentController {
   find(@Param('employeeNo') employeeNo: string) {
     return this.learningDevelopmentService.find(employeeNo);
   }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateLearningDevelopmentDto: UpdateLearningDevelopmentDto,
+  ) {
+    return await this.learningDevelopmentService.update(
+      id,
+      updateLearningDevelopmentDto,
+    );
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.learningDevelopmentService.remove(id);
+  }
 }

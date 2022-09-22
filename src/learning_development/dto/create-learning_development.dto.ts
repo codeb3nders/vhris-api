@@ -49,4 +49,8 @@ export class CreateLearningDevelopmentDto {
   @ApiProperty()
   @IsOptional()
   bondEndDate: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  lastModifiedDate?: number;
 }

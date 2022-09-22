@@ -25,6 +25,7 @@ function returnItem(item) {
     dateAssigned: item.dateAssigned,
     dateReturned: item.dateReturned,
     remarks: item.remarks,
+    lastModifiedDate: item.lastModifiedDate,
   };
 
   return toReturn;
@@ -48,20 +49,3 @@ const prepareEnumItem = (item: any, isArray = false) => {
     return data[0];
   }
 };
-
-function getReportToDetails(items: any) {
-  if (!items || items.length < 1) {
-    return null;
-  }
-
-  let item;
-  if (Array.isArray(items)) {
-    item = items[0];
-  } else {
-    item = items;
-  }
-  return {
-    ...item,
-    employeeName: `${item.firstName} ${item.lastName}`,
-  };
-}

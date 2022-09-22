@@ -26,4 +26,22 @@ export class LearningDevelopmentService {
   async find(employeeNo: string) {
     return this.learningDevelopment.find({ employeeNo });
   }
+
+  async update(
+    id: string,
+    updateLearningDevelopmentDto: UpdateLearningDevelopmentDto,
+  ) {
+    updateLearningDevelopmentDto['lastModifiedDate'] = Date.now();
+    const filter = { _id: id };
+    const update = updateLearningDevelopmentDto;
+    try {
+      return await this.learningDevelopment.updateOne(filter, update);
+    } catch (error) {
+      return `Failed updating record with id ${id}`;
+    }
+  }
+
+  remove(id: string) {
+    return this.learningDevelopment.deleteOne({ id });
+  }
 }

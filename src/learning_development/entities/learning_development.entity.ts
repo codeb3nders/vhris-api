@@ -40,6 +40,9 @@ export class LearningDevelopment {
 
   @Prop()
   bondEndDate: Date;
+
+  @Prop()
+  lastModifiedDate?: number;
 }
 
 export const LearningDevelopmentSchema =

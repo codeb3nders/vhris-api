@@ -63,20 +63,19 @@ export class AssetManagementController {
     @Param('id') id: string,
     @Body() updateAssetManagementDto: UpdateAssetManagementDto,
   ) {
-    try {
-      await this.validatorsService.validateEmployeesPostRequest(
-        updateAssetManagementDto,
-        toCheck,
-      );
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateAssetManagementDto,
+      toCheck,
+    );
 
-      return this.assetManagementService.update(id, updateAssetManagementDto);
-    } catch (error) {
-      ErrorResponse.conflict(error.message || error);
-    }
+    return await this.assetManagementService.update(
+      id,
+      updateAssetManagementDto,
+    );
   }
 
-  @Delete(':employeeNo')
-  remove(@Param('employeeNo') employeeNo: string) {
-    return this.assetManagementService.remove(employeeNo);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.assetManagementService.remove(id);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
@@ -22,61 +22,9 @@ export class AssetManagementService {
 
       {
         $set: {
-          dateInactive: formatDate('dateInactive'),
-          endOfProbationary: formatDate('endOfProbationary'),
-          dateHired: formatDate('dateHired'),
-          contractEndDate: formatDate('contractEndDate'),
-          jobLastUpdate: formatDate('jobLastUpdate'),
-          employmentLastUpdate: formatDate('employmentLastUpdate'),
-          dateCreated: formatDate('dateCreated'),
-          birthDate: {
-            $dateToString: {
-              format: '%Y-%m-%d',
-              date: { $toDate: '$birthDate' },
-            },
-          },
-          yearsInService: {
-            $subtract: [
-              {
-                $year: {
-                  $ifNull: [{ $toDate: '$dateInactive' }, '$$NOW'],
-                },
-              },
-              {
-                $year: { $toDate: '$dateHired' },
-              },
-            ],
-          },
-          age: {
-            $subtract: [
-              {
-                $subtract: [
-                  {
-                    $year: '$$NOW',
-                  },
-                  {
-                    $year: { $toDate: '$birthDate' },
-                  },
-                ],
-              },
-              {
-                $cond: [
-                  {
-                    $lt: [
-                      {
-                        $dayOfYear: '$birthday',
-                      },
-                      {
-                        $dayOfYear: '$$NOW',
-                      },
-                    ],
-                  },
-                  0,
-                  1,
-                ],
-              },
-            ],
-          },
+          dateAssigned: formatDate('dateAssigned'),
+          dateReturned: formatDate('dateReturned'),
+          lastModifiedDate: formatDate('lastModifiedDate'),
         },
       },
     ];
@@ -181,15 +129,19 @@ export class AssetManagementService {
     return await this.assetManagementModel.aggregate(pipeline);
   }
 
-  update(id: string, updateAssetManagementDto: UpdateAssetManagementDto) {
+  async update(id: string, updateAssetManagementDto: UpdateAssetManagementDto) {
     updateAssetManagementDto['lastModifiedDate'] = Date.now();
     const filter = { _id: id };
     const update = updateAssetManagementDto;
-    return this.assetManagementModel.findOneAndUpdate(filter, update);
+    try {
+      return await this.assetManagementModel.updateOne(filter, update);
+    } catch (error) {
+      return `Failed updating record with id ${id}`;
+    }
   }
 
   remove(id: string) {
-    return `This action removes a #${id} assetManagement`;
+    return this.assetManagementModel.deleteOne({ id });
   }
 }
 
