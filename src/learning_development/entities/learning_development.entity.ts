@@ -5,7 +5,7 @@ export type LearningDevelopmentDocument = LearningDevelopment & Document;
 
 @Schema()
 export class LearningDevelopment {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   employeeNo: string;
 
   @Prop({ default: Date.now() })

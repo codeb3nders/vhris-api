@@ -30,6 +30,24 @@ import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
 
+const toCheck = [
+  'citizenship',
+  'userGroup',
+  'civilStatus',
+  // 'religion',
+  //'educationalBackground',
+  //'payrollBankAccount',
+  'position',
+  'department',
+  'location',
+  'employmentStatus',
+  'employmentType',
+  'rank',
+  // 'paymentMethod',
+  // 'deductPhilhealth',
+  // 'fixedContributionRate',
+];
+
 @ApiTags('Employees')
 @Controller('employees')
 export class EmployeesController {
@@ -47,6 +65,7 @@ export class EmployeesController {
     try {
       await this.validatorsService.validateEmployeesPostRequest(
         createEmployeeDto,
+        toCheck,
       );
 
       return await this.employeesService.create(createEmployeeDto);
@@ -89,6 +108,7 @@ export class EmployeesController {
     isValidRequest(updateEmployeeDto, user);
     await this.validatorsService.validateEmployeesPostRequest(
       updateEmployeeDto,
+      toCheck,
     );
     const type = updateEmployeeDto.type;
     const effectiveDate = updateEmployeeDto.effectiveDate;
