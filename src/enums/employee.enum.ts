@@ -244,7 +244,6 @@ export enum NotAllowedToEdit {
   'LOCATION',
   'USERGROUP',
   'EMPLOYMENTSTATUS',
-  'CIVILSTATUS',
 }
 
 export enum PayTypeEnum {
@@ -465,3 +464,23 @@ export enum EducationLevelEnum {
   'POST GRADUATE',
   'OTHERS',
 }
+
+export const withEnumValuesList = [
+  'location',
+  'userGroup',
+  'gender',
+  'civilStatus',
+  'citizenship',
+  'religion',
+  'payRateType',
+  'payrollGroup',
+  'deductPhilhealth',
+  'fixedContributionRate',
+  'paymentMethod',
+  'position',
+  'rank',
+  'department',
+  'employmentStatus',
+  'employmentType',
+  'reportsTo',
+];

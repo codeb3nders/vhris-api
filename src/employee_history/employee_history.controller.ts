@@ -6,10 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { EmployeeHistoryService } from './employee_history.service';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
+import { EmployeeHistoryResponseHandler } from './response_handler/employee_history.response';
 
 @Controller('employee-history')
 export class EmployeeHistoryController {
@@ -23,13 +27,22 @@ export class EmployeeHistoryController {
   }
 
   @Get()
-  findAll() {
-    return this.employeeHistoryService.findAll();
+  async findAll(@Query() params) {
+    const response = await this.employeeHistoryService.findAll(params);
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.OK);
+    }
+    return EmployeeHistoryResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
-  find(@Param('employeeNo') employeeNo?: string) {
-    return this.employeeHistoryService.find(employeeNo);
+  async find(@Param('employeeNo') employeeNo?: string) {
+    const response = await this.employeeHistoryService.find(employeeNo);
+
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.OK);
+    }
+    return EmployeeHistoryResponseHandler.ok(response);
   }
 
   @Patch(':employeeNo')

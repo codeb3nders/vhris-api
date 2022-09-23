@@ -244,14 +244,13 @@ export class EmployeesService {
     const pipeline = [...this.aggregateQry];
 
     const relations = _params.relations;
+
     delete _params.relations;
     const params = _params;
 
-    let key;
     const keys = Object.keys(params);
     let n = keys.length;
-    const newOject: any = {};
-    let toMatch = [];
+    const toMatch = [];
     while (n--) {
       let value = isNaN(params[keys[n]])
         ? params[keys[n]].toLowerCase()
