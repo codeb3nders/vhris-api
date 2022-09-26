@@ -118,6 +118,7 @@ export class EmployeesController {
     //   throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
 
     const employee = await this.employeesService.findOne(employeeNo);
+
     if (!employee)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
     const response = await this.employeesService.update(

@@ -16,6 +16,7 @@ import {
 import { IsNotEmpty } from 'class-validator';
 import {
   Address,
+  AllowanceDetails,
   EducationalBackground,
   EmergencyContact,
   EmploymentRecords,
@@ -280,10 +281,11 @@ export class CreateEmployeeDto {
   @ApiProperty()
   deductWithholdingTax: number;
 
-  @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.map((item) => item.toUpperCase()))
-  allowanceDetails: string;
+  @ValidateNested({ each: true })
+  @Type(() => AllowanceDetails)
+  @IsOptional()
+  allowanceDetails: AllowanceDetails;
 
   @ApiProperty()
   @ValidateNested({ each: true })

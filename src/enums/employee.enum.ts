@@ -465,6 +465,12 @@ export enum EducationLevelEnum {
   'OTHERS',
 }
 
+export enum AllowanceTypeEnum {
+  'BASIC ALLOWANCE',
+  'PROJECT ALLOWANCE',
+  'PER DIEM (MEAL AND TRANSPORTATION ALLOWANCE)',
+}
+
 export const withEnumValuesList = [
   'location',
   'userGroup',

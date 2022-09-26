@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import {
+  AllowanceTypeEnum,
   EducationLevelEnum,
   LocationsEnum,
   RelationEnum,
@@ -193,6 +194,16 @@ export class LicensesCertifications {
   @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   licenseCertNo: string;
+}
+
+export class AllowanceDetails {
+  @IsEnum(AllowanceTypeEnum)
+  @Transform((param) => param.value.toUpperCase().trim())
+  @IsOptional()
+  allowanceType: AllowanceTypeEnum;
+
+  @IsOptional()
+  amount: number;
 }
 
 export class Location {
