@@ -20,6 +20,7 @@ export const ResponseHandler = {
 };
 
 function returnItem(item) {
+  console.log({ item });
   const leaveRequests = item.leave_requests;
   const employeeLeaves = item.employee_leaves;
 

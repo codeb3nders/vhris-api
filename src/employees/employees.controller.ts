@@ -86,6 +86,17 @@ export class EmployeesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('search')
+  async search(@Query() params: { name: string }): Promise<EmployeeI[]> {
+    const response = await this.employeesService.search(params);
+
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.OK);
+    }
+    return EmployeeResponseHandler.ok(response);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
   async findOne(
     @Query() params: FindOneEmployeeDto,
@@ -113,9 +124,6 @@ export class EmployeesController {
     const type = updateEmployeeDto.type;
     const effectiveDate = updateEmployeeDto.effectiveDate;
     const remarks = updateEmployeeDto?.remarks || null;
-
-    // if (!type)
-    //   throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
 
     const employee = await this.employeesService.findOne(employeeNo);
 
