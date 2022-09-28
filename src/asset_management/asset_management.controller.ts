@@ -44,7 +44,7 @@ export class AssetManagementController {
   async findAll(@Query() params) {
     const response = await this.assetManagementService.findAll(params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return response;
     }
     return assetManagementResponseHandler.ok(response);
   }
@@ -53,7 +53,7 @@ export class AssetManagementController {
   async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
     const response = await this.assetManagementService.find(employeeNo);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return response;
     }
     return assetManagementResponseHandler.ok(response);
   }
