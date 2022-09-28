@@ -43,21 +43,19 @@ export class EmployeeDocumentsController {
   }
 
   @Get()
-  async findAll(@Query() params): Promise<EmployeeDocument[]> {
-    const response: EmployeeDocument[] =
-      await this.employeeDocumentsService.findAll(params);
+  async findAll(@Query() params) {
+    const response = await this.employeeDocumentsService.findAll(params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return response;
     }
-    return response;
-    // return employeeDocumentsResponseHandler.ok(response);
+    return employeeDocumentsResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
   async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
     const response = await this.employeeDocumentsService.find(employeeNo);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return response;
     }
     return employeeDocumentsResponseHandler.ok(response);
   }
@@ -65,16 +63,16 @@ export class EmployeeDocumentsController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateAssetManagementDto: UpdateAssetManagementDto,
+    @Body() updateEmployeeDocumentDto: UpdateEmployeeDocumentDto,
   ) {
     await this.validatorService.validateEmployeesPostRequest(
-      updateAssetManagementDto,
+      updateEmployeeDocumentDto,
       toCheck,
     );
 
     return await this.employeeDocumentsService.update(
       id,
-      updateAssetManagementDto,
+      updateEmployeeDocumentDto,
     );
   }
 

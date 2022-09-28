@@ -1,7 +1,7 @@
-import { EmployeeDocumentsDocument } from 'src/employee_documents/entities/employee_document.entity';
+import { EmployeeDocument } from 'src/employee_documents/entities/employee_document.entity';
 
 export const employeeDocumentsResponseHandler = {
-  ok: (data: EmployeeDocumentsDocument[]) => {
+  ok: (data: EmployeeDocument[]) => {
     if (data.length > 0) {
       return data.map((item: any) => {
         return returnItem(item);
@@ -16,7 +16,7 @@ function returnItem(item) {
   const toReturn: any = {
     id: item._id,
     employeeNo: item.employeeNo,
-    documentType: item.documentType,
+    documentType: prepareEnumItem(item.documentTypeEnum),
     dateUploaded: item.dateUploaded,
     url: item.url,
     remarks: item.remarks,
