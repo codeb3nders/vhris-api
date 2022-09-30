@@ -25,7 +25,15 @@ export class EmployeesService {
         $project: {
           ...defaultItems,
           name: {
-            $concat: ['$firstName', ' ', '$middleName', ' ', '$lastName'],
+            $concat: [
+              '$lastName',
+              ',',
+              ' ',
+              '$firstName',
+              ' ',
+              '$middleName',
+              ' ',
+            ],
           },
         },
       },
@@ -375,8 +383,6 @@ export class EmployeesService {
       let value = isNaN(params[keys[n]])
         ? params[keys[n]].toUpperCase()
         : Number(params[keys[n]]);
-
-      console.log('VALUE', value);
 
       if (value === 'true' || value === 'false') {
         value = value === 'true';
