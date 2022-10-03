@@ -18,7 +18,6 @@ export class ValidatorsService {
           )
           .find((i) => i.code.toLocaleLowerCase() === text.toLocaleLowerCase());
       } catch (error) {
-        console.log({ error });
         throw new HttpException(
           'Error in: validateEmployeesPostRequest!',
           HttpStatus.INTERNAL_SERVER_ERROR,
