@@ -11,7 +11,7 @@ export class EmployeeDocument {
   @Prop({ required: true })
   employeeNo: string;
 
-  @Prop({ required: true })
+  @Prop({ unique: true, required: true })
   documentType: string;
 
   @Prop({ required: true })

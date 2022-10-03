@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
@@ -39,7 +39,11 @@ export class EmployeeDocumentsService {
       createEmployeeDocumentDto,
     );
 
-    return await createdEmployee.save();
+    try {
+      return await createdEmployee.save();
+    } catch (error) {
+      throw new HttpException(error.message || error, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async findAll(_params?: any): Promise<EmployeeDocument[]> {
