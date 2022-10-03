@@ -6,7 +6,7 @@ export type OvertimeRequestDocument = Overtime_request & Document;
 @Schema()
 export class Overtime_request {
   @Prop()
-  timeStamp: string;
+  timestamp: string;
   @Prop({ required: [true, 'overtimeRequestNo is required!'] })
   overtimeRequestNo: string;
   @Prop()

@@ -9,7 +9,7 @@ export class CreateEmployeeDocumentDto {
 
   @ApiProperty()
   @IsEmpty()
-  timeStamp: number;
+  timestamp: number;
 
   @ApiProperty()
   @Transform((param) => param.value.toUpperCase().trim())

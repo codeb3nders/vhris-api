@@ -42,7 +42,7 @@ export class UserCredentialsService {
 
     const userCredentials: CreateUserCredentialDto = {
       employeeNo: employee.employeeNo,
-      timeStamp: new Date().getTime(),
+      timestamp: new Date().getTime(),
       password: password,
       accessGroup: employee.userGroup,
       isActive: true,

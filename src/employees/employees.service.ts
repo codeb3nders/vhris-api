@@ -235,7 +235,7 @@ export class EmployeesService {
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
-        timeStamp: new Date().getTime(),
+        timestamp: new Date().getTime(),
 
         accessGroup: response.userGroup,
         isActive: true,

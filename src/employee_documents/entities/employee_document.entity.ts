@@ -6,7 +6,7 @@ export type EmployeeDocumentsDocument = EmployeeDocument & Document;
 @Schema()
 export class EmployeeDocument {
   @Prop({ required: true, default: Date.now() })
-  timeStamp: number;
+  timestamp: number;
 
   @Prop({ required: true })
   employeeNo: string;

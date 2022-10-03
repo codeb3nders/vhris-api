@@ -8,7 +8,7 @@ export class User_credential {
   @Prop({ required: true, unique: true })
   employeeNo: string;
   @Prop({ default: new Date().getTime() })
-  timeStamp: number;
+  timestamp: number;
   @Prop({ required: true })
   password: string;
   @Prop({ required: true })

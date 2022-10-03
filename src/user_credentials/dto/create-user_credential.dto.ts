@@ -8,7 +8,7 @@ export class CreateUserCredentialDto {
 
   @ApiProperty()
   @IsEmpty()
-  timeStamp: number;
+  timestamp: number;
 
   @ApiProperty()
   @IsEmpty()

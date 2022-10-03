@@ -16,6 +16,7 @@ function returnItem(item) {
   const toReturn: any = {
     id: item._id,
     employeeNo: item.employeeNo,
+    timestamp: item.timestamp,
     documentType: prepareEnumItem(item.documentTypeEnum),
     dateUploaded: item.dateUploaded,
     url: item.url,
