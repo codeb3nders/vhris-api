@@ -52,6 +52,9 @@ export class DisciplinaryAction {
 
   @Prop()
   status: string;
+
+  @Prop()
+  lastModifiedDate?: Date;
 }
 
 export const DisciplinaryActionSchema =

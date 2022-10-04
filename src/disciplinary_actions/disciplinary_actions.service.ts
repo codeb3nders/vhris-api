@@ -14,13 +14,20 @@ export class DisciplinaryActionsService {
   private aggregateQry;
   constructor(
     @InjectModel(DisciplinaryAction.name)
-    private assetManagementModel: Model<DisciplinaryActionDocument>,
+    private disciplinaryActionModel: Model<DisciplinaryActionDocument>,
   ) {
     this.aggregateQry = [
       {
         $set: {
-          dateAssigned: aggregateFormatDate('dateAssigned'),
-          dateReturned: aggregateFormatDate('dateReturned'),
+          dateAcknowledged: aggregateFormatDate('dateAcknowledged'),
+          misconductReportIssueDate: aggregateFormatDate(
+            'misconductReportIssueDate',
+          ),
+          noticeToExplainIssueDate: aggregateFormatDate(
+            'noticeToExplainIssueDate',
+          ),
+
+          explanationDate: aggregateFormatDate('explanationDate'),
           lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
         },
       },
@@ -28,26 +35,120 @@ export class DisciplinaryActionsService {
   }
 
   async create(createDisciplinaryActionDto: CreateDisciplinaryActionDto) {
-    const createdDisciplinaryAction = new this.assetManagementModel(
+    const createdDisciplinaryAction = new this.disciplinaryActionModel(
       createDisciplinaryActionDto,
     );
 
     return await createdDisciplinaryAction.save();
   }
 
-  findAll() {
-    return `This action returns all disciplinaryActions`;
+  async findAll(_params?: any): Promise<DisciplinaryAction[]> {
+    const pipeline = [...this.aggregateQry];
+
+    const relations = _params.relations;
+
+    delete _params.relations;
+    const params = _params;
+
+    const keys = Object.keys(params);
+    let n = keys.length;
+    const toMatch = [];
+    while (n--) {
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toLowerCase()
+        : Number(params[keys[n]]);
+
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        toMatch.push({
+          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
+        });
+      }
+    }
+
+    const match = toMatch.map((i) => {
+      return { $match: i };
+    });
+
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, ...match, ..._relations];
+    return this.disciplinaryActionModel.aggregate(pLine);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} disciplinaryAction`;
+  async find(employeeNo: string, _params?: any) {
+    const _relations = [];
+
+    if (_params) {
+      const relations = _params.relations;
+      delete _params.relations;
+
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
+        });
+      }
+    }
+
+    const pipeline = [
+      ...this.aggregateQry,
+      {
+        $match: {
+          employeeNo: employeeNo,
+        },
+      },
+
+      ..._relations,
+    ];
+
+    return await this.disciplinaryActionModel.aggregate(pipeline);
   }
 
-  update(id: number, updateDisciplinaryActionDto: UpdateDisciplinaryActionDto) {
-    return `This action updates a #${id} disciplinaryAction`;
+  async update(
+    id: string,
+    updateDisciplinaryActionDto: UpdateDisciplinaryActionDto,
+  ) {
+    updateDisciplinaryActionDto['lastModifiedDate'] = Date.now();
+    const filter = { _id: id };
+    const update = updateDisciplinaryActionDto;
+    try {
+      return await this.disciplinaryActionModel.updateOne(filter, update);
+    } catch (error) {
+      return `Failed updating record with id ${id}`;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} disciplinaryAction`;
+  remove(id: string) {
+    return this.disciplinaryActionModel.deleteOne({ id });
   }
 }

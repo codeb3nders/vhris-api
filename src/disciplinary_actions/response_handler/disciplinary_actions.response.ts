@@ -1,7 +1,7 @@
-import { EmployeeDocument } from 'src/employee_documents/entities/employee_document.entity';
+import { DisciplinaryAction } from '../entities/disciplinary_action.entity';
 
 export const disciplinaryActionsResponseHandler = {
-  ok: (data: EmployeeDocument[]) => {
+  ok: (data: DisciplinaryAction[]) => {
     if (data.length > 0) {
       return data.map((item: any) => {
         return returnItem(item);
@@ -31,6 +31,7 @@ function returnItem(item) {
     dateAcknowledged: item.dateAcknowledged,
     cleansingPeriod: item.cleansingPeriod,
     status: item.status,
+    lastModifiedDate: item.lastModifiedDate,
   };
 
   return toReturn;

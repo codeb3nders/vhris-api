@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ErrorResponse } from 'src/helpers/error_response';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { DisciplinaryActionsService } from './disciplinary_actions.service';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
+import { disciplinaryActionsResponseHandler } from './response_handler/disciplinary_actions.response';
 
 const toCheck = ['violations'];
 
@@ -42,28 +44,41 @@ export class DisciplinaryActionsController {
   }
 
   @Get()
-  findAll() {
-    return this.disciplinaryActionsService.findAll();
+  async findAll(@Query() params) {
+    const response = await this.disciplinaryActionsService.findAll(params);
+    if (!response || response.length < 1) {
+      return response;
+    }
+    return disciplinaryActionsResponseHandler.ok(response);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.disciplinaryActionsService.findOne(+id);
+  @Get(':employeeNo')
+  async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
+    const response = await this.disciplinaryActionsService.find(employeeNo);
+    if (!response || response.length < 1) {
+      return response;
+    }
+    return disciplinaryActionsResponseHandler.ok(response);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
-    @Body() updateDisciplinaryActionDto: UpdateDisciplinaryActionDto,
+    @Body() updateEmployeeDocumentDto: UpdateDisciplinaryActionDto,
   ) {
-    return this.disciplinaryActionsService.update(
-      +id,
-      updateDisciplinaryActionDto,
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateEmployeeDocumentDto,
+      toCheck,
+    );
+
+    return await this.disciplinaryActionsService.update(
+      id,
+      updateEmployeeDocumentDto,
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.disciplinaryActionsService.remove(+id);
+    return this.disciplinaryActionsService.remove(id);
   }
 }

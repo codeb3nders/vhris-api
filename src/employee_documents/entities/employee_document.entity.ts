@@ -22,6 +22,9 @@ export class EmployeeDocument {
 
   @Prop()
   remarks: string;
+
+  @Prop()
+  lastModifiedDate?: Date;
 }
 
 export const EmployeeDocumentSchema =
