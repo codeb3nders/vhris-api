@@ -1,6 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import {
+  aggregateFormatDate,
+  aggregateLookUp,
+} from 'src/utils/aggregate_helper';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
 import {
@@ -17,7 +21,7 @@ export class EmployeeDocumentsService {
   ) {
     this.aggregateQry = [
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'documentType',
           'code',
@@ -27,9 +31,9 @@ export class EmployeeDocumentsService {
 
       {
         $set: {
-          dateAssigned: formatDate('dateAssigned'),
-          dateReturned: formatDate('dateReturned'),
-          lastModifiedDate: formatDate('lastModifiedDate'),
+          dateAssigned: aggregateFormatDate('dateAssigned'),
+          dateReturned: aggregateFormatDate('dateReturned'),
+          lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
         },
       },
     ];
@@ -156,29 +160,3 @@ export class EmployeeDocumentsService {
     return this.employeeDocumentModel.deleteOne({ id });
   }
 }
-
-const lookUp = (
-  tableName: string,
-  localField: string,
-  foreignField: string,
-  asName: string,
-) => {
-  return {
-    from: `${tableName}`,
-    let: { field: { $toUpper: `$${localField}` } },
-    pipeline: [
-      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
-      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
-    ],
-    as: asName,
-  };
-};
-
-const formatDate = (date: string) => {
-  return {
-    $dateToString: {
-      format: '%Y-%m-%d',
-      date: { $toDate: `$${date}` },
-    },
-  };
-};

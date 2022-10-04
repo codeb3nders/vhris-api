@@ -9,7 +9,8 @@ import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_cr
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
 import { EmployeeFields } from './dto/fields-employe';
-import { defaultItems } from './interface/employee.interface';
+import { defaultItems, defaultSet } from './interface/employee.interface';
+import { aggregateLookUp } from 'src/utils/aggregate_helper';
 
 @Injectable()
 export class EmployeesService {
@@ -49,15 +50,20 @@ export class EmployeesService {
         },
       },
       {
-        $lookup: lookUp('enum_tables', 'userGroup', 'code', 'userGroupEnum'),
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'userGroup',
+          'code',
+          'userGroupEnum',
+        ),
       },
 
       {
-        $lookup: lookUp('enum_tables', 'gender', 'code', 'genderEnum'),
+        $lookup: aggregateLookUp('enum_tables', 'gender', 'code', 'genderEnum'),
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'civilStatus',
           'code',
@@ -66,7 +72,7 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'citizenship',
           'code',
@@ -75,11 +81,16 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp('enum_tables', 'religion', 'code', 'religionEnum'),
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'religion',
+          'code',
+          'religionEnum',
+        ),
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'payRateType',
           'code',
@@ -88,7 +99,7 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'payrollGroup',
           'code',
@@ -97,7 +108,7 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'deductPhilhealth',
           'code',
@@ -106,7 +117,7 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'fixedContributionRate',
           'code',
@@ -115,7 +126,7 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'paymentMethod',
           'code',
@@ -124,18 +135,28 @@ export class EmployeesService {
       },
 
       {
-        $lookup: lookUp('enum_tables', 'position', 'code', 'positionEnum'),
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'position',
+          'code',
+          'positionEnum',
+        ),
       },
 
       {
-        $lookup: lookUp('enum_tables', 'rank', 'code', 'rankEnum'),
+        $lookup: aggregateLookUp('enum_tables', 'rank', 'code', 'rankEnum'),
       },
 
       {
-        $lookup: lookUp('enum_tables', 'department', 'code', 'departmentEnum'),
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'department',
+          'code',
+          'departmentEnum',
+        ),
       },
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'employmentStatus',
           'code',
@@ -143,7 +164,7 @@ export class EmployeesService {
         ),
       },
       {
-        $lookup: lookUp(
+        $lookup: aggregateLookUp(
           'enum_tables',
           'employmentType',
           'code',
@@ -161,13 +182,8 @@ export class EmployeesService {
       },
       {
         $set: {
-          dateInactive: formatDate('dateInactive'),
-          endOfProbationary: formatDate('endOfProbationary'),
-          dateHired: formatDate('dateHired'),
-          contractEndDate: formatDate('contractEndDate'),
-          jobLastUpdate: formatDate('jobLastUpdate'),
-          employmentLastUpdate: formatDate('employmentLastUpdate'),
-          dateCreated: formatDate('dateCreated'),
+          ...defaultSet,
+
           birthDate: {
             $dateToString: {
               format: '%Y-%m-%d',
@@ -438,29 +454,3 @@ export class EmployeesService {
     return this.employeeModel.aggregate(pLine);
   }
 }
-
-const lookUp = (
-  tableName: string,
-  localField: string,
-  foreignField: string,
-  asName: string,
-) => {
-  return {
-    from: `${tableName}`,
-    let: { field: { $toUpper: `$${localField}` } },
-    pipeline: [
-      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
-      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
-    ],
-    as: asName,
-  };
-};
-
-const formatDate = (date: string) => {
-  return {
-    $dateToString: {
-      format: '%Y-%m-%d',
-      date: { $toDate: `$${date}` },
-    },
-  };
-};

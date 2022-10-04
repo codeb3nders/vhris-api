@@ -1,6 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import {
+  aggregateFormatDate,
+  aggregateLookUp,
+} from 'src/utils/aggregate_helper';
+
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import {
@@ -17,14 +22,19 @@ export class AssetManagementService {
   ) {
     this.aggregateQry = [
       {
-        $lookup: lookUp('enum_tables', 'assetType', 'code', 'assetTypeEnum'),
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'assetType',
+          'code',
+          'assetTypeEnum',
+        ),
       },
 
       {
         $set: {
-          dateAssigned: formatDate('dateAssigned'),
-          dateReturned: formatDate('dateReturned'),
-          lastModifiedDate: formatDate('lastModifiedDate'),
+          dateAssigned: aggregateFormatDate('dateAssigned'),
+          dateReturned: aggregateFormatDate('dateReturned'),
+          lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
         },
       },
     ];
@@ -144,29 +154,3 @@ export class AssetManagementService {
     return this.assetManagementModel.deleteOne({ id });
   }
 }
-
-const lookUp = (
-  tableName: string,
-  localField: string,
-  foreignField: string,
-  asName: string,
-) => {
-  return {
-    from: `${tableName}`,
-    let: { field: { $toUpper: `$${localField}` } },
-    pipeline: [
-      { $addFields: { [`${foreignField}`]: { $toUpper: `$${foreignField}` } } },
-      { $match: { $expr: { $eq: [`$${foreignField}`, `$$field`] } } },
-    ],
-    as: asName,
-  };
-};
-
-const formatDate = (date: string) => {
-  return {
-    $dateToString: {
-      format: '%Y-%m-%d',
-      date: { $toDate: `$${date}` },
-    },
-  };
-};
