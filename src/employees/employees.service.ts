@@ -9,11 +9,11 @@ import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_cr
 import { zeroPad } from 'src/helpers/number_helper';
 import { AutoCredentialEnum } from 'src/enums/employee.enum';
 import { EmployeeFields } from './dto/fields-employe';
+import { defaultItems } from './interface/employee.interface';
 
 @Injectable()
 export class EmployeesService {
   private aggregateQry;
-  private fields;
   constructor(
     @InjectModel(Employee.name)
     private employeeModel: Model<EmployeeDocument>,
@@ -21,6 +21,22 @@ export class EmployeesService {
     private userCredentialsService: UserCredentialsService,
   ) {
     this.aggregateQry = [
+      {
+        $project: {
+          ...defaultItems,
+          name: {
+            $concat: [
+              '$lastName',
+              ',',
+              ' ',
+              '$firstName',
+              ' ',
+              '$middleName',
+              ' ',
+            ],
+          },
+        },
+      },
       {
         $lookup: {
           from: 'enum_tables',
@@ -203,9 +219,6 @@ export class EmployeesService {
         },
       },
     ];
-
-    // TODO: apply aggregation $project to transform output data to lowercase
-    this.fields = EmployeeFields;
   }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
@@ -222,7 +235,7 @@ export class EmployeesService {
     ) {
       const userCredentials: CreateUserCredentialDto = {
         employeeNo: response.employeeNo,
-        timeStamp: new Date().getTime(),
+        timestamp: new Date().getTime(),
 
         accessGroup: response.userGroup,
         isActive: true,
@@ -353,6 +366,76 @@ export class EmployeesService {
       await this.userCredentialsService.remove(employeeNo);
     }
     return response;
+  }
+
+  async search(_params?: any): Promise<Employee[]> {
+    const pipeline = [...this.aggregateQry];
+
+    const relations = _params.relations;
+
+    delete _params.relations;
+    const params = _params;
+
+    const keys = Object.keys(params);
+    let n = keys.length;
+    const toMatch = [];
+    while (n--) {
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toUpperCase()
+        : Number(params[keys[n]]);
+
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        if (keys[n] === 'isActive') {
+          toMatch.push({
+            [`${keys[n]}`]: value === 'TRUE',
+          });
+        } else {
+          if (isNaN(Number(value))) {
+            toMatch.push({
+              [`${keys[n]}`]: { ['$regex']: value },
+            });
+          } else {
+            toMatch.push({
+              [`${keys[n]}`]: value,
+            });
+          }
+        }
+      }
+    }
+
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, ..._relations];
+    if (toMatch.length > 0) {
+      pLine.push({
+        $match: {
+          $or: [...toMatch],
+        },
+      });
+    }
+    return this.employeeModel.aggregate(pLine);
   }
 }
 

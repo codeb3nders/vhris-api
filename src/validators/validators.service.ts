@@ -5,24 +5,7 @@ import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
 export class ValidatorsService {
   constructor(private enumService: EnumTablesService) {}
 
-  async validateEmployeesPostRequest(event) {
-    const toCheck = [
-      'citizenship',
-      'userGroup',
-      'civilStatus',
-      // 'religion',
-      //'educationalBackground',
-      //'payrollBankAccount',
-      'position',
-      'department',
-      'location',
-      'employmentStatus',
-      'employmentType',
-      'rank',
-      // 'paymentMethod',
-      // 'deductPhilhealth',
-      // 'fixedContributionRate',
-    ];
+  async validateEmployeesPostRequest(event, toCheck) {
     const undefinedList = [];
     const response = await this.enumService.find();
 

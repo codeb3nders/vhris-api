@@ -4,7 +4,7 @@ import { IsOptional } from 'class-validator';
 
 export class FindOneEmployeeDto {
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   relations: string[];
 }

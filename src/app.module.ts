@@ -19,6 +19,8 @@ import { EnumTablesModule } from './enum_tables/enum_tables.module';
 import { ValidatorsService } from './validators/validators.service';
 import { ValidatorsModule } from './validators/validators.module';
 import { LearningDevelopmentModule } from './learning_development/learning_development.module';
+import { AssetManagementModule } from './asset_management/asset_management.module';
+import { EmployeeDocumentsModule } from './employee_documents/employee_documents.module';
 
 @Module({
   imports: [
@@ -50,6 +52,8 @@ import { LearningDevelopmentModule } from './learning_development/learning_devel
     EnumTablesModule,
     ValidatorsModule,
     LearningDevelopmentModule,
+    AssetManagementModule,
+    EmployeeDocumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

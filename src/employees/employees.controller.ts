@@ -30,6 +30,24 @@ import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
 
+const toCheck = [
+  'citizenship',
+  'userGroup',
+  'civilStatus',
+  // 'religion',
+  //'educationalBackground',
+  //'payrollBankAccount',
+  'position',
+  'department',
+  'location',
+  'employmentStatus',
+  'employmentType',
+  'rank',
+  // 'paymentMethod',
+  // 'deductPhilhealth',
+  // 'fixedContributionRate',
+];
+
 @ApiTags('Employees')
 @Controller('employees')
 export class EmployeesController {
@@ -47,6 +65,7 @@ export class EmployeesController {
     try {
       await this.validatorsService.validateEmployeesPostRequest(
         createEmployeeDto,
+        toCheck,
       );
 
       return await this.employeesService.create(createEmployeeDto);
@@ -59,6 +78,17 @@ export class EmployeesController {
   @Get()
   async findAll(@Query() params): Promise<EmployeeI[]> {
     const response = await this.employeesService.findAll(params);
+
+    if (!response || response.length < 1) {
+      throw new HttpException('No Record found!', HttpStatus.OK);
+    }
+    return EmployeeResponseHandler.ok(response);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('search')
+  async search(@Query() params: { name: string }): Promise<EmployeeI[]> {
+    const response = await this.employeesService.search(params);
 
     if (!response || response.length < 1) {
       throw new HttpException('No Record found!', HttpStatus.OK);
@@ -89,15 +119,14 @@ export class EmployeesController {
     isValidRequest(updateEmployeeDto, user);
     await this.validatorsService.validateEmployeesPostRequest(
       updateEmployeeDto,
+      toCheck,
     );
     const type = updateEmployeeDto.type;
     const effectiveDate = updateEmployeeDto.effectiveDate;
     const remarks = updateEmployeeDto?.remarks || null;
 
-    // if (!type)
-    //   throw new HttpException('Missing Property!', HttpStatus.BAD_REQUEST);
-
     const employee = await this.employeesService.findOne(employeeNo);
+
     if (!employee)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
     const response = await this.employeesService.update(

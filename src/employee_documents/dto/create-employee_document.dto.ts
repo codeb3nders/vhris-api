@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsEmpty, IsNotEmpty, IsOptional } from 'class-validator';
 
-export class CreateUserCredentialDto {
+export class CreateEmployeeDocumentDto {
   @ApiProperty()
   @IsNotEmpty()
   employeeNo: string;
@@ -11,18 +12,19 @@ export class CreateUserCredentialDto {
   timestamp: number;
 
   @ApiProperty()
-  @IsEmpty()
-  accessGroup: string;
+  @Transform((param) => param.value.toUpperCase().trim())
+  @IsNotEmpty()
+  documentType: string;
 
   @ApiProperty()
-  @IsEmpty()
-  isActive: boolean;
+  @IsNotEmpty()
+  dateUploaded: string;
 
   @ApiProperty()
-  @IsEmpty()
-  email?: string;
+  @IsNotEmpty()
+  url: string;
 
   @ApiProperty()
-  @IsEmpty()
-  password?: string;
+  @IsOptional()
+  remarks: string;
 }

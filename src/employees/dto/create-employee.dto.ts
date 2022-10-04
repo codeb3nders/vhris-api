@@ -16,6 +16,7 @@ import {
 import { IsNotEmpty } from 'class-validator';
 import {
   Address,
+  AllowanceDetails,
   EducationalBackground,
   EmergencyContact,
   EmploymentRecords,
@@ -28,7 +29,7 @@ import {
 export class CreateEmployeeDto {
   @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   employeeNo: string;
 
   @ApiProperty({ required: true })
@@ -37,26 +38,26 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   userGroup: UserGroupEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsNotEmpty()
   firstName: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsNotEmpty()
   lastName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   middleName: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   suffix: string;
 
@@ -66,32 +67,32 @@ export class CreateEmployeeDto {
   birthDate: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsNotEmpty()
   gender: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsNotEmpty()
   civilStatus: CivilStatusEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   citizenship: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   religion: ReligionEnum;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsNotEmpty()
   personalContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsEmail()
   @IsNotEmpty()
   personalEmail: string;
@@ -145,24 +146,24 @@ export class CreateEmployeeDto {
   emergencyContact: EmergencyContact;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   companyContactNumber: string;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsEmail()
   @IsNotEmpty()
   companyEmail: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   position: EmployeeEnum;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   department: DepartmentsEnum;
 
   @ApiProperty({ required: true })
@@ -171,7 +172,7 @@ export class CreateEmployeeDto {
   location: LocationsEnum;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   reportsTo: string;
 
@@ -211,22 +212,22 @@ export class CreateEmployeeDto {
   employeeBenefits: string[];
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   sss: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   philHealth: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   pagIbig: string;
 
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   tin: string;
 
@@ -235,7 +236,7 @@ export class CreateEmployeeDto {
   numberOfDependents: number;
 
   @ApiProperty({ required: true })
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   taxExemption: string;
 
@@ -245,17 +246,17 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   payRateType: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   paymentMethod: string;
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   payrollGroup: string;
 
   @IsOptional()
@@ -264,7 +265,7 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   deductPhilhealth: string;
 
   @IsOptional()
@@ -273,17 +274,18 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   fixedContributionRate: string;
 
   @IsOptional()
   @ApiProperty()
   deductWithholdingTax: number;
 
-  @IsOptional()
   @ApiProperty()
-  @Transform((param) => param.value.map((item) => item.toUpperCase()))
-  allowanceDetails: string;
+  @ValidateNested({ each: true })
+  @Type(() => AllowanceDetails)
+  @IsOptional()
+  allowanceDetails: AllowanceDetails;
 
   @ApiProperty()
   @ValidateNested({ each: true })
@@ -310,7 +312,7 @@ export class CreateEmployeeDto {
 
   @IsEmpty()
   @ApiProperty()
-  @Transform((param) => param.value.toUpperCase())
+  @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   password: string;
 }
