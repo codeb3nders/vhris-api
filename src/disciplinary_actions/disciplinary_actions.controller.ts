@@ -28,7 +28,6 @@ export class DisciplinaryActionsController {
   async create(
     @Body() createDisciplinaryActionDto: CreateDisciplinaryActionDto,
   ) {
-    console.log({ createDisciplinaryActionDto });
     try {
       await this.validatorsService.validateEmployeesPostRequest(
         createDisciplinaryActionDto,

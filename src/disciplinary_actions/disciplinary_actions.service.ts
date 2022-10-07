@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { aggregateFormatDate } from 'src/utils/aggregate_helper';
+import {
+  aggregateFormatDate,
+  aggregateLookUp,
+} from 'src/utils/aggregate_helper';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
 import {
@@ -18,6 +21,39 @@ export class DisciplinaryActionsService {
   ) {
     this.aggregateQry = [
       {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'violationCategory',
+          'code',
+          'violationCategoryEnum',
+        ),
+      },
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'violations',
+          'code',
+          'violationsEnum',
+        ),
+      },
+
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'offenseStage',
+          'code',
+          'offenseStageEnum',
+        ),
+      },
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'offenseLevel',
+          'code',
+          'offenseLevelEnum',
+        ),
+      },
+      {
         $set: {
           dateAcknowledged: aggregateFormatDate('dateAcknowledged'),
           misconductReportIssueDate: aggregateFormatDate(
@@ -29,6 +65,14 @@ export class DisciplinaryActionsService {
 
           explanationDate: aggregateFormatDate('explanationDate'),
           lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
+
+          aging: {
+            $dateDiff: {
+              startDate: '$misconductReportIssueDate',
+              endDate: '$$NOW',
+              unit: 'day',
+            },
+          },
         },
       },
     ];

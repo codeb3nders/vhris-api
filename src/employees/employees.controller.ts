@@ -89,7 +89,6 @@ export class EmployeesController {
   @Get('search')
   async search(@Query() params: { name: string }): Promise<EmployeeI[]> {
     const response = await this.employeesService.search(params);
-    console.log({ response });
 
     if (!response || response.length < 1) {
       return [];

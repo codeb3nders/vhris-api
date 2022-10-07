@@ -18,10 +18,10 @@ function returnItem(item) {
     employeeNo: item.employeeNo,
     timestamp: item.timestamp,
     caseNumber: item.caseNumber,
-    violationCategory: item.violationCategory,
-    violations: item.violations,
-    offenseStage: item.offenseStage,
-    offenseLevel: item.offenseLevel,
+    violationCategory: prepareEnumItem(item.violationCategoryEnum),
+    violations: prepareEnumItem(item.violationsEnum),
+    offenseStage: prepareEnumItem(item.offenseStageEnum),
+    offenseLevel: prepareEnumItem(item.offenseLevelEnum),
     misconductReportIssueDate: item.misconductReportIssueDate,
     noticeToExplainIssueDate: item.noticeToExplainIssueDate,
     explanationDate: item.explanationDate,
@@ -32,6 +32,7 @@ function returnItem(item) {
     cleansingPeriod: item.cleansingPeriod,
     status: item.status,
     lastModifiedDate: item.lastModifiedDate,
+    aging: item.aging,
   };
 
   return toReturn;
