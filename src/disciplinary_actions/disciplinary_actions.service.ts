@@ -1,53 +1,92 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
   aggregateFormatDate,
   aggregateLookUp,
 } from 'src/utils/aggregate_helper';
-
-import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
-import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
+import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
+import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
 import {
-  AssetManagement,
-  AssetManagementDocument,
-} from './entities/asset_management.entity';
+  DisciplinaryAction,
+  DisciplinaryActionDocument,
+} from './entities/disciplinary_action.entity';
 
 @Injectable()
-export class AssetManagementService {
+export class DisciplinaryActionsService {
   private aggregateQry;
   constructor(
-    @InjectModel(AssetManagement.name)
-    private assetManagementModel: Model<AssetManagementDocument>,
+    @InjectModel(DisciplinaryAction.name)
+    private disciplinaryActionModel: Model<DisciplinaryActionDocument>,
   ) {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
           'enum_tables',
-          'assetType',
+          'violationCategory',
           'code',
-          'assetTypeEnum',
+          'violationCategoryEnum',
+        ),
+      },
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'violations',
+          'code',
+          'violationsEnum',
         ),
       },
 
       {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'offenseStage',
+          'code',
+          'offenseStageEnum',
+        ),
+      },
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'offenseLevel',
+          'code',
+          'offenseLevelEnum',
+        ),
+      },
+      {
         $set: {
-          dateAssigned: aggregateFormatDate('dateAssigned'),
-          dateReturned: aggregateFormatDate('dateReturned'),
+          dateAcknowledged: aggregateFormatDate('dateAcknowledged'),
+          misconductReportIssueDate: aggregateFormatDate(
+            'misconductReportIssueDate',
+          ),
+          noticeToExplainIssueDate: aggregateFormatDate(
+            'noticeToExplainIssueDate',
+          ),
+
+          explanationDate: aggregateFormatDate('explanationDate'),
           lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
+
+          aging: {
+            $dateDiff: {
+              startDate: '$misconductReportIssueDate',
+              endDate: '$$NOW',
+              unit: 'day',
+            },
+          },
         },
       },
     ];
   }
-  async create(createAssetManagementDto: CreateAssetManagementDto) {
-    const createdEmployee = new this.assetManagementModel(
-      createAssetManagementDto,
+
+  async create(createDisciplinaryActionDto: CreateDisciplinaryActionDto) {
+    const createdDisciplinaryAction = new this.disciplinaryActionModel(
+      createDisciplinaryActionDto,
     );
 
-    return await createdEmployee.save();
+    return await createdDisciplinaryAction.save();
   }
 
-  async findAll(_params?: any): Promise<AssetManagement[]> {
+  async findAll(_params?: any): Promise<DisciplinaryAction[]> {
     const pipeline = [...this.aggregateQry];
 
     const relations = _params.relations;
@@ -99,7 +138,7 @@ export class AssetManagementService {
     }
 
     const pLine = [...pipeline, ...match, ..._relations];
-    return this.assetManagementModel.aggregate(pLine);
+    return this.disciplinaryActionModel.aggregate(pLine);
   }
 
   async find(employeeNo: string, _params?: any) {
@@ -136,21 +175,24 @@ export class AssetManagementService {
       ..._relations,
     ];
 
-    return await this.assetManagementModel.aggregate(pipeline);
+    return await this.disciplinaryActionModel.aggregate(pipeline);
   }
 
-  async update(id: string, updateAssetManagementDto: UpdateAssetManagementDto) {
-    updateAssetManagementDto['lastModifiedDate'] = Date.now();
+  async update(
+    id: string,
+    updateDisciplinaryActionDto: UpdateDisciplinaryActionDto,
+  ) {
+    updateDisciplinaryActionDto['lastModifiedDate'] = Date.now();
     const filter = { _id: id };
-    const update = updateAssetManagementDto;
+    const update = updateDisciplinaryActionDto;
     try {
-      return await this.assetManagementModel.updateOne(filter, update);
+      return await this.disciplinaryActionModel.updateOne(filter, update);
     } catch (error) {
       return `Failed updating record with id ${id}`;
     }
   }
 
   remove(id: string) {
-    return this.assetManagementModel.deleteOne({ id });
+    return this.disciplinaryActionModel.deleteOne({ id });
   }
 }

@@ -91,7 +91,7 @@ export class EmployeesController {
     const response = await this.employeesService.search(params);
 
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return [];
     }
     return EmployeeResponseHandler.ok(response);
   }
