@@ -12,13 +12,16 @@ import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Leave_request } from './entities/leave_request.entity';
-import { LeaveRequestResponseHandler } from './response_handler/leave_request.response';
 import { ErrorResponse } from 'src/helpers/error_response';
+import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_handler.response';
 
 @ApiTags('Leave Request')
 @Controller('leave')
 export class LeaveRequestController {
-  constructor(private readonly leaveRequestService: LeaveRequestService) {}
+  constructor(
+    private readonly leaveRequestService: LeaveRequestService,
+    private leaveRequestResponseHandler: LeaveRequestResponseHandler,
+  ) {}
 
   @Post()
   async create(@Body() createLeaveRequestDto: CreateLeaveRequestDto) {
@@ -34,7 +37,7 @@ export class LeaveRequestController {
   async findAll(): Promise<Leave_request[]> {
     try {
       const response = await this.leaveRequestService.findAll();
-      return LeaveRequestResponseHandler.ok(response);
+      return this.leaveRequestResponseHandler.ok(response);
     } catch (error) {
       ErrorResponse.badRequest(error.message || error);
     }
@@ -45,7 +48,7 @@ export class LeaveRequestController {
     try {
       const response =
         await this.leaveRequestService.findAllWithEmployeeDetails();
-      return LeaveRequestResponseHandler.ok(response);
+      return this.leaveRequestResponseHandler.ok(response);
     } catch (error) {
       ErrorResponse.badRequest(error.message || error);
     }

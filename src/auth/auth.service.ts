@@ -1,16 +1,19 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmployeesService } from 'src/employees/employees.service';
-import { EmployeeResponseHandler } from 'src/employees/response_handler/employee.response';
+import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { comparePassword } from 'src/utils/encoder';
 @Injectable()
 export class AuthService {
+  private employeesResponseHandler;
   constructor(
     private userCredentialService: UserCredentialsService,
     private employeeService: EmployeesService,
     private jwtService: JwtService,
-  ) {}
+  ) {
+    this.employeesResponseHandler = EmployeesResponseHandler;
+  }
 
   async validateUser(employeeNo: string, password: string): Promise<any> {
     const user = await this.userCredentialService.findOne(employeeNo);
@@ -34,7 +37,7 @@ export class AuthService {
       employeeNo,
     };
     const employee = await this.employeeService.findOne(employeeNo);
-    const formatedResponset = EmployeeResponseHandler.ok(employee);
+    const formatedResponset = this.employeesResponseHandler.ok(employee);
 
     return {
       access_token: this.jwtService.sign(payload),

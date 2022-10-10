@@ -1,25 +1,16 @@
-export class BaseResponseHandler<T> {
-  ok(data: T[]) {
-    if (data.length > 0) {
-      return data.map((item: any) => {
-        return this.returnItem(item);
-      });
-    } else {
-      this.returnItem(data);
-    }
-  }
-
-  private returnItem = (item: any) => {
+export class BaseResponseHandler {
+  returnItem = (item: any, otherItem?: any) => {
     const toReturn: any = {
       id: item._id,
       employeeNo: item.employeeNo,
       timestamp: item.timestamp,
+      ...otherItem,
     };
 
     return toReturn;
   };
 
-  private prepareEnumItem = (item: any, isArray = false) => {
+  prepareEnumItem = (item: any, isArray = false) => {
     if (!item || item.length < 1) return null;
     if (isArray) {
       return (
@@ -37,4 +28,21 @@ export class BaseResponseHandler<T> {
       return data[0];
     }
   };
+
+  getReportToDetails(items: any) {
+    if (!items || items.length < 1) {
+      return null;
+    }
+
+    let item;
+    if (Array.isArray(items)) {
+      item = items[0];
+    } else {
+      item = items;
+    }
+    return {
+      ...item,
+      employeeName: `${item.firstName} ${item.lastName}`,
+    };
+  }
 }

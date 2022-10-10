@@ -9,6 +9,7 @@ import { UserCredentialsModule } from 'src/user_credentials/user_credentials.mod
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
+import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
 
 @Module({
   imports: [
@@ -23,7 +24,12 @@ import { EmployeeHistoryModule } from 'src/employee_history/employee_history.mod
     ]),
   ],
   controllers: [EmployeesController],
-  providers: [EmployeesService, EmailService, ValidatorsService],
+  providers: [
+    EmployeesService,
+    EmailService,
+    ValidatorsService,
+    EmployeesResponseHandler,
+  ],
   exports: [EmployeesService],
 })
 export class EmployeesModule {}

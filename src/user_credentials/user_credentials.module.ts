@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { EmailService } from 'src/email/email.service';
 import { EmployeesModule } from 'src/employees/employees.module';
+import { UserCredentialResponseHandler } from 'src/response_handler/user_credential_handler.response';
 
 @Module({
   imports: [
@@ -24,7 +25,11 @@ import { EmployeesModule } from 'src/employees/employees.module';
   ],
   controllers: [UserCredentialsController],
 
-  providers: [UserCredentialsService, EmailService],
-  exports: [UserCredentialsService, UserCredentialsService],
+  providers: [
+    UserCredentialsService,
+    EmailService,
+    UserCredentialResponseHandler,
+  ],
+  exports: [UserCredentialsService],
 })
 export class UserCredentialsModule {}

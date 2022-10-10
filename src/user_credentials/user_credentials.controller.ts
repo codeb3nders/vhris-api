@@ -12,11 +12,13 @@ import { UserCredentialsService } from './user_credentials.service';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
+import { UserCredentialResponseHandler } from 'src/response_handler/user_credential_handler.response';
 
 @Controller('user-credentials')
 export class UserCredentialsController {
   constructor(
     private readonly userCredentialsService: UserCredentialsService,
+    private readonly userCredentialResponseHandler: UserCredentialResponseHandler,
   ) {}
 
   @Post()
@@ -26,14 +28,16 @@ export class UserCredentialsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.userCredentialsService.findAll();
+  async findAll(): Promise<CreateUserCredentialDto[]> {
+    const response = await this.userCredentialsService.findAll();
+    return this.userCredentialResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  findOne(@Param('employeeNo') employeeNo: string) {
-    return this.userCredentialsService.findOne(employeeNo);
+  async findOne(@Param('employeeNo') employeeNo: string) {
+    const response = await this.userCredentialsService.findOne(employeeNo);
+    return this.userCredentialResponseHandler.ok(response);
   }
 
   @Patch(':employeeNo')

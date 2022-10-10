@@ -1,4 +1,3 @@
-import { LeaveRequestResponseHandler } from 'src/leave_requests/response_handler/leave_request.response';
 import { AssetManagement } from '../entities/asset_management.entity';
 
 export const assetManagementResponseHandler = {

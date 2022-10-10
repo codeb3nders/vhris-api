@@ -19,7 +19,6 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
 import { ErrorResponse } from 'src/helpers/error_response';
-import { EmployeeResponseHandler } from './response_handler/employee.response';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
@@ -29,6 +28,7 @@ import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
+import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
 
 const toCheck = [
   'citizenship',
@@ -55,6 +55,7 @@ export class EmployeesController {
     private readonly employeesService: EmployeesService,
     private validatorsService: ValidatorsService,
     private employeeHistoryService: EmployeeHistoryService,
+    private employeesResponseHandler: EmployeesResponseHandler,
   ) {}
 
   @Post()
@@ -82,7 +83,7 @@ export class EmployeesController {
     if (!response || response.length < 1) {
       throw new HttpException('No Record found!', HttpStatus.OK);
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -93,7 +94,7 @@ export class EmployeesController {
     if (!response || response.length < 1) {
       return [];
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -106,7 +107,7 @@ export class EmployeesController {
     if (!response || response.length < 1) {
       throw new HttpException('No Record found!', HttpStatus.OK);
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
