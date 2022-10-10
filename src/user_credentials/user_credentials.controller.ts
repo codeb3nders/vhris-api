@@ -6,10 +6,12 @@ import {
   Param,
   Delete,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { UserCredentialsService } from './user_credentials.service';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
+import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 
 @Controller('user-credentials')
 export class UserCredentialsController {
@@ -32,6 +34,17 @@ export class UserCredentialsController {
   @Get(':employeeNo')
   findOne(@Param('employeeNo') employeeNo: string) {
     return this.userCredentialsService.findOne(employeeNo);
+  }
+
+  @Patch(':employeeNo')
+  async update(
+    @Param('employeeNo') employeeNo: string,
+    @Body() updateUserCredentialDto: UpdateUserCredentialDto,
+  ) {
+    return await this.userCredentialsService.update(
+      employeeNo,
+      updateUserCredentialDto,
+    );
   }
 
   @UseGuards(JwtAuthGuard)

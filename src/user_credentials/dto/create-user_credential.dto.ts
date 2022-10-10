@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmpty, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsOptional, IsNotEmpty, IsEmpty } from 'class-validator';
 
 export class CreateUserCredentialDto {
   @ApiProperty()
@@ -11,18 +11,18 @@ export class CreateUserCredentialDto {
   timestamp: number;
 
   @ApiProperty()
-  @IsEmpty()
+  @IsOptional()
   accessGroup: string;
 
   @ApiProperty()
-  @IsEmpty()
+  @IsOptional()
   isActive: boolean;
 
   @ApiProperty()
-  @IsEmpty()
+  @IsOptional()
   email?: string;
 
   @ApiProperty()
-  @IsEmpty()
+  @IsOptional()
   password?: string;
 }

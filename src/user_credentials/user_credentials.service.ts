@@ -4,13 +4,14 @@ import { Model } from 'mongoose';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import {
   UserCredentialDocument,
-  User_credential,
+  UserCredential,
 } from './entities/user_credential.entity';
 import { encodePassWord } from 'src/utils/encoder';
 
 import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
 import { generatePassword } from 'src/helpers/password_generator';
+import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 
 export type User = {
   id: string;
@@ -22,7 +23,7 @@ export type User = {
 @Injectable()
 export class UserCredentialsService {
   constructor(
-    @InjectModel(User_credential.name)
+    @InjectModel(UserCredential.name)
     private userCredentialModel: Model<UserCredentialDocument>,
     @Inject(forwardRef(() => EmployeesService))
     private employeesService: EmployeesService,
@@ -65,6 +66,23 @@ export class UserCredentialsService {
 
   async findOne(employeeNo: string) {
     return await this.userCredentialModel.findOne({ employeeNo });
+  }
+
+  async update(
+    employeeNo: string,
+    updateUserCredentialDto: UpdateUserCredentialDto,
+  ) {
+    updateUserCredentialDto['lastModifiedDate'] = Date.now();
+    updateUserCredentialDto.password = await encodePassWord(
+      updateUserCredentialDto.password,
+    );
+
+    const update = updateUserCredentialDto;
+    try {
+      return await this.userCredentialModel.updateOne({ employeeNo }, update);
+    } catch (error) {
+      return `Failed updating record with id ${employeeNo}`;
+    }
   }
 
   remove(employeeNo: string) {

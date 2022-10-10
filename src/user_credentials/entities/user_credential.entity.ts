@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type UserCredentialDocument = User_credential & Document;
+export type UserCredentialDocument = UserCredential & Document;
 
 @Schema()
-export class User_credential {
+export class UserCredential {
   @Prop({ required: true, unique: true })
   employeeNo: string;
   @Prop({ default: new Date().getTime() })
@@ -15,7 +15,9 @@ export class User_credential {
   accessGroup: string;
   @Prop({ default: true })
   isActive: boolean;
+  @Prop()
+  lastModifiedDate?: number;
 }
 
 export const UserCredentialSchema =
-  SchemaFactory.createForClass(User_credential);
+  SchemaFactory.createForClass(UserCredential);
