@@ -11,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EmailService } from 'src/email/email.service';
 import { EmployeesModule } from 'src/employees/employees.module';
 import { UserCredentialResponseHandler } from 'src/response_handler/user_credential_handler.response';
+import { UserCode, UserCodeSchema } from './entities/user_code.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { UserCredentialResponseHandler } from 'src/response_handler/user_credent
       {
         name: UserCredential.name,
         schema: UserCredentialSchema,
+      },
+      {
+        name: UserCode.name,
+        schema: UserCodeSchema,
       },
     ]),
   ],
