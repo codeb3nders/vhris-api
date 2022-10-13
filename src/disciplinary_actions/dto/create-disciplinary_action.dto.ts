@@ -12,7 +12,7 @@ export class CreateDisciplinaryActionDto {
   timestamp: number;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsEmpty()
   @Transform((param) => param.value.toUpperCase().trim())
   caseNumber: string;
 

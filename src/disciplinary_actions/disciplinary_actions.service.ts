@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { zeroPad } from 'src/helpers/number_helper';
 import {
   aggregateFormatDate,
   aggregateLookUp,
@@ -79,6 +80,17 @@ export class DisciplinaryActionsService {
   }
 
   async create(createDisciplinaryActionDto: CreateDisciplinaryActionDto) {
+    const year = new Date().getFullYear();
+    const lastRecord = await this.findLast();
+    const lastCaseNumber =
+      (lastRecord && lastRecord.caseNumber.split('-').pop()) || 0;
+    const caseNumber = Number(lastCaseNumber) + 1;
+
+    createDisciplinaryActionDto.caseNumber = `${year}-${zeroPad(
+      caseNumber,
+      8,
+    )}`;
+
     const createdDisciplinaryAction = new this.disciplinaryActionModel(
       createDisciplinaryActionDto,
     );
@@ -194,5 +206,13 @@ export class DisciplinaryActionsService {
 
   remove(id: string) {
     return this.disciplinaryActionModel.deleteOne({ id });
+  }
+
+  async findLast() {
+    return this.disciplinaryActionModel.findOne(
+      {},
+      {},
+      { sort: { employeeNo: -1 } },
+    );
   }
 }
