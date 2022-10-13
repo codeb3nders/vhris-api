@@ -81,7 +81,7 @@ export class EmployeesController {
     const response = await this.employeesService.findAll(params);
 
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return [];
     }
     return this.employeesResponseHandler.ok(response);
   }
@@ -105,7 +105,7 @@ export class EmployeesController {
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
     if (!response || response.length < 1) {
-      throw new HttpException('No Record found!', HttpStatus.OK);
+      return []
     }
     return this.employeesResponseHandler.ok(response);
   }
