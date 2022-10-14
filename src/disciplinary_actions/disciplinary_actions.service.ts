@@ -88,7 +88,7 @@ export class DisciplinaryActionsService {
 
     createDisciplinaryActionDto.caseNumber = `${year}-${zeroPad(
       caseNumber,
-      8,
+      7,
     )}`;
 
     const createdDisciplinaryAction = new this.disciplinaryActionModel(
