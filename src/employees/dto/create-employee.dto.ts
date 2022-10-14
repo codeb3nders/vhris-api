@@ -442,6 +442,14 @@ export class CreateEmployeeDto {
   @IsOptional()
   jobLastUpdate: Date;
 
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  isRehire: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  oldEmployeeNo: string;
+
   @IsOptional()
   type?: 'string';
 

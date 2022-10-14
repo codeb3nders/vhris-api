@@ -290,7 +290,11 @@ export const EmployeeFields = [
       employeeNo: {
         $toUpper: '$employeeNo',
       },
+      oldEmployeeNo: {
+        $toUpper: '$oldEmployeeNo',
+      },
       isActive: '$isActive',
+      isRehire: '$isRehire',
       userGroup: {
         $toUpper: '$userGroup',
       },

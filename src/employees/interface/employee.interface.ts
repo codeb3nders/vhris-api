@@ -3,6 +3,8 @@ import { aggregateFormatDate } from 'src/utils/aggregate_helper';
 export interface EmployeeI {
   employeeNo: string;
   isActive: boolean;
+  isRehire: boolean;
+  oldEmployeeNo: string;
   userGroup: string;
   firstName: string;
   lastName: string;
@@ -59,6 +61,8 @@ export interface EmployeeI {
 export const defaultItems = {
   employeeNo: '$employeeNo',
   isActive: '$isActive',
+  isRehire: '$isRehire',
+  oldEmployeeNo: '$oldEmployeeNo',
   userGroup: '$userGroup',
   firstName: '$firstName',
   lastName: '$lastName',
