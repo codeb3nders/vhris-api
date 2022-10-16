@@ -11,7 +11,7 @@ export class DisciplinaryAction {
   @Prop({ required: true })
   employeeNo: string;
 
-  @Prop()
+  @Prop({ required: true, unique: true })
   caseNumber: string;
 
   @Prop()

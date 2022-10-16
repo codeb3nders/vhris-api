@@ -105,7 +105,7 @@ export class EmployeesController {
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
     if (!response || response.length < 1) {
-      return []
+      return [];
     }
     return this.employeesResponseHandler.ok(response);
   }
