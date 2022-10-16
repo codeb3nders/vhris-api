@@ -8,12 +8,12 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
+import { DisciplinaryActionResponseHandler } from 'src/response_handler/disciplinary_actions_handler.response';
 import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { DisciplinaryActionsService } from './disciplinary_actions.service';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
-import { disciplinaryActionsResponseHandler } from './response_handler/disciplinary_actions.response';
 
 const toCheck = ['violations'];
 
@@ -22,6 +22,7 @@ export class DisciplinaryActionsController {
   constructor(
     private readonly disciplinaryActionsService: DisciplinaryActionsService,
     private validatorsService: ValidatorsService,
+    private disciplinaryActionResponseHandler: DisciplinaryActionResponseHandler,
   ) {}
 
   @Post()
@@ -48,7 +49,7 @@ export class DisciplinaryActionsController {
     if (!response || response.length < 1) {
       return response;
     }
-    return disciplinaryActionsResponseHandler.ok(response);
+    return this.disciplinaryActionResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
@@ -57,7 +58,7 @@ export class DisciplinaryActionsController {
     if (!response || response.length < 1) {
       return response;
     }
-    return disciplinaryActionsResponseHandler.ok(response);
+    return this.disciplinaryActionResponseHandler.ok(response);
   }
 
   @Patch(':id')

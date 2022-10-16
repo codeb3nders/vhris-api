@@ -15,7 +15,7 @@ import { ValidatorsService } from 'src/validators/validators.service';
 import { AssetManagementService } from './asset_management.service';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
-import { assetManagementResponseHandler } from './response_handler/asset_management.response';
+import { AssetManagementResponseHandler } from '../response_handler/asset_management_handler.response';
 
 const toCheck = ['assetType'];
 
@@ -24,6 +24,7 @@ export class AssetManagementController {
   constructor(
     private readonly assetManagementService: AssetManagementService,
     private validatorsService: ValidatorsService,
+    private assetManagementResponseHandler: AssetManagementResponseHandler,
   ) {}
 
   @Post()
@@ -46,7 +47,7 @@ export class AssetManagementController {
     if (!response || response.length < 1) {
       return response;
     }
-    return assetManagementResponseHandler.ok(response);
+    return this.assetManagementResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
@@ -55,7 +56,7 @@ export class AssetManagementController {
     if (!response || response.length < 1) {
       return response;
     }
-    return assetManagementResponseHandler.ok(response);
+    return this.assetManagementResponseHandler.ok(response);
   }
 
   @Patch(':id')

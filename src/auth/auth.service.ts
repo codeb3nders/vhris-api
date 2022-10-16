@@ -6,14 +6,12 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { comparePassword } from 'src/utils/data/encoder';
 @Injectable()
 export class AuthService {
-  private employeesResponseHandler;
   constructor(
     private userCredentialService: UserCredentialsService,
     private employeeService: EmployeesService,
     private jwtService: JwtService,
-  ) {
-    this.employeesResponseHandler = EmployeesResponseHandler;
-  }
+    private employeesResponseHandler: EmployeesResponseHandler,
+  ) {}
 
   async validateUser(employeeNo: string, password: string): Promise<any> {
     const user = await this.userCredentialService.findOne(employeeNo);

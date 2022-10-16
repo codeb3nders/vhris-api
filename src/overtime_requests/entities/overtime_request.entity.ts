@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type OvertimeRequestDocument = Overtime_request & Document;
+export type OvertimeRequestDocument = OvertimeRequest & Document;
 
 @Schema()
-export class Overtime_request {
+export class OvertimeRequest {
   @Prop()
-  timestamp: string;
+  timestamp: number;
   @Prop({ required: [true, 'overtimeRequestNo is required!'] })
   overtimeRequestNo: string;
   @Prop()
@@ -27,11 +27,10 @@ export class Overtime_request {
   otStatus: string;
   @Prop()
   isApprove: boolean;
-  @Prop()
-  date: Date;
+
   @Prop()
   disapprovalReason: string;
 }
 
 export const OvertimeRequestSchema =
-  SchemaFactory.createForClass(Overtime_request);
+  SchemaFactory.createForClass(OvertimeRequest);

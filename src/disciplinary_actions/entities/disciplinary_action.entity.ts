@@ -48,7 +48,7 @@ export class DisciplinaryAction {
   dateAcknowledged: Date;
 
   @Prop()
-  cleansingPeriod: string;
+  cleansingPeriod: number;
 
   @Prop()
   status: string;

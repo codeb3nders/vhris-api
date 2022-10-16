@@ -1,28 +1,52 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class CreateOvertimeRequestDto {
   @ApiProperty()
-  timestamp: string;
+  @IsOptional()
+  timestamp: number;
+
   @ApiProperty()
+  @IsOptional()
+  overtimeRequestNo: string;
+
+  @ApiProperty()
+  @IsOptional()
   employeeNo: string;
+
   @ApiProperty()
-  dateTimeFrom: string;
+  @IsOptional()
+  dateTimeFrom: Date;
+
   @ApiProperty()
-  dateTimeTo: string;
+  @IsOptional()
+  dateTimeTo: Date;
+
   @ApiProperty()
-  isEarlyOt: string;
+  @IsOptional()
+  isEarlyOt: boolean;
+
   @ApiProperty()
+  @IsOptional()
   reason: string;
+
   @ApiProperty()
-  isLessBreak: string;
+  @IsOptional()
+  isLessBreak: boolean;
+
   @ApiProperty()
-  isPlusDay: string;
+  @IsOptional()
+  isPlusDay: boolean;
+
   @ApiProperty()
+  @IsOptional()
   otStatus: string;
+
   @ApiProperty()
-  isApprove: string;
+  @IsOptional()
+  isApprove: boolean;
+
   @ApiProperty()
-  date: string;
-  @ApiProperty()
+  @IsOptional()
   disapprovalReason: string;
 }

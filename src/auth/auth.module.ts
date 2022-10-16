@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { localStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { EmployeesModule } from 'src/employees/employees.module';
+import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
 
 @Module({
   imports: [
@@ -18,7 +19,12 @@ import { EmployeesModule } from 'src/employees/employees.module';
       }),
     }),
   ],
-  providers: [AuthService, localStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    localStrategy,
+    JwtStrategy,
+    EmployeesResponseHandler,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

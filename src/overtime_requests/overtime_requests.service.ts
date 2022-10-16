@@ -5,13 +5,13 @@ import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
 import {
   OvertimeRequestDocument,
-  Overtime_request,
+  OvertimeRequest,
 } from './entities/overtime_request.entity';
 
 @Injectable()
 export class OvertimeRequestsService {
   constructor(
-    @InjectModel(Overtime_request.name)
+    @InjectModel(OvertimeRequest.name)
     private overtimeRequestModel: Model<OvertimeRequestDocument>,
   ) {}
 

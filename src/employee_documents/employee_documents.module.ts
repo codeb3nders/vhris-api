@@ -8,6 +8,7 @@ import {
   EmployeeDocumentSchema,
 } from './entities/employee_document.entity';
 import { ValidatorsService } from 'src/validators/validators.service';
+import { EmployeeDocumentResponseHandler } from 'src/response_handler/employee_documents_handler.response';
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { ValidatorsService } from 'src/validators/validators.service';
     ]),
   ],
   controllers: [EmployeeDocumentsController],
-  providers: [EmployeeDocumentsService, ValidatorsService],
+  providers: [
+    EmployeeDocumentsService,
+    ValidatorsService,
+    EmployeeDocumentResponseHandler,
+  ],
 })
 export class EmployeeDocumentsModule {}

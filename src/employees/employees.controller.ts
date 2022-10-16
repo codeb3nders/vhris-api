@@ -22,7 +22,10 @@ import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
-import { isAllowedUser, isValidRequest } from '../validators/validate.request';
+import {
+  isAllowedUser,
+  isValidRequest,
+} from '../validators/validate.request.util';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';

@@ -10,12 +10,13 @@ import {
 import { LearningDevelopmentService } from './learning_development.service';
 import { CreateLearningDevelopmentDto } from './dto/create-learning_development.dto';
 import { UpdateLearningDevelopmentDto } from './dto/update-learning_development.dto';
-import { learningDevelopmentResponseHandler } from './response_handler/learning_development.response';
+import { LearningDevelopmentResponseHandler } from 'src/response_handler/learning_development_handler.response';
 
 @Controller('learning-development')
 export class LearningDevelopmentController {
   constructor(
     private readonly learningDevelopmentService: LearningDevelopmentService,
+    private readonly learningDevelopmentResponseHandler: LearningDevelopmentResponseHandler,
   ) {}
 
   @Post()
@@ -29,7 +30,7 @@ export class LearningDevelopmentController {
     if (!response || response.length < 1) {
       return response;
     }
-    return learningDevelopmentResponseHandler.ok(response);
+    return this.learningDevelopmentResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
@@ -38,7 +39,7 @@ export class LearningDevelopmentController {
     if (!response || response.length < 1) {
       return response;
     }
-    return learningDevelopmentResponseHandler.ok(response);
+    return this.learningDevelopmentResponseHandler.ok(response);
   }
 
   @Patch(':id')

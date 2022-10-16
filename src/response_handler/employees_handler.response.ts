@@ -3,7 +3,6 @@ import { BaseResponseHandler } from './base_handler.response';
 
 export class EmployeesResponseHandler extends BaseResponseHandler {
   ok(data: Employee | Employee[]) {
-    console.log({ data });
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
         return this.returnItem(item, this.items(item));
