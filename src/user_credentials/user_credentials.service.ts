@@ -7,11 +7,11 @@ import {
   UserCredentialDocument,
   UserCredential,
 } from './entities/user_credential.entity';
-import { encodePassWord } from 'src/utils/encoder';
+import { encodePassWord } from 'src/utils/data/encoder';
 
 import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
-import { generatePassword } from 'src/helpers/password_generator';
+import { generatePassword } from 'src/utils/data/password_generator.util';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 import { UserCode, UserCodeDocument } from './entities/user_code.entity';
 

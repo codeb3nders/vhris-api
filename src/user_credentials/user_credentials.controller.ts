@@ -14,9 +14,9 @@ import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 import { UserCredentialResponseHandler } from 'src/response_handler/user_credential_handler.response';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { comparePassword } from 'src/utils/encoder';
+import { comparePassword } from 'src/utils/data/encoder';
 
 @Controller('user-credentials')
 export class UserCredentialsController {

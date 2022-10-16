@@ -12,7 +12,7 @@ import { CreateLeaveTypeDto } from './dto/create-leave_type.dto';
 import { UpdateLeaveTypeDto } from './dto/update-leave_type.dto';
 
 import { Leave_types } from './entities/leave_types.entity';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { LeaveTypesResponseHandler } from './response_handler/leave_types.response';
 import { ApiTags } from '@nestjs/swagger';
 

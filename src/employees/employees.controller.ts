@@ -18,11 +18,11 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
-import { isAllowedUser, isValidRequest } from './dto/validate.request';
+import { isAllowedUser, isValidRequest } from '../validators/validate.request';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';

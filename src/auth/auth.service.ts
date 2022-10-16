@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EmployeesService } from 'src/employees/employees.service';
 import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
-import { comparePassword } from 'src/utils/encoder';
+import { comparePassword } from 'src/utils/data/encoder';
 @Injectable()
 export class AuthService {
   private employeesResponseHandler;
@@ -37,11 +37,12 @@ export class AuthService {
       employeeNo,
     };
     const employee = await this.employeeService.findOne(employeeNo);
-    const formatedResponset = this.employeesResponseHandler.ok(employee);
 
+    const formatResponse = this.employeesResponseHandler.ok(employee);
+    console.log({ formatResponse });
     return {
       access_token: this.jwtService.sign(payload),
-      userInfo: formatedResponset,
+      userInfo: formatResponse,
     };
   }
 }

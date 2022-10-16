@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import {
   aggregateFormatDate,
   aggregateLookUp,
-} from 'src/utils/aggregate_helper';
+} from 'src/utils/data/aggregate.util';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
 import {

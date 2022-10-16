@@ -12,7 +12,7 @@ import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
 import { Overtime_request } from './entities/overtime_request.entity';
 import { OvertimeRequestResponseHandler } from './response_handler/overtime_request.response';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Overtime Requests')

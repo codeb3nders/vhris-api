@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { zeroPad } from 'src/helpers/number_helper';
+import { zeroPad } from 'src/utils/numbers/number_helper.util';
 import {
   aggregateFormatDate,
   aggregateLookUp,
-} from 'src/utils/aggregate_helper';
+} from 'src/utils/data/aggregate.util';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
 import {

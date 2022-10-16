@@ -10,7 +10,7 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { AssetManagementService } from './asset_management.service';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';

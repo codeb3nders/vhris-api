@@ -1,4 +1,4 @@
-import { aggregateFormatDate } from 'src/utils/aggregate_helper';
+import { aggregateFormatDate } from 'src/utils/data/aggregate.util';
 
 export interface EmployeeI {
   employeeNo: string;

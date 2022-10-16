@@ -12,7 +12,7 @@ import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Leave_request } from './entities/leave_request.entity';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_handler.response';
 
 @ApiTags('Leave Request')
