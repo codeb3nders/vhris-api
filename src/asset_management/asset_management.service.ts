@@ -23,7 +23,7 @@ export class AssetManagementService {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'assetType',
           'code',
           'assetTypeEnum',

@@ -162,7 +162,7 @@ const enumsLookUp = () => {
   return withEnumValuesList.map((item) => {
     return {
       $lookup: aggregateLookUp(
-        'enum_tables',
+        'enums_table',
         `details.${item}`,
         'code',
         `${item}Enum`,

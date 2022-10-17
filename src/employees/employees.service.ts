@@ -40,7 +40,7 @@ export class EmployeesService {
       },
       {
         $lookup: {
-          from: 'enum_tables',
+          from: 'enums_table',
           let: { field: '$location' },
           pipeline: [
             { $addFields: { code: { $toUpper: '$code' } } },
@@ -51,7 +51,7 @@ export class EmployeesService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'userGroup',
           'code',
           'userGroupEnum',
@@ -59,12 +59,12 @@ export class EmployeesService {
       },
 
       {
-        $lookup: aggregateLookUp('enum_tables', 'gender', 'code', 'genderEnum'),
+        $lookup: aggregateLookUp('enums_table', 'gender', 'code', 'genderEnum'),
       },
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'civilStatus',
           'code',
           'civilStatusEnum',
@@ -73,7 +73,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'citizenship',
           'code',
           'citizenshipEnum',
@@ -82,7 +82,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'religion',
           'code',
           'religionEnum',
@@ -91,7 +91,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'payRateType',
           'code',
           'payRateTypeEnum',
@@ -100,7 +100,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'payrollGroup',
           'code',
           'payrollGroupEnum',
@@ -109,7 +109,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'deductPhilhealth',
           'code',
           'deductPhilhealthEnum',
@@ -118,7 +118,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'fixedContributionRate',
           'code',
           'fixedContributionRateEnum',
@@ -127,7 +127,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'paymentMethod',
           'code',
           'paymentMethodEnum',
@@ -136,7 +136,7 @@ export class EmployeesService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'position',
           'code',
           'positionEnum',
@@ -144,12 +144,12 @@ export class EmployeesService {
       },
 
       {
-        $lookup: aggregateLookUp('enum_tables', 'rank', 'code', 'rankEnum'),
+        $lookup: aggregateLookUp('enums_table', 'rank', 'code', 'rankEnum'),
       },
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'department',
           'code',
           'departmentEnum',
@@ -157,7 +157,7 @@ export class EmployeesService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'employmentStatus',
           'code',
           'employmentStatusEnum',
@@ -165,7 +165,7 @@ export class EmployeesService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'employmentType',
           'code',
           'employmentTypeEnum',

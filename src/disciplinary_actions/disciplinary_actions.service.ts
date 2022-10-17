@@ -23,7 +23,7 @@ export class DisciplinaryActionsService {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'violationCategory',
           'code',
           'violationCategoryEnum',
@@ -31,7 +31,7 @@ export class DisciplinaryActionsService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'violations',
           'code',
           'violationsEnum',
@@ -40,7 +40,7 @@ export class DisciplinaryActionsService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'offenseStage',
           'code',
           'offenseStageEnum',
@@ -48,7 +48,7 @@ export class DisciplinaryActionsService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'offenseLevel',
           'code',
           'offenseLevelEnum',

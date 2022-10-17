@@ -22,7 +22,7 @@ export class EmployeeDocumentsService {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'documentType',
           'code',
           'documentTypeEnum',
