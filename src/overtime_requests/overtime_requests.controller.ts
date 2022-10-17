@@ -11,9 +11,9 @@ import { OvertimeRequestsService } from './overtime_requests.service';
 import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
 import { OvertimeRequest } from './entities/overtime_request.entity';
-import { ErrorResponse } from 'src/utils/response/error_response.util';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
 import { ApiTags } from '@nestjs/swagger';
-import { OvertimeRequestResponseHandler } from 'src/response_handler/overtime_request_handler.response';
+import { OvertimeRequestResponseHandler } from 'src/utils/response_handler/overtime_request_handler.response';
 
 @ApiTags('Overtime Requests')
 @Controller('overtime')

@@ -8,7 +8,7 @@ import {
   EmployeeDocumentSchema,
 } from './entities/employee_document.entity';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { EmployeeDocumentResponseHandler } from 'src/response_handler/employee_documents_handler.response';
+import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
 
 @Module({
   imports: [

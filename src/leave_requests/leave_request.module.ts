@@ -6,7 +6,7 @@ import {
   LeaveRequest,
   LeaveRequestSchema,
 } from './entities/leave_request.entity';
-import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_handler.response';
+import { LeaveRequestResponseHandler } from 'src/utils/response_handler/leave_request_handler.response';
 
 @Module({
   imports: [

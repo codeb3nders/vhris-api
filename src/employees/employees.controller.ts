@@ -18,7 +18,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
-import { ErrorResponse } from 'src/utils/response/error_response.util';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
@@ -27,11 +27,11 @@ import {
   isValidRequest,
 } from '../validators/validate.request.util';
 import { AuthUser } from 'src/auth/jwt.helper';
-import { CONSTANTS } from 'src/constants/employees';
+import { CONSTANTS } from 'src/utils/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
-import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
 
 const toCheck = [
   'citizenship',

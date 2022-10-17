@@ -8,8 +8,8 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { DisciplinaryActionResponseHandler } from 'src/response_handler/disciplinary_actions_handler.response';
-import { ErrorResponse } from 'src/utils/response/error_response.util';
+import { DisciplinaryActionResponseHandler } from 'src/utils/response_handler/disciplinary_actions_handler.response';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { DisciplinaryActionsService } from './disciplinary_actions.service';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';

@@ -9,7 +9,7 @@ import { UserCredentialsModule } from 'src/user_credentials/user_credentials.mod
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
-import { EmployeesResponseHandler } from 'src/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
 
 @Module({
   imports: [

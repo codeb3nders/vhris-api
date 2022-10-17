@@ -10,7 +10,7 @@ import {
 import { LearningDevelopmentService } from './learning_development.service';
 import { CreateLearningDevelopmentDto } from './dto/create-learning_development.dto';
 import { UpdateLearningDevelopmentDto } from './dto/update-learning_development.dto';
-import { LearningDevelopmentResponseHandler } from 'src/response_handler/learning_development_handler.response';
+import { LearningDevelopmentResponseHandler } from 'src/utils/response_handler/learning_development_handler.response';
 
 @Controller('learning-development')
 export class LearningDevelopmentController {

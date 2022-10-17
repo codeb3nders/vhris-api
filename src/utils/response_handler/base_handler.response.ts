@@ -1,4 +1,4 @@
-import { withEnumValuesList } from 'src/enums/employee.enum';
+import { withEnumValuesList } from 'src/utils/enums/employee.enum';
 
 export class BaseResponseHandler {
   returnItem = (item: any, otherItem?: any) => {

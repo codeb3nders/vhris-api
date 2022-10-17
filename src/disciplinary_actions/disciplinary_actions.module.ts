@@ -8,7 +8,7 @@ import {
   DisciplinaryActionSchema,
 } from './entities/disciplinary_action.entity';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { DisciplinaryActionResponseHandler } from 'src/response_handler/disciplinary_actions_handler.response';
+import { DisciplinaryActionResponseHandler } from 'src/utils/response_handler/disciplinary_actions_handler.response';
 
 @Module({
   imports: [

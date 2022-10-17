@@ -6,7 +6,7 @@ import {
   OvertimeRequestSchema,
   OvertimeRequest,
 } from './entities/overtime_request.entity';
-import { OvertimeRequestResponseHandler } from 'src/response_handler/overtime_request_handler.response';
+import { OvertimeRequestResponseHandler } from 'src/utils/response_handler/overtime_request_handler.response';
 
 @Module({
   imports: [
