@@ -42,8 +42,8 @@ export class AssetManagementController {
   }
 
   @Get()
-  async findAll(@Query() params) {
-    const response = await this.assetManagementService.findAll(params);
+  async find(@Query() params) {
+    const response = await this.assetManagementService.find(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -51,8 +51,13 @@ export class AssetManagementController {
   }
 
   @Get(':employeeNo')
-  async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
-    const response = await this.assetManagementService.find(employeeNo);
+  async findByEmployeeId(
+    @Query() params: any,
+    @Param('employeeNo') employeeNo: string,
+  ) {
+    const response = await this.assetManagementService.findByEmployeeId(
+      employeeNo,
+    );
     if (!response || response.length < 1) {
       return response;
     }

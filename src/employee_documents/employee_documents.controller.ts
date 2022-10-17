@@ -40,8 +40,8 @@ export class EmployeeDocumentsController {
   }
 
   @Get()
-  async findAll(@Query() params) {
-    const response = await this.employeeDocumentsService.findAll(params);
+  async find(@Query() params) {
+    const response = await this.employeeDocumentsService.find(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -49,8 +49,13 @@ export class EmployeeDocumentsController {
   }
 
   @Get(':employeeNo')
-  async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
-    const response = await this.employeeDocumentsService.find(employeeNo);
+  async findByEmployeeId(
+    @Query() params: any,
+    @Param('employeeNo') employeeNo: string,
+  ) {
+    const response = await this.employeeDocumentsService.findByEmployeeId(
+      employeeNo,
+    );
     if (!response || response.length < 1) {
       return response;
     }

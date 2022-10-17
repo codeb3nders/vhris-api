@@ -9,6 +9,7 @@ import {
 } from './entities/employee_document.entity';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
+import { AggregateEmployeeDocuments } from 'src/database/aggreates/employee_documents.aggregate';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/empl
     EmployeeDocumentsService,
     ValidatorsService,
     EmployeeDocumentResponseHandler,
+    AggregateEmployeeDocuments,
   ],
 })
 export class EmployeeDocumentsModule {}
