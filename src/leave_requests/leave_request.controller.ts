@@ -11,7 +11,7 @@ import { LeaveRequestService } from './leave_request.service';
 import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Leave_request } from './entities/leave_request.entity';
+import { LeaveRequest } from './entities/leave_request.entity';
 import { ErrorResponse } from 'src/utils/response/error_response.util';
 import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_handler.response';
 
@@ -34,7 +34,7 @@ export class LeaveRequestController {
   }
 
   @Get()
-  async findAll(): Promise<Leave_request[]> {
+  async findAll(): Promise<LeaveRequest[]> {
     try {
       const response = await this.leaveRequestService.findAll();
       return this.leaveRequestResponseHandler.ok(response);
@@ -44,7 +44,7 @@ export class LeaveRequestController {
   }
 
   @Get('/employee')
-  async findAllWithEmployeeDetails(): Promise<Leave_request[]> {
+  async findAllWithEmployeeDetails(): Promise<LeaveRequest[]> {
     try {
       const response =
         await this.leaveRequestService.findAllWithEmployeeDetails();

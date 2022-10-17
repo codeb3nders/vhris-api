@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type LearningDevelopmentDocument = LearningDevelopment & Document;
 
-@Schema()
+@Schema({ collection: 'learning_developments' })
 export class LearningDevelopment {
   @Prop({ required: true })
   employeeNo: string;

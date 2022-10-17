@@ -37,7 +37,7 @@ export class AuthService {
     const employee = await this.employeeService.findOne(employeeNo);
 
     const formatResponse = this.employeesResponseHandler.ok(employee);
-    console.log({ formatResponse });
+
     return {
       access_token: this.jwtService.sign(payload),
       userInfo: formatResponse,

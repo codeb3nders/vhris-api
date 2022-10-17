@@ -6,7 +6,7 @@ import { aggregateLookUp } from 'src/utils/data/aggregate.util';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
 import {
-  Employee_history,
+  EmployeeHistory,
   EmployeeHistoryDocument,
 } from './entities/employee_history.entity';
 
@@ -35,7 +35,7 @@ reportsTo
 export class EmployeeHistoryService {
   private aggregateQry;
   constructor(
-    @InjectModel(Employee_history.name)
+    @InjectModel(EmployeeHistory.name)
     private employeeHistoryModel: Model<EmployeeHistoryDocument>,
   ) {
     this.aggregateQry = [...enumsLookUp()];
@@ -51,7 +51,7 @@ export class EmployeeHistoryService {
   //   return await this.employeeHistoryModel.find();
   // }
 
-  async findAll(_params?: any): Promise<Employee_history[]> {
+  async findAll(_params?: any): Promise<EmployeeHistory[]> {
     const pipeline = [...this.aggregateQry];
 
     const relations = _params.relations;

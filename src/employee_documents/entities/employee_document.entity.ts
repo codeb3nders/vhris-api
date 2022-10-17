@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type EmployeeDocumentsDocument = EmployeeDocument & Document;
 
-@Schema()
+@Schema({ collection: 'employee_documents' })
 export class EmployeeDocument {
   @Prop({ required: true, default: Date.now() })
   timestamp: number;

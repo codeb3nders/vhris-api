@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type UserCodeDocument = UserCode & Document;
 
-@Schema()
+@Schema({ collection: 'user_codes' })
 export class UserCode {
   @Prop({ required: true, unique: true })
   companyEmail: string;

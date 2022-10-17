@@ -3,7 +3,7 @@ import { LeaveRequestService } from './leave_request.service';
 import { LeaveRequestController } from './leave_request.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
-  Leave_request,
+  LeaveRequest,
   LeaveRequestSchema,
 } from './entities/leave_request.entity';
 import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_handler.response';
@@ -12,7 +12,7 @@ import { LeaveRequestResponseHandler } from 'src/response_handler/leave_request_
   imports: [
     MongooseModule.forFeature([
       {
-        name: Leave_request.name,
+        name: LeaveRequest.name,
         schema: LeaveRequestSchema,
       },
     ]),

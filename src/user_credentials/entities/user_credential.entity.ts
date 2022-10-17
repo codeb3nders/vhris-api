@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type UserCredentialDocument = UserCredential & Document;
 
-@Schema()
+@Schema({ collection: 'user_credential' })
 export class UserCredential {
   @Prop({ required: true, unique: true })
   employeeNo: string;

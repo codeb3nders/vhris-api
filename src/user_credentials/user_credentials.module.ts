@@ -19,7 +19,7 @@ import { UserCode, UserCodeSchema } from './entities/user_code.entity';
 
     MongooseModule.forFeature([
       {
-        name: UserCredential.name,
+        name: UserCredential.name as 'user_cred',
         schema: UserCredentialSchema,
       },
       {

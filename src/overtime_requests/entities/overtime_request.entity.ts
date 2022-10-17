@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type OvertimeRequestDocument = OvertimeRequest & Document;
 
-@Schema()
+@Schema({ collection: 'overtime_request' })
 export class OvertimeRequest {
   @Prop()
   timestamp: number;

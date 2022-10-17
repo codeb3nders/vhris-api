@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type DisciplinaryActionDocument = DisciplinaryAction & Document;
 
-@Schema()
+@Schema({ collection: 'disciplinary_actions' })
 export class DisciplinaryAction {
   @Prop({ required: true, default: Date.now() })
   timestamp: number;

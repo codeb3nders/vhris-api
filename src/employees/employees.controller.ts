@@ -56,9 +56,9 @@ const toCheck = [
 export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,
-    private validatorsService: ValidatorsService,
-    private employeeHistoryService: EmployeeHistoryService,
-    private employeesResponseHandler: EmployeesResponseHandler,
+    private readonly validatorsService: ValidatorsService,
+    private readonly employeeHistoryService: EmployeeHistoryService,
+    private readonly employeesResponseHandler: EmployeesResponseHandler,
   ) {}
 
   @Post()

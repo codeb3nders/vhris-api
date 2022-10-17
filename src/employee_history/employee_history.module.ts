@@ -3,7 +3,7 @@ import { EmployeeHistoryService } from './employee_history.service';
 import { EmployeeHistoryController } from './employee_history.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
-  Employee_history,
+  EmployeeHistory,
   EmployeeHistorySchema,
 } from './entities/employee_history.entity';
 import { EmployeeHistoryResponseHandler } from 'src/response_handler/employee_history_handler.response';
@@ -12,7 +12,7 @@ import { EmployeeHistoryResponseHandler } from 'src/response_handler/employee_hi
   imports: [
     MongooseModule.forFeature([
       {
-        name: Employee_history.name,
+        name: EmployeeHistory.name,
         schema: EmployeeHistorySchema,
       },
     ]),
