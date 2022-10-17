@@ -204,7 +204,6 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => new Date(param.value).getTime())
   birthDate: number;
 
   @ApiProperty({ required: true })
@@ -319,23 +318,19 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => new Date(param.value).getTime())
-  dateHired: number;
+  dateHired: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  dateInactive: number;
+  dateInactive: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  endOfProbationary: number;
+  endOfProbationary: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  contractEndDate: number;
+  contractEndDate: Date;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
