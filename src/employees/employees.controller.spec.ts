@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ValidatorsService } from 'src/validators/validators.service';
+import { ValidatorsService } from 'src/_validators/validators.service';
 import { EmployeesController } from './employees.controller';
 import { EmployeesService } from './employees.service';
 

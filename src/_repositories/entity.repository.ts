@@ -1,17 +1,53 @@
-import { Document, Model } from 'mongoose';
-import {
-  aggregateLookUp,
-  aggregateFormatDate,
-} from 'src/utils/data/aggregate.util';
+import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 export abstract class EntityRepository<T extends Document> {
-  constructor(private entityModel: Model<T>, private aggregateQry: any) {}
+  constructor(private entityModel: Model<T>, private aggregateQry?: any) {}
   async create(createEntityData: unknown) {
     const createdEmployee = new this.entityModel(createEntityData);
     return await createdEmployee.save();
   }
 
-  async find(entityFilterQuery?: any): Promise<T[]> {
+  async findOne(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: Record<string, unknown>,
+  ): Promise<T | null> {
+    return await this.entityModel.findOne(entityFilterQuery, {
+      _id: 0,
+      __v: 0,
+      ...projection,
+    });
+  }
+
+  async find(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: Record<string, unknown>,
+  ): Promise<T[] | null> {
+    return await this.entityModel.find(entityFilterQuery, {
+      _id: 0,
+      __v: 0,
+      ...projection,
+    });
+  }
+
+  async findOneAndUpdate(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<unknown>,
+  ): Promise<T | null> {
+    return await this.entityModel.findOneAndUpdate(
+      entityFilterQuery,
+      updateEntityData,
+      {
+        new: true,
+      },
+    );
+  }
+
+  async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+    const deleteResult = await this.entityModel.deleteMany(entityFilterQuery);
+    return deleteResult.deletedCount >= 1;
+  }
+
+  async aggregateFind(entityFilterQuery?: any): Promise<T[]> {
     const pipeline = [...this.aggregateQry.values()];
 
     const relations = entityFilterQuery.relations;
@@ -66,7 +102,7 @@ export abstract class EntityRepository<T extends Document> {
     return this.entityModel.aggregate(pLine);
   }
 
-  async findByEmployeeId(
+  async aggregateFindByEmployeeId(
     employeeNo: string,
     entityFilterQuery?: any,
   ): Promise<T[]> {

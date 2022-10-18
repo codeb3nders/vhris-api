@@ -11,9 +11,9 @@ import {
 import { EmployeeDocumentsService } from './employee_documents.service';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
-import { ValidatorsService } from 'src/validators/validators.service';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
-import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
+import { ValidatorsService } from 'src/_validators/validators.service';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
+import { EmployeeDocumentResponseHandler } from 'src/_utils/response_handler/employee_documents_handler.response';
 
 const toCheck = ['documentType'];
 
@@ -41,7 +41,7 @@ export class EmployeeDocumentsController {
 
   @Get()
   async find(@Query() params) {
-    const response = await this.employeeDocumentsService.find(params);
+    const response = await this.employeeDocumentsService.aggregateFind(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -49,13 +49,12 @@ export class EmployeeDocumentsController {
   }
 
   @Get(':employeeNo')
-  async findByEmployeeId(
+  async aggregateFindByEmployeeId(
     @Query() params: any,
     @Param('employeeNo') employeeNo: string,
   ) {
-    const response = await this.employeeDocumentsService.findByEmployeeId(
-      employeeNo,
-    );
+    const response =
+      await this.employeeDocumentsService.aggregateFindByEmployeeId(employeeNo);
     if (!response || response.length < 1) {
       return response;
     }

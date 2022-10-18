@@ -12,8 +12,8 @@ import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LeaveRequest } from './entities/leave_request.entity';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
-import { LeaveRequestResponseHandler } from 'src/utils/response_handler/leave_request_handler.response';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
+import { LeaveRequestResponseHandler } from 'src/_utils/response_handler/leave_request_handler.response';
 
 @ApiTags('Leave Request')
 @Controller('leave')

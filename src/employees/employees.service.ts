@@ -6,11 +6,11 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
-import { zeroPad } from 'src/utils/numbers/number_helper.util';
-import { AutoCredentialEnum } from 'src/utils/enums/employee.enum';
+import { zeroPad } from 'src/_utils/numbers/number_helper.util';
+import { AutoCredentialEnum } from 'src/_utils/enums/employee.enum';
 import { EmployeeFields } from './dto/fields-employe';
 import { defaultItems, defaultSet } from './interface/employee.interface';
-import { aggregateLookUp } from 'src/utils/data/aggregate.util';
+import { aggregateLookUp } from 'src/_repositories/aggregates/helper.aggregate';
 
 @Injectable()
 export class EmployeesService {

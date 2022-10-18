@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AggregateEmployeeDocuments } from 'src/database/aggreates/employee_documents.aggregate';
-import { EntityRepository } from 'src/database/entity_repository';
+import { AggregateEmployeeDocuments } from 'src/_repositories/aggregates/employee_documents.aggregate';
+import { EntityRepository } from 'src/_repositories/entity.repository';
 import {
   EmployeeDocument,
   EmployeeDocumentsDocument,

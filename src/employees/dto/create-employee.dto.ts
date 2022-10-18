@@ -21,7 +21,7 @@ import {
   RelationEnum,
   ReligionEnum,
   UserGroupEnum,
-} from 'src/utils/enums/employee.enum';
+} from 'src/_utils/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
 
 class PayrollBankAccount {

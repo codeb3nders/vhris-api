@@ -6,7 +6,7 @@ import {
   LearningDevelopment,
   LearningDevelopmentSchema,
 } from './entities/learning_development.entity';
-import { LearningDevelopmentResponseHandler } from 'src/utils/response_handler/learning_development_handler.response';
+import { LearningDevelopmentResponseHandler } from 'src/_utils/response_handler/learning_development_handler.response';
 
 @Module({
   imports: [

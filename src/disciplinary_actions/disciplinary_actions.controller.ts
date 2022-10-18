@@ -8,9 +8,9 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { DisciplinaryActionResponseHandler } from 'src/utils/response_handler/disciplinary_actions_handler.response';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
-import { ValidatorsService } from 'src/validators/validators.service';
+import { DisciplinaryActionResponseHandler } from 'src/_utils/response_handler/disciplinary_actions_handler.response';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
+import { ValidatorsService } from 'src/_validators/validators.service';
 import { DisciplinaryActionsService } from './disciplinary_actions.service';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';

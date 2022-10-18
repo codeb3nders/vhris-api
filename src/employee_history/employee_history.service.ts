@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { withEnumValuesList } from 'src/utils/enums/employee.enum';
-import { aggregateLookUp } from 'src/utils/data/aggregate.util';
+import { withEnumValuesList } from 'src/_utils/enums/employee.enum';
+import { aggregateLookUp } from 'src/_repositories/aggregates/helper.aggregate';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
 import {

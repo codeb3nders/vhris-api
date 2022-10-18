@@ -10,12 +10,12 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
-import { ValidatorsService } from 'src/validators/validators.service';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
+import { ValidatorsService } from 'src/_validators/validators.service';
 import { AssetManagementService } from './asset_management.service';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
-import { AssetManagementResponseHandler } from '../utils/response_handler/asset_management_handler.response';
+import { AssetManagementResponseHandler } from '../_utils/response_handler/asset_management_handler.response';
 
 const toCheck = ['assetType'];
 
@@ -43,7 +43,7 @@ export class AssetManagementController {
 
   @Get()
   async find(@Query() params) {
-    const response = await this.assetManagementService.find(params);
+    const response = await this.assetManagementService.aggregateFind(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -51,13 +51,12 @@ export class AssetManagementController {
   }
 
   @Get(':employeeNo')
-  async findByEmployeeId(
+  async aggregateFindByEmployeeId(
     @Query() params: any,
     @Param('employeeNo') employeeNo: string,
   ) {
-    const response = await this.assetManagementService.findByEmployeeId(
-      employeeNo,
-    );
+    const response =
+      await this.assetManagementService.aggregateFindByEmployeeId(employeeNo);
     if (!response || response.length < 1) {
       return response;
     }

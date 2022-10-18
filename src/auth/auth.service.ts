@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmployeesService } from 'src/employees/employees.service';
-import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
-import { comparePassword } from 'src/utils/data/encoder';
+import { comparePassword } from 'src/_utils/data/encoder';
 @Injectable()
 export class AuthService {
   constructor(

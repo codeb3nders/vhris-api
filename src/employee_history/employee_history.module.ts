@@ -6,7 +6,7 @@ import {
   EmployeeHistory,
   EmployeeHistorySchema,
 } from './entities/employee_history.entity';
-import { EmployeeHistoryResponseHandler } from 'src/utils/response_handler/employee_history_handler.response';
+import { EmployeeHistoryResponseHandler } from 'src/_utils/response_handler/employee_history_handler.response';
 
 @Module({
   imports: [

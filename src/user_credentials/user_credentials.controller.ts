@@ -13,10 +13,10 @@ import { UserCredentialsService } from './user_credentials.service';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
-import { UserCredentialResponseHandler } from 'src/utils/response_handler/user_credential_handler.response';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
+import { UserCredentialResponseHandler } from 'src/_utils/response_handler/user_credential_handler.response';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { comparePassword } from 'src/utils/data/encoder';
+import { comparePassword } from 'src/_utils/data/encoder';
 
 @Controller('user-credentials')
 export class UserCredentialsController {

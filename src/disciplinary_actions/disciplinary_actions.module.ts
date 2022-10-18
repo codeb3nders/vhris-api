@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { DisciplinaryActionsService } from './disciplinary_actions.service';
 import { DisciplinaryActionsController } from './disciplinary_actions.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ValidatorsModule } from 'src/validators/validators.module';
+import { ValidatorsModule } from 'src/_validators/validators.module';
 import {
   DisciplinaryAction,
   DisciplinaryActionSchema,
 } from './entities/disciplinary_action.entity';
-import { ValidatorsService } from 'src/validators/validators.service';
-import { DisciplinaryActionResponseHandler } from 'src/utils/response_handler/disciplinary_actions_handler.response';
+import { ValidatorsService } from 'src/_validators/validators.service';
+import { DisciplinaryActionResponseHandler } from 'src/_utils/response_handler/disciplinary_actions_handler.response';
 
 @Module({
   imports: [
