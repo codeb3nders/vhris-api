@@ -1,17 +1,12 @@
 import { forwardRef, Inject } from '@nestjs/common';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
-import { AutoCredentialEnum } from 'src/_utils/enums/employee.enum';
-import { zeroPad } from 'src/_utils/numbers/number_helper.util';
 
 export abstract class EntityRepository<T extends Document> {
   constructor(
     @Inject(forwardRef(() => UserCredentialsService))
     private entityModel: Model<T>,
     private aggregateQry?: any,
-
-    private userCredentialService?: UserCredentialsService,
   ) {}
 
   async create(createEntityData: unknown) {
@@ -92,7 +87,7 @@ export abstract class EntityRepository<T extends Document> {
     }
 
     const pipeline = [
-      ...this.aggregateQry,
+      ...this.aggregateQry.values(),
       {
         $match: {
           employeeNo: employeeNo,
@@ -201,6 +196,76 @@ export abstract class EntityRepository<T extends Document> {
     ];
 
     return await this.entityModel.aggregate(pipeline);
+  }
+
+  async search(entityFilterQuery?: any): Promise<T[]> {
+    const pipeline = [...this.aggregateQry.values()];
+
+    const relations = entityFilterQuery.relations;
+
+    delete entityFilterQuery.relations;
+    const params = entityFilterQuery;
+
+    const keys = Object.keys(params);
+    let n = keys.length;
+    const toMatch = [];
+    while (n--) {
+      let value = isNaN(params[keys[n]])
+        ? params[keys[n]].toUpperCase()
+        : Number(params[keys[n]]);
+
+      if (value === 'true' || value === 'false') {
+        value = value === 'true';
+      }
+      if (typeof value === 'boolean') {
+        toMatch.push({
+          ['$expr']: { $eq: [`$${keys[n]}`, value] },
+        });
+      } else {
+        if (keys[n] === 'isActive') {
+          toMatch.push({
+            [`${keys[n]}`]: value === 'TRUE',
+          });
+        } else {
+          if (isNaN(Number(value))) {
+            toMatch.push({
+              [`${keys[n]}`]: { ['$regex']: value },
+            });
+          } else {
+            toMatch.push({
+              [`${keys[n]}`]: value,
+            });
+          }
+        }
+      }
+    }
+
+    const _relations = [];
+
+    if (relations) {
+      const rel = JSON.parse(relations);
+
+      rel.forEach((r) => {
+        _relations.push({
+          $lookup: {
+            from: `${r}`,
+            localField: 'employeeNo',
+            foreignField: 'employeeNo',
+            as: `${r}`,
+          },
+        });
+      });
+    }
+
+    const pLine = [...pipeline, ..._relations];
+    if (toMatch.length > 0) {
+      pLine.push({
+        $match: {
+          $or: [...toMatch],
+        },
+      });
+    }
+    return this.entityModel.aggregate(pLine);
   }
 
   findLast() {

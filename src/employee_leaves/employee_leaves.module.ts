@@ -6,6 +6,7 @@ import {
   EmployeeLeavesSchema,
   EmployeeLeaves,
 } from './entities/employee_leave.entity';
+import { EmployeeLeavesRepository } from 'src/_repositories/employee_leaves/employee_leaves.repository';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import {
     ]),
   ],
   controllers: [EmployeeLeavesController],
-  providers: [EmployeeLeavesService],
+  providers: [EmployeeLeavesService, EmployeeLeavesRepository],
 })
 export class EmployeeLeavesModule {}

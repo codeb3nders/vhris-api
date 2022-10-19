@@ -107,6 +107,7 @@ export class EmployeesController {
     @Param('employeeNo') employeeNo: string,
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
+
     if (!response || response.length < 1) {
       return [];
     }
@@ -131,12 +132,13 @@ export class EmployeesController {
 
     const employee = await this.employeesService.findOne(employeeNo);
 
-    if (!employee)
+    if (!employee.length)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
     const response = await this.employeesService.update(
       employeeNo,
       updateEmployeeDto,
     );
+
     if (response) {
       const previousValue = {};
 
@@ -163,7 +165,7 @@ export class EmployeesController {
         }
       }
     }
-    return { response };
+    return response;
   }
 
   @UseGuards(JwtAuthGuard)

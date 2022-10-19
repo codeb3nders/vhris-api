@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type EnumTableDocument = EnumsTable & Document;
+export type EnumsTableDocument = EnumsTable & Document;
 
 @Schema({ collection: 'enums_table', strict: false })
 export class EnumsTable {
@@ -11,4 +11,4 @@ export class EnumsTable {
   type: string;
 }
 
-export const EnumTableSchema = SchemaFactory.createForClass(EnumsTable);
+export const EnumsTableSchema = SchemaFactory.createForClass(EnumsTable);

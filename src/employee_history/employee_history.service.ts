@@ -1,19 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { withEnumValuesList } from 'src/_utils/enums/employee.enum';
-import { aggregateLookUp } from 'src/_aggregates/helper.aggregate';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
-import {
-  EmployeeHistory,
-  EmployeeHistoryDocument,
-} from './entities/employee_history.entity';
+import { EmployeeHistory } from './entities/employee_history.entity';
 import { EmployeeHistoryRepository } from 'src/_repositories/employee_history/employee_history.repository';
 
 @Injectable()
 export class EmployeeHistoryService {
   constructor(private employeeHistoryRepository: EmployeeHistoryRepository) {}
+
   async create(createEmployeeHistoryDto: CreateEmployeeHistoryDto) {
     return await this.employeeHistoryRepository.create(
       createEmployeeHistoryDto,
