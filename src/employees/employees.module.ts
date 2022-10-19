@@ -10,6 +10,8 @@ import { ValidatorsModule } from 'src/_validators/validators.module';
 import { ValidatorsService } from 'src/_validators/validators.service';
 import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
 import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
+import { EmployeeRepository } from 'src/employees/employee.repository';
+import { AggregateEmployee } from 'src/_aggregates/employee.aggregate';
 
 @Module({
   imports: [
@@ -29,7 +31,9 @@ import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_
     EmailService,
     ValidatorsService,
     EmployeesResponseHandler,
+    EmployeeRepository,
+    AggregateEmployee,
   ],
-  exports: [EmployeesService],
+  exports: [EmployeesService, EmployeeRepository],
 })
 export class EmployeesModule {}

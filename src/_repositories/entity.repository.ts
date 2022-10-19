@@ -1,7 +1,19 @@
+import { forwardRef, Inject } from '@nestjs/common';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
+import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
+import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
+import { AutoCredentialEnum } from 'src/_utils/enums/employee.enum';
+import { zeroPad } from 'src/_utils/numbers/number_helper.util';
 
 export abstract class EntityRepository<T extends Document> {
-  constructor(private entityModel: Model<T>, private aggregateQry?: any) {}
+  constructor(
+    @Inject(forwardRef(() => UserCredentialsService))
+    private entityModel: Model<T>,
+    private aggregateQry?: any,
+
+    private userCredentialService?: UserCredentialsService,
+  ) {}
+
   async create(createEntityData: unknown) {
     const createdEmployee = new this.entityModel(createEntityData);
     return await createdEmployee.save();
@@ -19,7 +31,7 @@ export abstract class EntityRepository<T extends Document> {
   }
 
   async find(
-    entityFilterQuery: FilterQuery<T>,
+    entityFilterQuery?: FilterQuery<T>,
     projection?: Record<string, unknown>,
   ): Promise<T[] | null> {
     return await this.entityModel.find(entityFilterQuery, {
@@ -45,6 +57,55 @@ export abstract class EntityRepository<T extends Document> {
   async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
     const deleteResult = await this.entityModel.deleteMany(entityFilterQuery);
     return deleteResult.deletedCount >= 1;
+  }
+
+  async deleteOne(id: string): Promise<boolean> {
+    const deleteResult = await await this.entityModel.deleteOne({ id });
+    return deleteResult.deletedCount >= 1;
+  }
+
+  // Aggregate Queries
+
+  async aggregateFindOne(
+    employeeNo: string,
+    entityFilterQuery?: any,
+  ): Promise<T[]> {
+    const _relations = [];
+    if (entityFilterQuery) {
+      const relations = entityFilterQuery.relations;
+      delete entityFilterQuery.relations;
+
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
+        });
+      }
+    }
+
+    const pipeline = [
+      ...this.aggregateQry,
+      {
+        $match: {
+          employeeNo: employeeNo,
+        },
+      },
+      {
+        $limit: 1,
+      },
+      ..._relations,
+    ];
+
+    const pLine = [...pipeline, ..._relations];
+    return this.entityModel.aggregate(pLine);
   }
 
   async aggregateFind(entityFilterQuery?: any): Promise<T[]> {
@@ -142,21 +203,7 @@ export abstract class EntityRepository<T extends Document> {
     return await this.entityModel.aggregate(pipeline);
   }
 
-  async update(
-    id: string,
-    updateAssetManagementDto: unknown,
-  ): Promise<unknown> {
-    updateAssetManagementDto['lastModifiedDate'] = Date.now();
-    const filter = { _id: id };
-    const update = updateAssetManagementDto;
-    try {
-      return await this.entityModel.updateOne(filter, update);
-    } catch (error) {
-      return `Failed updating record with id ${id}`;
-    }
-  }
-
-  remove(id: string) {
-    return this.entityModel.deleteOne({ id });
+  findLast() {
+    return this.entityModel.findOne({}, {}, { sort: { employeeNo: -1 } });
   }
 }

@@ -11,7 +11,7 @@ export class EmployeeHistory {
   @Prop({ default: Date.now() })
   timestamp: Date;
 
-  @Prop()
+  @Prop({ default: Date.now() })
   effectiveDate: Date;
 
   @Prop()

@@ -80,7 +80,7 @@ export class AssetManagementController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.assetManagementService.remove(id);
+  deleteOne(@Param('id') id: string) {
+    return this.assetManagementService.deleteOne(id);
   }
 }

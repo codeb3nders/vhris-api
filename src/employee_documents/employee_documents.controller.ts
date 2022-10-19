@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { EmployeeDocumentsService } from './employee_documents.service';
+import { EmployeeDocumentService } from './employee_documents.service';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
 import { ValidatorsService } from 'src/_validators/validators.service';
@@ -20,7 +20,7 @@ const toCheck = ['documentType'];
 @Controller('employee-documents')
 export class EmployeeDocumentsController {
   constructor(
-    private readonly employeeDocumentsService: EmployeeDocumentsService,
+    private readonly employeeDocumentsService: EmployeeDocumentService,
     private readonly validatorService: ValidatorsService,
     private readonly employeeDocumentResponseHandler: EmployeeDocumentResponseHandler,
   ) {}
@@ -78,7 +78,7 @@ export class EmployeeDocumentsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeDocumentsService.remove(id);
+  deleteOne(@Param('id') id: string) {
+    return this.employeeDocumentsService.deleteOne(id);
   }
 }

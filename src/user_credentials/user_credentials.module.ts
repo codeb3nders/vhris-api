@@ -12,6 +12,9 @@ import { EmailService } from 'src/email/email.service';
 import { EmployeesModule } from 'src/employees/employees.module';
 import { UserCredentialResponseHandler } from 'src/_utils/response_handler/user_credential_handler.response';
 import { UserCode, UserCodeSchema } from './entities/user_code.entity';
+import { UserCredentialRepository } from 'src/_repositories/user_credential/user_credential.repository';
+import { EmployeeRepository } from 'src/employees/employee.repository';
+import { UserCodeRepository } from 'src/_repositories/user_codes/user_codes.repository';
 
 @Module({
   imports: [
@@ -34,6 +37,8 @@ import { UserCode, UserCodeSchema } from './entities/user_code.entity';
     UserCredentialsService,
     EmailService,
     UserCredentialResponseHandler,
+    UserCredentialRepository,
+    UserCodeRepository,
   ],
   exports: [UserCredentialsService],
 })

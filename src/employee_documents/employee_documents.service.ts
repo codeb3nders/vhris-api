@@ -1,20 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { AggregateEmployeeDocuments } from 'src/_repositories/aggregates/employee_documents.aggregate';
-import { EntityRepository } from 'src/_repositories/entity.repository';
-import {
-  EmployeeDocument,
-  EmployeeDocumentsDocument,
-} from './entities/employee_document.entity';
+import { EmployeeDocumentRepository } from '../_repositories/employee_documents/asset_management.repository';
+import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
+import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
+import { EmployeeDocument } from './entities/employee_document.entity';
 
 @Injectable()
-export class EmployeeDocumentsService extends EntityRepository<EmployeeDocumentsDocument> {
-  constructor(
-    @InjectModel(EmployeeDocument.name)
-    assetManagementModel: Model<EmployeeDocumentsDocument>,
-    aggregateQry: AggregateEmployeeDocuments,
+export class EmployeeDocumentService {
+  constructor(private employeeDocumentRepository: EmployeeDocumentRepository) {}
+
+  async create(createEmployeeDocumentDto: CreateEmployeeDocumentDto) {
+    return await this.employeeDocumentRepository.create(
+      createEmployeeDocumentDto,
+    );
+  }
+
+  async aggregateFind(_params?: any): Promise<EmployeeDocument[]> {
+    return this.employeeDocumentRepository.aggregateFind(_params);
+  }
+
+  async aggregateFindByEmployeeId(employeeNo: string, _params?: any) {
+    return await this.employeeDocumentRepository.aggregateFindByEmployeeId(
+      employeeNo,
+      _params,
+    );
+  }
+
+  async update(
+    id: string,
+    updateEmployeeDocumentDto: UpdateEmployeeDocumentDto,
   ) {
-    super(assetManagementModel, aggregateQry);
+    updateEmployeeDocumentDto['lastModifiedDate'] = Date.now();
+
+    return await this.employeeDocumentRepository.findOneAndUpdate(
+      { id },
+      updateEmployeeDocumentDto,
+    );
+  }
+
+  deleteOne(id: string) {
+    return this.employeeDocumentRepository.deleteOne(id);
   }
 }

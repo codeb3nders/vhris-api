@@ -1,17 +1,17 @@
 import {
-  aggregateFormatDate,
   aggregateLookUp,
-} from 'src/_repositories/aggregates/helper.aggregate';
+  aggregateFormatDate,
+} from 'src/_aggregates/helper.aggregate';
 
-export class AggregateEmployeeDocuments {
+export class AggregateAssetManagement {
   values() {
     return [
       {
         $lookup: aggregateLookUp(
-          'enums_table',
-          'documentType',
+          'enum_tables',
+          'assetType',
           'code',
-          'documentTypeEnum',
+          'assetTypeEnum',
         ),
       },
 

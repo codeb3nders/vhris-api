@@ -29,7 +29,7 @@ export class EmployeeHistoryController {
 
   @Get()
   async findAll(@Query() params) {
-    const response = await this.employeeHistoryService.findAll(params);
+    const response = await this.employeeHistoryService.findAll();
     if (!response || response.length < 1) {
       return response;
     }
@@ -38,7 +38,7 @@ export class EmployeeHistoryController {
 
   @Get(':employeeNo')
   async find(@Param('employeeNo') employeeNo?: string) {
-    const response = await this.employeeHistoryService.find(employeeNo);
+    const response = await this.employeeHistoryService.findAll({ employeeNo });
 
     if (!response || response.length < 1) {
       return response;

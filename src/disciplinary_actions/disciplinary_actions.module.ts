@@ -9,6 +9,8 @@ import {
 } from './entities/disciplinary_action.entity';
 import { ValidatorsService } from 'src/_validators/validators.service';
 import { DisciplinaryActionResponseHandler } from 'src/_utils/response_handler/disciplinary_actions_handler.response';
+import { DisciplinaryActionRepository } from 'src/_repositories/disciplinary_actions/disciplinary_actions.repository';
+import { AggregateDisciplinaryAction } from 'src/_aggregates/disciplinary_actions.aggregate';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { DisciplinaryActionResponseHandler } from 'src/_utils/response_handler/d
     DisciplinaryActionsService,
     ValidatorsService,
     DisciplinaryActionResponseHandler,
+    DisciplinaryActionRepository,
+    AggregateDisciplinaryAction,
   ],
 })
 export class DisciplinaryActionsModule {}

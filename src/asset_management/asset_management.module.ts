@@ -9,7 +9,8 @@ import {
 import { ValidatorsModule } from 'src/_validators/validators.module';
 import { ValidatorsService } from 'src/_validators/validators.service';
 import { AssetManagementResponseHandler } from 'src/_utils/response_handler/asset_management_handler.response';
-import { AggregateAssetManagement } from 'src/_repositories/aggregates/asset_management.aggregate';
+import { AggregateAssetManagement } from 'src/_aggregates/asset_management.aggregate';
+import { AssetManagementRepository } from '../_repositories/asset_managements/asset_management.repository';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AggregateAssetManagement } from 'src/_repositories/aggregates/asset_man
     ValidatorsService,
     AssetManagementResponseHandler,
     AggregateAssetManagement,
+    AssetManagementRepository,
   ],
 })
 export class AssetManagementModule {}

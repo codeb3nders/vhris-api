@@ -2,171 +2,46 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { withEnumValuesList } from 'src/_utils/enums/employee.enum';
-import { aggregateLookUp } from 'src/_repositories/aggregates/helper.aggregate';
+import { aggregateLookUp } from 'src/_aggregates/helper.aggregate';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
 import {
   EmployeeHistory,
   EmployeeHistoryDocument,
 } from './entities/employee_history.entity';
-
-/**
- * **
-location
-userGroup
-gender
-civilStatus
-citizenship
-religion
-payRateType
-payrollGroup
-deductPhilhealth
-fixedContributionRate
-paymentMethod
-position
-rank
-department
-employmentStatus
-employmentType
-reportsTo
- */
+import { EmployeeHistoryRepository } from 'src/_repositories/employee_history/employee_history.repository';
 
 @Injectable()
 export class EmployeeHistoryService {
-  private aggregateQry;
-  constructor(
-    @InjectModel(EmployeeHistory.name)
-    private employeeHistoryModel: Model<EmployeeHistoryDocument>,
-  ) {
-    this.aggregateQry = [...enumsLookUp()];
-  }
+  constructor(private employeeHistoryRepository: EmployeeHistoryRepository) {}
   async create(createEmployeeHistoryDto: CreateEmployeeHistoryDto) {
-    const createEmployeeHistory = new this.employeeHistoryModel(
+    return await this.employeeHistoryRepository.create(
       createEmployeeHistoryDto,
     );
-    return await createEmployeeHistory.save();
   }
-
-  // async findAll() {
-  //   return await this.employeeHistoryModel.find();
-  // }
 
   async findAll(_params?: any): Promise<EmployeeHistory[]> {
-    const pipeline = [...this.aggregateQry];
-
-    const relations = _params.relations;
-
-    delete _params.relations;
-
-    const params = _params;
-
-    const keys = Object.keys(params);
-    let n = keys.length;
-    const toMatch = [];
-    while (n--) {
-      let value = isNaN(params[keys[n]])
-        ? params[keys[n]].toLowerCase()
-        : Number(params[keys[n]]);
-
-      if (value === 'true' || value === 'false') {
-        value = value === 'true';
-      }
-      if (typeof value === 'boolean') {
-        toMatch.push({
-          ['$expr']: { $eq: [`$${keys[n]}`, value] },
-        });
-      } else {
-        toMatch.push({
-          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
-        });
-      }
-    }
-
-    const match = toMatch.map((i) => {
-      return { $match: i };
-    });
-
-    const _relations = [];
-
-    if (relations) {
-      const rel = JSON.parse(relations);
-
-      rel.forEach((r) => {
-        _relations.push({
-          $lookup: {
-            from: `${r}`,
-            localField: 'employeeNo',
-            foreignField: 'employeeNo',
-            as: `${r}`,
-          },
-        });
-      });
-    }
-
-    const pLine = [...pipeline, ...match, ..._relations];
-    return this.employeeHistoryModel.aggregate(pLine);
+    return await this.employeeHistoryRepository.find(_params);
   }
 
-  async find(employeeNo: string, _params?: any) {
-    const _relations = [];
-
-    if (_params) {
-      const relations = _params.relations;
-      delete _params.relations;
-
-      if (relations) {
-        const rel = JSON.parse(relations);
-
-        rel.forEach((r) => {
-          _relations.push({
-            $lookup: {
-              from: `${r}`,
-              localField: 'employeeNo',
-              foreignField: 'employeeNo',
-              as: `${r}`,
-            },
-          });
-        });
-      }
-    }
-
-    const pipeline = [
-      ...this.aggregateQry,
-      {
-        $match: {
-          employeeNo: employeeNo,
-        },
-      },
-      ..._relations,
-    ];
-
-    return await this.employeeHistoryModel.aggregate(pipeline);
+  async findOne(employeeNo: string, _params?: any) {
+    return await this.employeeHistoryRepository.aggregateFindOne(
+      employeeNo,
+      _params,
+    );
   }
 
   update(
     employeeNo: string,
     updateEmployeeHistoryDto: UpdateEmployeeHistoryDto,
   ) {
-    return this.employeeHistoryModel.updateOne(
+    return this.employeeHistoryRepository.findOneAndUpdate(
       { employeeNo },
       { $set: { ...updateEmployeeHistoryDto } },
     );
   }
 
   remove(employeeNo: string) {
-    return this.employeeHistoryModel.deleteOne({ employeeNo });
+    return this.employeeHistoryRepository.deleteMany({ employeeNo });
   }
 }
-
-const enumsLookUp = () => {
-  return withEnumValuesList.map((item) => {
-    return {
-      $lookup: aggregateLookUp(
-        'enums_table',
-        `details.${item}`,
-        'code',
-        `${item}Enum`,
-      ),
-    };
-  });
-};

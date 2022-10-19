@@ -8,9 +8,8 @@ import { UserCredentialsService } from 'src/user_credentials/user_credentials.se
 import { CreateUserCredentialDto } from 'src/user_credentials/dto/create-user_credential.dto';
 import { zeroPad } from 'src/_utils/numbers/number_helper.util';
 import { AutoCredentialEnum } from 'src/_utils/enums/employee.enum';
-import { EmployeeFields } from './dto/fields-employe';
 import { defaultItems, defaultSet } from './interface/employee.interface';
-import { aggregateLookUp } from 'src/_repositories/aggregates/helper.aggregate';
+import { aggregateLookUp } from 'src/_aggregates/helper.aggregate';
 
 @Injectable()
 export class EmployeesService {
