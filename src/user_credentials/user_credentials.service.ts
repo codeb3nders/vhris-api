@@ -100,7 +100,10 @@ export class UserCredentialsService {
         companyEmail: employee.companyEmail,
       };
 
-      await this.userCodeRepository.create(createUserCode);
+      await this.userCodeRepository.insertOrUpdate(
+        { companyEmail: employee.companyEmail },
+        createUserCode,
+      );
 
       const emailDetails = {
         to: employee.companyEmail,

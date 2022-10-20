@@ -49,6 +49,20 @@ export abstract class EntityRepository<T extends Document> {
     );
   }
 
+  async insertOrUpdate(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<unknown>,
+  ): Promise<T | null> {
+    return await this.entityModel.findOneAndUpdate(
+      entityFilterQuery,
+      updateEntityData,
+      {
+        new: true,
+        upsert: true,
+      },
+    );
+  }
+
   async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
     const deleteResult = await this.entityModel.deleteMany(entityFilterQuery);
     return deleteResult.deletedCount >= 1;
