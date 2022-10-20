@@ -11,7 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
-import { ValidatorsService } from 'src/_validators/validators.service';
+import { ValidatorsService } from 'src/validators/validators.service';
 import { AssetManagementService } from './asset_management.service';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';

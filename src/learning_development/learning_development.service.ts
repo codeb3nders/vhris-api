@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { LearningDevelopmentRepository } from 'src/_repositories/learning_developments/learning_developments.repository';
 import { CreateLearningDevelopmentDto } from './dto/create-learning_development.dto';
 import { UpdateLearningDevelopmentDto } from './dto/update-learning_development.dto';
 import { LearningDevelopment } from './entities/learning_development.entity';
@@ -9,22 +9,21 @@ import { LearningDevelopment } from './entities/learning_development.entity';
 export class LearningDevelopmentService {
   constructor(
     @InjectModel(LearningDevelopment.name)
-    private learningDevelopment: Model<LearningDevelopment>,
+    private learningDevelopmentRepository: LearningDevelopmentRepository,
   ) {}
 
   async create(createLearningDevelopmentDto: CreateLearningDevelopmentDto) {
-    const createLearningDevelopment = new this.learningDevelopment(
+    return await this.learningDevelopmentRepository.create(
       createLearningDevelopmentDto,
     );
-    return await createLearningDevelopment.save();
   }
 
-  async findAll() {
-    return await this.learningDevelopment.find();
+  async findAll(): Promise<LearningDevelopment[]> {
+    return await this.learningDevelopmentRepository.find();
   }
 
-  async find(employeeNo: string) {
-    return this.learningDevelopment.find({ employeeNo });
+  async find(employeeNo: string): Promise<LearningDevelopment[]> {
+    return await this.learningDevelopmentRepository.find({ employeeNo });
   }
 
   async update(
@@ -34,14 +33,14 @@ export class LearningDevelopmentService {
     updateLearningDevelopmentDto['lastModifiedDate'] = Date.now();
     const filter = { _id: id };
     const update = updateLearningDevelopmentDto;
-    try {
-      return await this.learningDevelopment.updateOne(filter, update);
-    } catch (error) {
-      return `Failed updating record with id ${id}`;
-    }
+
+    return await this.learningDevelopmentRepository.findOneAndUpdate(
+      filter,
+      update,
+    );
   }
 
   remove(id: string) {
-    return this.learningDevelopment.deleteOne({ id });
+    return this.learningDevelopmentRepository.deleteOne(id);
   }
 }

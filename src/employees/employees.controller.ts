@@ -25,10 +25,10 @@ import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import {
   isAllowedUser,
   isValidRequest,
-} from '../_validators/validate.request.util';
+} from '../validators/validate.request.util';
 import { AuthUser } from 'src/auth/jwt.helper';
 import { CONSTANTS } from 'src/_utils/constants/employees';
-import { ValidatorsService } from 'src/_validators/validators.service';
+import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
 import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';

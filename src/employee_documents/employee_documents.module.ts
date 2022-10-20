@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { EmployeeDocumentsController } from './employee_documents.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ValidatorsModule } from 'src/_validators/validators.module';
+import { ValidatorsModule } from 'src/validators/validators.module';
 import {
   EmployeeDocument,
   EmployeeDocumentSchema,
 } from './entities/employee_document.entity';
-import { ValidatorsService } from 'src/_validators/validators.service';
+import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeDocumentResponseHandler } from 'src/_utils/response_handler/employee_documents_handler.response';
 import { AggregateEmployeeDocument } from 'src/_aggregates/employee_documents.aggregate';
 import { EmployeeDocumentService } from './employee_documents.service';

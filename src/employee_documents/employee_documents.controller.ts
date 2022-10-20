@@ -11,7 +11,7 @@ import {
 import { EmployeeDocumentService } from './employee_documents.service';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
-import { ValidatorsService } from 'src/_validators/validators.service';
+import { ValidatorsService } from 'src/validators/validators.service';
 import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 import { EmployeeDocumentResponseHandler } from 'src/_utils/response_handler/employee_documents_handler.response';
 

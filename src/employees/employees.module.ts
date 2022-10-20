@@ -6,8 +6,8 @@ import { Employee, EmployeeSchema } from './entities/employee.entity';
 import { EmailService } from 'src/email/email.service';
 
 import { UserCredentialsModule } from 'src/user_credentials/user_credentials.module';
-import { ValidatorsModule } from 'src/_validators/validators.module';
-import { ValidatorsService } from 'src/_validators/validators.service';
+import { ValidatorsModule } from 'src/validators/validators.module';
+import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
 import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
 import { EmployeeRepository } from 'src/employees/employee.repository';
