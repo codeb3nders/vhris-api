@@ -9,6 +9,7 @@ import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
 import { UserCredentialRepository } from 'src/_repositories/user_credential/user_credential.repository';
 import { EmployeeRepository } from 'src/employees/employee.repository';
 import { UserCodeRepository } from 'src/_repositories/user_codes/user_codes.repository';
+import { CONSTANTS } from 'src/_utils/constants/employees';
 
 export type User = {
   id: string;
@@ -92,13 +93,17 @@ export class UserCredentialsService {
     const employee = await this.employeeRepository.findOne({ employeeNo });
 
     if (isNil(employee)) {
-      throw new Error('Invalid Employee Number');
+      return { isValid: false, error: 'Invalid Employee Number' };
     } else {
       const code = generatePassword(5);
       const createUserCode = {
         code,
         companyEmail: employee.companyEmail,
       };
+
+      const existing = await this.userCodeRepository.find({
+        companyEmail: employee.companyEmail,
+      });
 
       await this.userCodeRepository.insertOrUpdate(
         { companyEmail: employee.companyEmail },
@@ -117,9 +122,9 @@ export class UserCredentialsService {
         `,
       };
 
-      await this.emailService.sendMail(emailDetails);
+      // await this.emailService.sendMail(emailDetails);
 
-      return { code, email: employee.companyEmail };
+      return { isValid: true, expiresInSeconds: CONSTANTS.TTL };
     }
   }
 
