@@ -10,16 +10,17 @@ import {
 import { OvertimeRequestsService } from './overtime_requests.service';
 import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
-import { Overtime_request } from './entities/overtime_request.entity';
-import { OvertimeRequestResponseHandler } from './response_handler/overtime_request.response';
-import { ErrorResponse } from 'src/helpers/error_response';
+import { OvertimeRequest } from './entities/overtime_request.entity';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
 import { ApiTags } from '@nestjs/swagger';
+import { OvertimeRequestResponseHandler } from 'src/utils/response_handler/overtime_request_handler.response';
 
 @ApiTags('Overtime Requests')
 @Controller('overtime')
 export class OvertimeRequestsController {
   constructor(
     private readonly overtimeRequestsService: OvertimeRequestsService,
+    private readonly overtimeRequestResponseHandler: OvertimeRequestResponseHandler,
   ) {}
 
   @Post()
@@ -32,21 +33,21 @@ export class OvertimeRequestsController {
   }
 
   @Get()
-  async findAll(): Promise<Overtime_request[]> {
+  async findAll(): Promise<OvertimeRequest[]> {
     try {
       const response = await this.overtimeRequestsService.findAll();
-      return OvertimeRequestResponseHandler.ok(response);
+      return this.overtimeRequestResponseHandler.ok(response);
     } catch (error) {
       ErrorResponse.badRequest(error.message || error);
     }
   }
 
   @Get('/employee')
-  async findAllWithEmployeeDetails(): Promise<Overtime_request[]> {
+  async findAllWithEmployeeDetails(): Promise<OvertimeRequest[]> {
     try {
       const response =
         await this.overtimeRequestsService.findAllWithEmployeeDetails();
-      return OvertimeRequestResponseHandler.ok(response);
+      return this.overtimeRequestResponseHandler.ok(response);
     } catch (error) {
       ErrorResponse.badRequest(error.message || error);
     }

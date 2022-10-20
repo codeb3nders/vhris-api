@@ -12,6 +12,12 @@ export class Employee {
   isActive: boolean;
 
   @Prop({ required: true })
+  isRehire: boolean;
+
+  @Prop()
+  oldEmployeeNo: string;
+
+  @Prop({ required: true })
   userGroup: string;
 
   @Prop({ required: true })
@@ -27,7 +33,7 @@ export class Employee {
   suffix: string;
 
   @Prop({ required: true })
-  birthDate: number;
+  birthDate: Date;
 
   @Prop({ required: true })
   gender: string;
@@ -44,7 +50,7 @@ export class Employee {
   @Prop({ required: true })
   personalContactNumber: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   personalEmail: string;
 
   @Prop({ type: JSON })
@@ -147,16 +153,16 @@ export class Employee {
   reportsTo: string;
 
   @Prop({ required: true })
-  dateHired: number;
+  dateHired: Date;
 
   @Prop()
-  dateInactive: number;
+  dateInactive: Date;
 
   @Prop()
   endOfProbationary: number;
 
   @Prop()
-  contractEndDate: number;
+  contractEndDate: Date;
 
   @Prop({ required: true })
   rank: string;

@@ -5,13 +5,13 @@ import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
 import { UpdateEmployeeLeaveDto } from './dto/update-employee_leave.dto';
 import {
   EmployeeLeavesDocument,
-  Employee_leaves,
+  EmployeeLeaves,
 } from './entities/employee_leave.entity';
 
 @Injectable()
 export class EmployeeLeavesService {
   constructor(
-    @InjectModel(Employee_leaves.name)
+    @InjectModel(EmployeeLeaves.name)
     private employeeLeavesModel: Model<EmployeeLeavesDocument>,
   ) {}
 

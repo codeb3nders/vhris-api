@@ -4,14 +4,14 @@ import { Model } from 'mongoose';
 import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import {
-  Leave_request,
+  LeaveRequest,
   LeaveRequestDocument,
 } from './entities/leave_request.entity';
 
 @Injectable()
 export class LeaveRequestService {
   constructor(
-    @InjectModel(Leave_request.name)
+    @InjectModel(LeaveRequest.name)
     private leaveRequestModel: Model<LeaveRequestDocument>,
   ) {}
   create(createLeaveRequestDto: CreateLeaveRequestDto) {

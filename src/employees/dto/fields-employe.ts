@@ -1,7 +1,7 @@
 const aggregateQry = [
   {
     $lookup: {
-      from: 'enum_tables',
+      from: 'enums_table',
       localField: 'location',
       foreignField: 'code',
       as: 'locationEnum',
@@ -9,7 +9,7 @@ const aggregateQry = [
   },
   {
     $lookup: {
-      from: 'enum_tables',
+      from: 'enums_table',
       localField: 'department',
       foreignField: 'code',
       as: 'departmentEnum',
@@ -17,7 +17,7 @@ const aggregateQry = [
   },
   {
     $lookup: {
-      from: 'enum_tables',
+      from: 'enums_table',
       localField: 'employmentStatus',
       foreignField: 'code',
       as: 'employmentStatusEnum',
@@ -25,7 +25,7 @@ const aggregateQry = [
   },
   {
     $lookup: {
-      from: 'enum_tables',
+      from: 'enums_table',
       localField: 'employmentType',
       foreignField: 'code',
       as: 'employmentTypeEnum',
@@ -290,7 +290,11 @@ export const EmployeeFields = [
       employeeNo: {
         $toUpper: '$employeeNo',
       },
+      oldEmployeeNo: {
+        $toUpper: '$oldEmployeeNo',
+      },
       isActive: '$isActive',
+      isRehire: '$isRehire',
       userGroup: {
         $toUpper: '$userGroup',
       },

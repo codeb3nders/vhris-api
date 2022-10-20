@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { zeroPad } from 'src/utils/numbers/number_helper.util';
 import {
   aggregateFormatDate,
   aggregateLookUp,
-} from 'src/utils/aggregate_helper';
+} from 'src/utils/data/aggregate.util';
 import { CreateDisciplinaryActionDto } from './dto/create-disciplinary_action.dto';
 import { UpdateDisciplinaryActionDto } from './dto/update-disciplinary_action.dto';
 import {
@@ -22,7 +23,7 @@ export class DisciplinaryActionsService {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'violationCategory',
           'code',
           'violationCategoryEnum',
@@ -30,7 +31,7 @@ export class DisciplinaryActionsService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'violations',
           'code',
           'violationsEnum',
@@ -39,7 +40,7 @@ export class DisciplinaryActionsService {
 
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'offenseStage',
           'code',
           'offenseStageEnum',
@@ -47,7 +48,7 @@ export class DisciplinaryActionsService {
       },
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'offenseLevel',
           'code',
           'offenseLevelEnum',
@@ -79,6 +80,17 @@ export class DisciplinaryActionsService {
   }
 
   async create(createDisciplinaryActionDto: CreateDisciplinaryActionDto) {
+    const year = new Date().getFullYear();
+    const lastRecord = await this.findLast();
+    const lastCaseNumber =
+      (lastRecord && lastRecord.caseNumber.split('-').pop()) || 0;
+    const caseNumber = Number(lastCaseNumber) + 1;
+
+    createDisciplinaryActionDto.caseNumber = `${year}-${zeroPad(
+      caseNumber,
+      7,
+    )}`;
+
     const createdDisciplinaryAction = new this.disciplinaryActionModel(
       createDisciplinaryActionDto,
     );
@@ -194,5 +206,13 @@ export class DisciplinaryActionsService {
 
   remove(id: string) {
     return this.disciplinaryActionModel.deleteOne({ id });
+  }
+
+  async findLast() {
+    return this.disciplinaryActionModel.findOne(
+      {},
+      {},
+      { sort: { employeeNo: -1 } },
+    );
   }
 }

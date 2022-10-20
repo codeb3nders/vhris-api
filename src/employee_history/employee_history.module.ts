@@ -3,21 +3,22 @@ import { EmployeeHistoryService } from './employee_history.service';
 import { EmployeeHistoryController } from './employee_history.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
-  Employee_history,
+  EmployeeHistory,
   EmployeeHistorySchema,
 } from './entities/employee_history.entity';
+import { EmployeeHistoryResponseHandler } from 'src/utils/response_handler/employee_history_handler.response';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: Employee_history.name,
+        name: EmployeeHistory.name,
         schema: EmployeeHistorySchema,
       },
     ]),
   ],
   controllers: [EmployeeHistoryController],
-  providers: [EmployeeHistoryService],
+  providers: [EmployeeHistoryService, EmployeeHistoryResponseHandler],
   exports: [EmployeeHistoryService],
 })
 export class EmployeeHistoryModule {}

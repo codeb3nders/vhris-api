@@ -6,18 +6,14 @@ import {
   Patch,
   Param,
   Delete,
-  HttpException,
-  HttpStatus,
   Query,
 } from '@nestjs/common';
 import { EmployeeDocumentsService } from './employee_documents.service';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { ErrorResponse } from 'src/helpers/error_response';
-import { UpdateAssetManagementDto } from 'src/asset_management/dto/update-asset_management.dto';
-import { employeeDocumentsResponseHandler } from './response_handler/employee_documents.response';
-import { EmployeeDocument } from './entities/employee_document.entity';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
+import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
 
 const toCheck = ['documentType'];
 
@@ -26,6 +22,7 @@ export class EmployeeDocumentsController {
   constructor(
     private readonly employeeDocumentsService: EmployeeDocumentsService,
     private readonly validatorService: ValidatorsService,
+    private readonly employeeDocumentResponseHandler: EmployeeDocumentResponseHandler,
   ) {}
 
   @Post()
@@ -48,7 +45,7 @@ export class EmployeeDocumentsController {
     if (!response || response.length < 1) {
       return response;
     }
-    return employeeDocumentsResponseHandler.ok(response);
+    return this.employeeDocumentResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
@@ -57,7 +54,7 @@ export class EmployeeDocumentsController {
     if (!response || response.length < 1) {
       return response;
     }
-    return employeeDocumentsResponseHandler.ok(response);
+    return this.employeeDocumentResponseHandler.ok(response);
   }
 
   @Patch(':id')

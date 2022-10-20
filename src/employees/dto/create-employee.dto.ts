@@ -21,7 +21,7 @@ import {
   RelationEnum,
   ReligionEnum,
   UserGroupEnum,
-} from 'src/enums/employee.enum';
+} from 'src/utils/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
 
 class PayrollBankAccount {
@@ -204,7 +204,6 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => new Date(param.value).getTime())
   birthDate: number;
 
   @ApiProperty({ required: true })
@@ -319,23 +318,19 @@ export class CreateEmployeeDto {
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  @Transform((param) => new Date(param.value).getTime())
-  dateHired: number;
+  dateHired: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  dateInactive: number;
+  dateInactive: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  endOfProbationary: number;
+  endOfProbationary: Date;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => new Date(param.value).getTime())
-  contractEndDate: number;
+  contractEndDate: Date;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
@@ -441,6 +436,14 @@ export class CreateEmployeeDto {
   @ApiProperty()
   @IsOptional()
   jobLastUpdate: Date;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  isRehire: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  oldEmployeeNo: string;
 
   @IsOptional()
   type?: 'string';

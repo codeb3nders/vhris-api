@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type AssetManagementDocument = AssetManagement & Document;
 
-@Schema()
+@Schema({ collection: 'asset_managements' })
 export class AssetManagement {
   @Prop({ required: true })
   employeeNo: string;

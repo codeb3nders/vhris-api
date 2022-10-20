@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateEnumTableDto } from './dto/create-enum_table.dto';
 import { UpdateEnumTableDto } from './dto/update-enum_table.dto';
-import { EnumTableDocument, Enum_Table } from './entities/enum_table.entity';
+import { EnumTableDocument, EnumsTable } from './entities/enum_table.entity';
 
 @Injectable()
 export class EnumTablesService {
   constructor(
-    @InjectModel(Enum_Table.name)
+    @InjectModel(EnumsTable.name)
     private enumTableModel: Model<EnumTableDocument>,
   ) {}
   async create(createEnumTableDto: CreateEnumTableDto) {

@@ -13,12 +13,13 @@ import {
 import { EmployeeHistoryService } from './employee_history.service';
 import { CreateEmployeeHistoryDto } from './dto/create-employee_history.dto';
 import { UpdateEmployeeHistoryDto } from './dto/update-employee_history.dto';
-import { EmployeeHistoryResponseHandler } from './response_handler/employee_history.response';
+import { EmployeeHistoryResponseHandler } from 'src/utils/response_handler/employee_history_handler.response';
 
 @Controller('employee-history')
 export class EmployeeHistoryController {
   constructor(
     private readonly employeeHistoryService: EmployeeHistoryService,
+    private readonly employeeHistoryResponseHandler: EmployeeHistoryResponseHandler,
   ) {}
 
   @Post()
@@ -32,7 +33,7 @@ export class EmployeeHistoryController {
     if (!response || response.length < 1) {
       return response;
     }
-    return EmployeeHistoryResponseHandler.ok(response);
+    return this.employeeHistoryResponseHandler.ok(response);
   }
 
   @Get(':employeeNo')
@@ -42,7 +43,7 @@ export class EmployeeHistoryController {
     if (!response || response.length < 1) {
       return response;
     }
-    return EmployeeHistoryResponseHandler.ok(response);
+    return this.employeeHistoryResponseHandler.ok(response);
   }
 
   @Patch(':employeeNo')

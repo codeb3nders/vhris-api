@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type DisciplinaryActionDocument = DisciplinaryAction & Document;
 
-@Schema()
+@Schema({ collection: 'disciplinary_actions' })
 export class DisciplinaryAction {
   @Prop({ required: true, default: Date.now() })
   timestamp: number;
@@ -11,7 +11,7 @@ export class DisciplinaryAction {
   @Prop({ required: true })
   employeeNo: string;
 
-  @Prop()
+  @Prop({ required: true, unique: true })
   caseNumber: string;
 
   @Prop()
@@ -48,7 +48,7 @@ export class DisciplinaryAction {
   dateAcknowledged: Date;
 
   @Prop()
-  cleansingPeriod: string;
+  cleansingPeriod: number;
 
   @Prop()
   status: string;

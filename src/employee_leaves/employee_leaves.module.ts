@@ -4,14 +4,14 @@ import { EmployeeLeavesController } from './employee_leaves.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   EmployeeLeavesSchema,
-  Employee_leaves,
+  EmployeeLeaves,
 } from './entities/employee_leave.entity';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: Employee_leaves.name,
+        name: EmployeeLeaves.name,
         schema: EmployeeLeavesSchema,
       },
     ]),

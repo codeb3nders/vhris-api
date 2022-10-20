@@ -54,7 +54,7 @@
       "leaveRequestNo": "{{timestamp}}",
       "employeeNo": "1121",
       "timestamp": "{{timestamp}}",
-      "leaveApplied": "Vacation Leave_request (VL)",
+      "leaveApplied": "Vacation LeaveRequest (VL)",
       "otHoursOffset": "",
       "dateToOffsetFrom": "",
       "dateToOffsetTo": "",
@@ -70,7 +70,7 @@
       "dateTimeArrival": "",
       "information": "I Agree",
       "immediateSupervisor": "APPROVED",
-      "status": "Leave_request not covered by policy",
+      "status": "LeaveRequest not covered by policy",
       "disapprovalReason": "",
       "approvedDate": "",
       "disapprovedDate": ""

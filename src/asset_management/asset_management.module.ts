@@ -8,6 +8,7 @@ import {
 } from './entities/asset_management.entity';
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
+import { AssetManagementResponseHandler } from 'src/utils/response_handler/asset_management_handler.response';
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { ValidatorsService } from 'src/validators/validators.service';
     ]),
   ],
   controllers: [AssetManagementController],
-  providers: [AssetManagementService, ValidatorsService],
+  providers: [
+    AssetManagementService,
+    ValidatorsService,
+    AssetManagementResponseHandler,
+  ],
 })
 export class AssetManagementModule {}

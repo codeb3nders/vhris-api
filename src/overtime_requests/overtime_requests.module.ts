@@ -4,19 +4,20 @@ import { OvertimeRequestsController } from './overtime_requests.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   OvertimeRequestSchema,
-  Overtime_request,
+  OvertimeRequest,
 } from './entities/overtime_request.entity';
+import { OvertimeRequestResponseHandler } from 'src/utils/response_handler/overtime_request_handler.response';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: Overtime_request.name,
+        name: OvertimeRequest.name,
         schema: OvertimeRequestSchema,
       },
     ]),
   ],
   controllers: [OvertimeRequestsController],
-  providers: [OvertimeRequestsService],
+  providers: [OvertimeRequestsService, OvertimeRequestResponseHandler],
 })
 export class OvertimeRequestsModule {}

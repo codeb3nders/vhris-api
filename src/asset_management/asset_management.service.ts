@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import {
   aggregateFormatDate,
   aggregateLookUp,
-} from 'src/utils/aggregate_helper';
+} from 'src/utils/data/aggregate.util';
 
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
@@ -23,7 +23,7 @@ export class AssetManagementService {
     this.aggregateQry = [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'assetType',
           'code',
           'assetTypeEnum',

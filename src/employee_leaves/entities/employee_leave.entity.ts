@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type EmployeeLeavesDocument = Employee_leaves & Document;
+export type EmployeeLeavesDocument = EmployeeLeaves & Document;
 
-@Schema()
-export class Employee_leaves {
+@Schema({ collection: 'employee_leaves' })
+export class EmployeeLeaves {
   @Prop({ required: [true, 'employee number is required!'] })
   employeeNo: string;
   @Prop()
@@ -18,4 +18,4 @@ export class Employee_leaves {
 }
 
 export const EmployeeLeavesSchema =
-  SchemaFactory.createForClass(Employee_leaves);
+  SchemaFactory.createForClass(EmployeeLeaves);

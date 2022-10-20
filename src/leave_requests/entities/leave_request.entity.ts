@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type LeaveRequestDocument = Leave_request & Document;
+export type LeaveRequestDocument = LeaveRequest & Document;
 
-@Schema()
-export class Leave_request {
+@Schema({ collection: 'leave_request' })
+export class LeaveRequest {
   @Prop({ required: [true, 'leaveRequestNo is required!'] })
   leaveRequestNo: string;
   @Prop()
@@ -36,4 +36,4 @@ export class Leave_request {
   disapprovedDate: string;
 }
 
-export const LeaveRequestSchema = SchemaFactory.createForClass(Leave_request);
+export const LeaveRequestSchema = SchemaFactory.createForClass(LeaveRequest);

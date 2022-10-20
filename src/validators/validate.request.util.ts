@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { CONSTANTS } from 'src/constants/employees';
-import { NotAllowedToEdit } from 'src/enums/employee.enum';
-import { UpdateEmployeeDto } from './update-employee.dto';
+import { CONSTANTS } from 'src/utils/constants/employees';
+import { NotAllowedToEdit } from 'src/utils/enums/employee.enum';
+import { UpdateEmployeeDto } from '../employees/dto/update-employee.dto';
 
 export const isValidRequest = (
   updateEmployeeDto: UpdateEmployeeDto,

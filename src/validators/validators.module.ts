@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose/dist';
 import {
   EnumTableSchema,
-  Enum_Table,
+  EnumsTable,
 } from 'src/enum_tables/entities/enum_table.entity';
 import { EnumTablesModule } from 'src/enum_tables/enum_tables.module';
 import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
@@ -12,7 +12,7 @@ import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
     EnumTablesModule,
     MongooseModule.forFeature([
       {
-        name: Enum_Table.name,
+        name: EnumsTable.name,
         schema: EnumTableSchema,
       },
     ]),

@@ -18,17 +18,20 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
-import { ErrorResponse } from 'src/helpers/error_response';
-import { EmployeeResponseHandler } from './response_handler/employee.response';
+import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
-import { isAllowedUser, isValidRequest } from './dto/validate.request';
+import {
+  isAllowedUser,
+  isValidRequest,
+} from '../validators/validate.request.util';
 import { AuthUser } from 'src/auth/jwt.helper';
-import { CONSTANTS } from 'src/constants/employees';
+import { CONSTANTS } from 'src/utils/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
+import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
 
 const toCheck = [
   'citizenship',
@@ -53,8 +56,9 @@ const toCheck = [
 export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,
-    private validatorsService: ValidatorsService,
-    private employeeHistoryService: EmployeeHistoryService,
+    private readonly validatorsService: ValidatorsService,
+    private readonly employeeHistoryService: EmployeeHistoryService,
+    private readonly employeesResponseHandler: EmployeesResponseHandler,
   ) {}
 
   @Post()
@@ -82,7 +86,7 @@ export class EmployeesController {
     if (!response || response.length < 1) {
       return [];
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -93,7 +97,7 @@ export class EmployeesController {
     if (!response || response.length < 1) {
       return [];
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -104,9 +108,9 @@ export class EmployeesController {
   ): Promise<EmployeeI[]> {
     const response = await this.employeesService.findOne(employeeNo, params);
     if (!response || response.length < 1) {
-      return []
+      return [];
     }
-    return EmployeeResponseHandler.ok(response);
+    return this.employeesResponseHandler.ok(response);
   }
 
   @UseGuards(JwtAuthGuard)
