@@ -99,11 +99,8 @@ export class UserCredentialsService {
       const createUserCode = {
         code,
         companyEmail: employee.companyEmail,
+        codeCreatedAt: new Date(),
       };
-
-      const existing = await this.userCodeRepository.find({
-        companyEmail: employee.companyEmail,
-      });
 
       await this.userCodeRepository.insertOrUpdate(
         { companyEmail: employee.companyEmail },

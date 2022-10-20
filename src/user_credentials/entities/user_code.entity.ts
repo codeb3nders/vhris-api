@@ -13,7 +13,7 @@ export class UserCode {
   @Prop({ required: true })
   code: string;
 
-  @Prop({ default: Date(), expires: CONSTANTS.TTL })
+  @Prop({ default: Date(), expires: Number(CONSTANTS.TTL) })
   codeCreatedAt: Date;
 }
 
