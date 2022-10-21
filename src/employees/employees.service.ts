@@ -50,12 +50,12 @@ export class EmployeesService {
     return await this.employeeRepository.aggregateFind(_params);
   }
 
-  async findOne(employeeNo: string): Promise<Employee> {
-    return await this.employeeRepository.findOne({ employeeNo });
-  }
-
-  async aggregateFindOne(employeeNo: string, _params?: any) {
-    return await this.employeeRepository.aggregateFindOne(employeeNo, _params);
+  async findOne(employeeNo: string, _params?: any) {
+    const response = await this.employeeRepository.aggregateFindOne(
+      employeeNo,
+      _params,
+    );
+    return response[0];
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
