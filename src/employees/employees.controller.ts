@@ -102,11 +102,14 @@ export class EmployeesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeNo')
-  async findOne(
+  async aggregateFindOne(
     @Query() params: FindOneEmployeeDto,
     @Param('employeeNo') employeeNo: string,
   ): Promise<EmployeeI[]> {
-    const response = await this.employeesService.findOne(employeeNo, params);
+    const response = await this.employeesService.aggregateFindOne(
+      employeeNo,
+      params,
+    );
 
     if (!response || response.length < 1) {
       return [];
@@ -130,7 +133,7 @@ export class EmployeesController {
     const effectiveDate = updateEmployeeDto.effectiveDate;
     const remarks = updateEmployeeDto?.remarks || null;
 
-    const employee = await this.employeesService.findOne(employeeNo);
+    const employee = await this.employeesService.aggregateFindOne(employeeNo);
 
     if (!employee.length)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
