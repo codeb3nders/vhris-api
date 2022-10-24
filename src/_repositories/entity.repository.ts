@@ -1,7 +1,9 @@
 import { forwardRef, Inject } from '@nestjs/common';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
-
+interface StringMap {
+  [key: string]: string;
+}
 export abstract class EntityRepository<T extends Document> {
   constructor(
     @Inject(forwardRef(() => UserCredentialsService))
@@ -76,7 +78,7 @@ export abstract class EntityRepository<T extends Document> {
   // Aggregate Queries
 
   async aggregateFindOne(
-    employeeNo: string,
+    key: StringMap,
     entityFilterQuery?: any,
   ): Promise<T[]> {
     const _relations = [];
@@ -104,7 +106,7 @@ export abstract class EntityRepository<T extends Document> {
       ...this.aggregateQry.values(),
       {
         $match: {
-          employeeNo: employeeNo,
+          ...key,
         },
       },
       {
@@ -114,7 +116,8 @@ export abstract class EntityRepository<T extends Document> {
     ];
 
     const pLine = [...pipeline, ..._relations];
-    return this.entityModel.aggregate(pLine);
+    const response = await this.entityModel.aggregate(pLine);
+    return response[0];
   }
 
   async aggregateFind(entityFilterQuery?: any): Promise<T[]> {

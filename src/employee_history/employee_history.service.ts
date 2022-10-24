@@ -20,7 +20,7 @@ export class EmployeeHistoryService {
 
   async findOne(employeeNo: string, _params?: any) {
     return await this.employeeHistoryRepository.aggregateFindOne(
-      employeeNo,
+      { employeeNo },
       _params,
     );
   }
