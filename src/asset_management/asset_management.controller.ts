@@ -16,10 +16,11 @@ import { AssetManagementService } from './asset_management.service';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import { AssetManagementResponseHandler } from '../_utils/response_handler/asset_management_handler.response';
+import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 
 const toCheck = ['assetType'];
 
-@Controller('asset-management')
+@Controller('asset')
 export class AssetManagementController {
   constructor(
     private readonly assetManagementService: AssetManagementService,
@@ -27,7 +28,7 @@ export class AssetManagementController {
     private assetManagementResponseHandler: AssetManagementResponseHandler,
   ) {}
 
-  @Post()
+  @Post('management')
   async create(@Body() createAssetManagementDto: CreateAssetManagementDto) {
     try {
       await this.validatorsService.validateEmployeesPostRequest(
@@ -41,7 +42,7 @@ export class AssetManagementController {
     }
   }
 
-  @Get()
+  @Get('management')
   async find(@Query() params) {
     const response = await this.assetManagementService.aggregateFind(params);
     if (!response || response.length < 1) {
@@ -50,7 +51,7 @@ export class AssetManagementController {
     return this.assetManagementResponseHandler.ok(response);
   }
 
-  @Get(':employeeNo')
+  @Get('management/:employeeNo')
   async aggregateFindByEmployeeId(
     @Query() params: any,
     @Param('employeeNo') employeeNo: string,
@@ -63,7 +64,7 @@ export class AssetManagementController {
     return this.assetManagementResponseHandler.ok(response);
   }
 
-  @Patch(':id')
+  @Patch('management/:id')
   async update(
     @Param('id') id: string,
     @Body() updateAssetManagementDto: UpdateAssetManagementDto,
@@ -79,8 +80,46 @@ export class AssetManagementController {
     );
   }
 
-  @Delete(':id')
+  @Delete('management/:id')
   deleteOne(@Param('id') id: string) {
     return this.assetManagementService.deleteOne(id);
+  }
+
+  // company asset
+
+  @Post('company')
+  async createCompanyAsset(
+    @Body() createCompanyAssetDto: CreateCompanyAssetDto,
+  ) {
+    try {
+      await this.validatorsService.validateEmployeesPostRequest(
+        createCompanyAssetDto,
+        toCheck,
+      );
+
+      return await this.assetManagementService.createCompanyAsset(
+        createCompanyAssetDto,
+      );
+    } catch (error) {
+      ErrorResponse.conflict(error.message || error);
+    }
+  }
+
+  @Get('company')
+  async findCompanyAsset(@Param('id') id: string) {
+    const response = await this.assetManagementService.getCompanyAssetById(id);
+    if (!response) {
+      return response;
+    }
+    return this.assetManagementResponseHandler.asset(response);
+  }
+
+  @Get('company/:id')
+  async findCompanyAssetById(@Param('id') id: string) {
+    const response = await this.assetManagementService.getCompanyAssetById(id);
+    if (!response) {
+      return response;
+    }
+    return this.assetManagementResponseHandler.asset(response);
   }
 }

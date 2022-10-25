@@ -1,8 +1,19 @@
 import { CreateAssetManagementDto } from 'src/asset_management/dto/create-asset_management.dto';
+import { CreateCompanyAssetDto } from 'src/asset_management/dto/create-company_asset.dto';
 import { BaseResponseHandler } from './base_handler.response';
 
 export class AssetManagementResponseHandler extends BaseResponseHandler {
   ok(data: CreateAssetManagementDto | CreateAssetManagementDto[]) {
+    console.log({ data });
+    if (Array.isArray(data) && data.length > 0) {
+      return data.map((item: any) => {
+        return this.returnItem(item, this.items(item));
+      });
+    } else {
+      return this.returnItem(data, this.items(data));
+    }
+  }
+  asset(data: CreateCompanyAssetDto | CreateCompanyAssetDto[]) {
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
         return this.returnItem(item, this.items(item));

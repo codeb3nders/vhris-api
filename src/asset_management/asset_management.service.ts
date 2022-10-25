@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { CompanyAssetRepository } from 'src/_repositories/asset_managements/company_asset.repository';
 import { AssetManagementRepository } from '../_repositories/asset_managements/asset_management.repository';
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
+import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import { AssetManagement } from './entities/asset_management.entity';
 
 @Injectable()
 export class AssetManagementService {
-  constructor(private assetManagementRepository: AssetManagementRepository) {}
+  constructor(
+    private assetManagementRepository: AssetManagementRepository,
+    private companyAssetRepository: CompanyAssetRepository,
+  ) {}
 
   async create(createAssetManagementDto: CreateAssetManagementDto) {
     return await this.assetManagementRepository.create(
@@ -39,5 +44,19 @@ export class AssetManagementService {
 
   deleteOne(id: string) {
     return this.assetManagementRepository.deleteOne(id);
+  }
+
+  // company Asset
+
+  async createCompanyAsset(createCompanyAssetDto: CreateCompanyAssetDto) {
+    return await this.companyAssetRepository.create(createCompanyAssetDto);
+  }
+
+  async getAllCompanyAsset() {
+    return await this.companyAssetRepository.find();
+  }
+
+  async getCompanyAssetById(id: string) {
+    return await this.companyAssetRepository.findOne({ id });
   }
 }

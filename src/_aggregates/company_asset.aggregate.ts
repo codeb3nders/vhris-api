@@ -1,0 +1,27 @@
+import {
+  aggregateLookUp,
+  aggregateFormatDate,
+} from 'src/_aggregates/helper.aggregate';
+
+export class AggregateCompanyAsset {
+  values() {
+    return [
+      {
+        $lookup: aggregateLookUp(
+          'enum_tables',
+          'assetType',
+          'code',
+          'assetTypeEnum',
+        ),
+      },
+
+      {
+        $set: {
+          dateAssigned: aggregateFormatDate('dateAssigned'),
+          dateReturned: aggregateFormatDate('dateReturned'),
+          lastModifiedDate: aggregateFormatDate('lastModifiedDate'),
+        },
+      },
+    ];
+  }
+}
