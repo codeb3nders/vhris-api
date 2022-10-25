@@ -48,7 +48,7 @@ export class AssetManagementController {
     if (!response || response.length < 1) {
       return response;
     }
-    return this.assetManagementResponseHandler.ok(response);
+    return this.assetManagementResponseHandler.assetManagement(response);
   }
 
   @Get('management/:employeeNo')
@@ -61,7 +61,7 @@ export class AssetManagementController {
     if (!response || response.length < 1) {
       return response;
     }
-    return this.assetManagementResponseHandler.ok(response);
+    return this.assetManagementResponseHandler.assetManagement(response);
   }
 
   @Patch('management/:id')
@@ -111,7 +111,7 @@ export class AssetManagementController {
     if (!response) {
       return response;
     }
-    return this.assetManagementResponseHandler.asset(response);
+    return this.assetManagementResponseHandler.companyAsset(response);
   }
 
   @Get('company/:id')
@@ -120,6 +120,6 @@ export class AssetManagementController {
     if (!response) {
       return response;
     }
-    return this.assetManagementResponseHandler.asset(response);
+    return this.assetManagementResponseHandler.companyAsset(response);
   }
 }

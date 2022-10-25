@@ -3,35 +3,68 @@ import { CreateCompanyAssetDto } from 'src/asset_management/dto/create-company_a
 import { BaseResponseHandler } from './base_handler.response';
 
 export class AssetManagementResponseHandler extends BaseResponseHandler {
-  ok(data: CreateAssetManagementDto | CreateAssetManagementDto[]) {
+  assetManagement(data: CreateAssetManagementDto | CreateAssetManagementDto[]) {
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
-        return this.returnItem(item, this.items(item));
+        return this.returnItem(item, this.assetManagementItems(item));
       });
     } else {
-      return this.returnItem(data, this.items(data));
+      return this.returnItem(data, this.assetManagementItems(data));
     }
   }
-  asset(data: CreateCompanyAssetDto | CreateCompanyAssetDto[]) {
+  companyAsset(data: CreateCompanyAssetDto | CreateCompanyAssetDto[]) {
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
-        return this.returnItem(item, this.items(item));
+        return this.returnItem(item, this.companyAssetItems(item));
       });
     } else {
-      return this.returnItem(data, this.items(data));
+      return this.returnItem(data, this.companyAssetItems(data));
     }
   }
-  private items = (item: any) => {
+
+  private companyAssetItems = (item: any) => {
     const employee = item.employee;
     const toReturn: any = {
+      timestamp: item.timestamp,
       assetName: item.assetName,
       assetType: this.prepareEnumItem(item.assetTypeEnum),
       assetDetails: item.assetDetails,
-      timestamp: item.timestamp,
       assetSerialNumber: item.assetSerialNumber,
+      status: item.status,
+    };
+
+    if (employee) {
+      toReturn.employee = employee;
+    }
+
+    return toReturn;
+  };
+
+  private assetManagementItems = (item: any) => {
+    const itemDetails = item.details[0];
+    // const xxx = item.xxx[0];
+    // console.log('----', xxx);
+    console.log({ item });
+    const employee = item.employee;
+    const toReturn: any = {
+      timestamp: item.timestamp,
+      lastModifiedDate: item.lastModifiedDate,
+      employeeNo: item.employeeNo,
+      companyAssetId: item.companyAssetId,
       dateAssigned: item.dateAssigned,
       dateReturned: item.dateReturned,
       remarks: item.remarks,
+      // assetName: item.assetName,
+      // assetType: this.prepareEnumItem(item.assetTypeEnum),
+      assetDetails: {
+        name: itemDetails?.assetName,
+        type: itemDetails?.assetType,
+        details: itemDetails?.assetDetails,
+        serialNumber: itemDetails?.assetSerialNumber,
+        status: itemDetails?.status,
+      },
+      // assetSerialNumber: item.assetSerialNumber,
+      status: item.status,
     };
 
     if (employee) {

@@ -12,16 +12,7 @@ export class AssetManagement {
   timestamp: number;
 
   @Prop()
-  assetName: string;
-
-  @Prop()
-  assetType: string;
-
-  @Prop()
-  assetDetails: string;
-
-  @Prop()
-  assetSerialNumber: string;
+  companyAssetId: string;
 
   @Prop()
   dateAssigned: Date;

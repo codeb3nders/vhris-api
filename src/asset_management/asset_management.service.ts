@@ -53,10 +53,10 @@ export class AssetManagementService {
   }
 
   async getAllCompanyAsset() {
-    return await this.companyAssetRepository.find();
+    return await this.companyAssetRepository.aggregateFind();
   }
 
   async getCompanyAssetById(id: string) {
-    return await this.companyAssetRepository.findOne({ id });
+    return await this.companyAssetRepository.aggregateFindOne({ id });
   }
 }

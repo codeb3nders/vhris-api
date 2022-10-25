@@ -1,18 +1,16 @@
-import {
-  aggregateLookUp,
-  aggregateFormatDate,
-} from 'src/_aggregates/helper.aggregate';
+import { aggregateFormatDate } from 'src/_aggregates/helper.aggregate';
 
 export class AggregateAssetManagement {
   values() {
     return [
+      { $addFields: { userId: { $toObjectId: '$companyAssetId' } } },
       {
-        $lookup: aggregateLookUp(
-          'enums_table',
-          'assetType',
-          'code',
-          'assetTypeEnum',
-        ),
+        $lookup: {
+          from: 'company_assets',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'details',
+        },
       },
 
       {
