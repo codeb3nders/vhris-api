@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { EnumTablesService } from './enum_tables.service';
+import { EnumTablesService } from './enums_table.service';
 import { CreateEnumTableDto } from './dto/create-enum_table.dto';
 import { UpdateEnumTableDto } from './dto/update-enum_table.dto';
 

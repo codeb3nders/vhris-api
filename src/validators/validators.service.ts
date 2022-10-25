@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { EnumTablesService } from 'src/enum_tables/enum_tables.service';
+import { EnumTablesService } from 'src/enums_table/enums_table.service';
 
 @Injectable()
 export class ValidatorsService {

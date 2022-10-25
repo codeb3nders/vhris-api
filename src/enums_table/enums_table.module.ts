@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { EnumTablesService } from './enum_tables.service';
-import { EnumTablesController } from './enum_tables.controller';
+import { EnumTablesService } from './enums_table.service';
+import { EnumTablesController } from './enums_table.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EnumsTableSchema, EnumsTable } from './entities/enum_table.entity';
+import { EnumsTableSchema, EnumsTable } from './entities/enums_table.entity';
 import { EnumsTableRepository } from 'src/_repositories/enums_table/enums_table.repository';
 
 @Module({

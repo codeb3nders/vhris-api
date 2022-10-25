@@ -4,7 +4,6 @@ import { BaseResponseHandler } from './base_handler.response';
 
 export class AssetManagementResponseHandler extends BaseResponseHandler {
   ok(data: CreateAssetManagementDto | CreateAssetManagementDto[]) {
-    console.log({ data });
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
         return this.returnItem(item, this.items(item));

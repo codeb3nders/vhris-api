@@ -8,7 +8,7 @@ export class AggregateCompanyAsset {
     return [
       {
         $lookup: aggregateLookUp(
-          'enum_tables',
+          'enums_table',
           'assetType',
           'code',
           'assetTypeEnum',

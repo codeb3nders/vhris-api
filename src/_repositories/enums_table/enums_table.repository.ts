@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import {
   EnumsTable,
   EnumsTableDocument,
-} from 'src/enum_tables/entities/enum_table.entity';
+} from 'src/enums_table/entities/enums_table.entity';
 import { EntityRepository } from '../entity.repository';
 
 @Injectable()
