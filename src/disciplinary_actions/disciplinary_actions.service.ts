@@ -126,6 +126,6 @@ export class DisciplinaryActionsService {
   }
 
   remove(id: string) {
-    return this.disciplinaryActionRepository.deleteOne(id);
+    return this.disciplinaryActionRepository.deleteOne({ _id: id });
   }
 }

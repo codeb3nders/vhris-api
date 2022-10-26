@@ -41,6 +41,6 @@ export class LearningDevelopmentService {
   }
 
   remove(id: string) {
-    return this.learningDevelopmentRepository.deleteOne(id);
+    return this.learningDevelopmentRepository.deleteOne({ _id: id });
   }
 }

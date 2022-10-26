@@ -70,8 +70,11 @@ export abstract class EntityRepository<T extends Document> {
     return deleteResult.deletedCount >= 1;
   }
 
-  async deleteOne(id: string): Promise<boolean> {
-    const deleteResult = await await this.entityModel.deleteOne({ id });
+  async deleteOne(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+    console.log('CHECK', entityFilterQuery);
+    const deleteResult = await await this.entityModel.deleteOne(
+      entityFilterQuery,
+    );
     return deleteResult.deletedCount >= 1;
   }
 
@@ -117,6 +120,7 @@ export abstract class EntityRepository<T extends Document> {
 
     const pLine = [...pipeline, ..._relations];
     const response = await this.entityModel.aggregate(pLine);
+    console.log({ response }, pLine);
     return response[0];
   }
 

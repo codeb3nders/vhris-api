@@ -30,6 +30,6 @@ export class EmployeeLeavesService {
   }
 
   async remove(employeeNo: string) {
-    return await this.employeeLeavesRepository.deleteOne(employeeNo);
+    return await this.employeeLeavesRepository.deleteOne({ employeeNo });
   }
 }

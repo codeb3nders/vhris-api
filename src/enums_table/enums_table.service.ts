@@ -22,7 +22,7 @@ export class EnumTablesService {
   }
 
   async remove(code: string) {
-    const response = await this.enumsTableRepository.deleteOne(code);
+    const response = await this.enumsTableRepository.deleteOne({ code });
 
     return response;
   }

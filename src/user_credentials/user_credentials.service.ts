@@ -86,7 +86,7 @@ export class UserCredentialsService {
   }
 
   remove(employeeNo: string) {
-    return this.userCredentialRepository.deleteOne(employeeNo);
+    return this.userCredentialRepository.deleteOne({ employeeNo });
   }
 
   async forgotPassword(employeeNo: string) {

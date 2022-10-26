@@ -17,6 +17,7 @@ import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import { AssetManagementResponseHandler } from '../_utils/response_handler/asset_management_handler.response';
 import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
+import { UpdateCompanyAssetDto } from './dto/update-company_asset.dto';
 
 const toCheck = ['assetType'];
 
@@ -110,7 +111,8 @@ export class AssetManagementController {
     const response = await this.assetManagementService.getAllCompanyAsset(
       params,
     );
-    if (!response) {
+
+    if (!response || response.length < 1) {
       return response;
     }
     return this.assetManagementResponseHandler.companyAsset(response);
@@ -123,5 +125,26 @@ export class AssetManagementController {
       return response;
     }
     return this.assetManagementResponseHandler.companyAsset(response);
+  }
+
+  @Patch('company/:id')
+  async updateCompanyAsset(
+    @Param('id') id: string,
+    @Body() updateCompanyAssetDto: UpdateCompanyAssetDto,
+  ) {
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateCompanyAssetDto,
+      toCheck,
+    );
+
+    return await this.assetManagementService.updateCompanyAsset(
+      id,
+      updateCompanyAssetDto,
+    );
+  }
+
+  @Delete('company/:id')
+  companyAssetDeleteOne(@Param('id') id: string) {
+    return this.assetManagementService.companyAssetDeleteOne(id);
   }
 }

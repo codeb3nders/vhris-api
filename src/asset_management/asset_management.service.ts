@@ -4,6 +4,7 @@ import { AssetManagementRepository } from '../_repositories/asset_managements/as
 import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
+import { UpdateCompanyAssetDto } from './dto/update-company_asset.dto';
 import { AssetManagement } from './entities/asset_management.entity';
 import { CompanyAsset } from './entities/company_asset.entity';
 
@@ -44,7 +45,7 @@ export class AssetManagementService {
   }
 
   deleteOne(id: string) {
-    return this.assetManagementRepository.deleteOne(id);
+    return this.assetManagementRepository.deleteOne({ _id: id });
   }
 
   // company Asset
@@ -58,6 +59,27 @@ export class AssetManagementService {
   }
 
   async getCompanyAssetById(id: string) {
-    return await this.companyAssetRepository.aggregateFindOne({ id });
+    return await this.companyAssetRepository.aggregateFindOne({
+      _id: `ObjectId(${id})`,
+    });
+  }
+
+  async updateCompanyAsset(
+    id: string,
+    updateCompanyAssetDto: UpdateCompanyAssetDto,
+  ) {
+    updateCompanyAssetDto['lastModifiedDate'] = Date.now();
+    try {
+      return await this.companyAssetRepository.findOneAndUpdate(
+        { id },
+        updateCompanyAssetDto,
+      );
+    } catch (error) {
+      return `Failed updating record with id ${id}`;
+    }
+  }
+
+  companyAssetDeleteOne(id: string) {
+    return this.companyAssetRepository.deleteOne({ id });
   }
 }
