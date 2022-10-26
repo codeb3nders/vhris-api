@@ -5,6 +5,7 @@ import { CreateAssetManagementDto } from './dto/create-asset_management.dto';
 import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import { AssetManagement } from './entities/asset_management.entity';
+import { CompanyAsset } from './entities/company_asset.entity';
 
 @Injectable()
 export class AssetManagementService {
@@ -52,8 +53,8 @@ export class AssetManagementService {
     return await this.companyAssetRepository.create(createCompanyAssetDto);
   }
 
-  async getAllCompanyAsset() {
-    return await this.companyAssetRepository.aggregateFind();
+  async getAllCompanyAsset(_params?: any): Promise<CompanyAsset[]> {
+    return await this.companyAssetRepository.aggregateFind(_params);
   }
 
   async getCompanyAssetById(id: string) {

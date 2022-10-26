@@ -106,8 +106,10 @@ export class AssetManagementController {
   }
 
   @Get('company')
-  async findCompanyAsset(@Param('id') id: string) {
-    const response = await this.assetManagementService.getCompanyAssetById(id);
+  async findCompanyAsset(@Query() params) {
+    const response = await this.assetManagementService.getAllCompanyAsset(
+      params,
+    );
     if (!response) {
       return response;
     }

@@ -42,9 +42,6 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
 
   private assetManagementItems = (item: any) => {
     const itemDetails = item.details[0];
-    // const xxx = item.xxx[0];
-    // console.log('----', xxx);
-    console.log({ item });
     const employee = item.employee;
     const toReturn: any = {
       timestamp: item.timestamp,
