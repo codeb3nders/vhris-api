@@ -106,7 +106,7 @@ export class DisciplinaryActionsService {
 
   async find(employeeNo: string, _params?: any) {
     return await this.disciplinaryActionRepository.aggregateFindOne(
-      employeeNo,
+      { employeeNo },
       _params,
     );
   }

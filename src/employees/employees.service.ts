@@ -51,11 +51,10 @@ export class EmployeesService {
   }
 
   async findOne(employeeNo: string, _params?: any) {
-    const response = await this.employeeRepository.aggregateFindOne(
-      employeeNo,
+    return await this.employeeRepository.aggregateFindOne(
+      { employeeNo },
       _params,
     );
-    return response[0];
   }
 
   async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
