@@ -3,7 +3,7 @@ import { withEnumValuesList } from 'src/_utils/enums/employee.enum';
 export class BaseResponseHandler {
   returnItem = (item: any, otherItem?: any) => {
     const toReturn: any = {
-      id: item._id,
+      id: item.id,
       employeeNo: item.employeeNo,
       timestamp: item.timestamp,
       lastModifiedDate: item.lastModifiedDate,

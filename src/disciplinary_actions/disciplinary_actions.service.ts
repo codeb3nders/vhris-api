@@ -116,7 +116,7 @@ export class DisciplinaryActionsService {
     updateDisciplinaryActionDto: UpdateDisciplinaryActionDto,
   ) {
     updateDisciplinaryActionDto['lastModifiedDate'] = Date.now();
-    const filter = { _id: id };
+    const filter = { id };
     const update = updateDisciplinaryActionDto;
 
     return await this.disciplinaryActionRepository.findOneAndUpdate(
@@ -126,6 +126,6 @@ export class DisciplinaryActionsService {
   }
 
   remove(id: string) {
-    return this.disciplinaryActionRepository.deleteOne({ _id: id });
+    return this.disciplinaryActionRepository.deleteOne({ id });
   }
 }

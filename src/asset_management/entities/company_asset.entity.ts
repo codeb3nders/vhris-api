@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { uuid } from 'src/_utils/data/uuid';
 
 export type CompanyAssetDocument = CompanyAsset & Document;
 
 @Schema({ collection: 'company_assets' })
 export class CompanyAsset {
+  @Prop({ required: true, default: uuid })
+  id: string;
+
   @Prop({ default: Date.now() })
   timestamp: number;
 

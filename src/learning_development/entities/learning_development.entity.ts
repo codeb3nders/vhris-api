@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { uuid } from 'src/_utils/data/uuid';
 
 export type LearningDevelopmentDocument = LearningDevelopment & Document;
 
 @Schema({ collection: 'learning_developments' })
 export class LearningDevelopment {
+  @Prop({ required: true, default: uuid })
+  id: string;
+
   @Prop({ required: true })
   employeeNo: string;
 

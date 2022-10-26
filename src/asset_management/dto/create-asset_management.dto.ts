@@ -17,6 +17,14 @@ export class CreateAssetManagementDto {
 
   @ApiProperty()
   @IsOptional()
+  conditionAssigned: string;
+
+  @ApiProperty()
+  @IsOptional()
+  conditionReturned: string;
+
+  @ApiProperty()
+  @IsOptional()
   dateAssigned: Date;
 
   @ApiProperty()

@@ -45,7 +45,7 @@ export class AssetManagementService {
   }
 
   deleteOne(id: string) {
-    return this.assetManagementRepository.deleteOne({ _id: id });
+    return this.assetManagementRepository.deleteOne({ id });
   }
 
   // company Asset
@@ -59,9 +59,7 @@ export class AssetManagementService {
   }
 
   async getCompanyAssetById(id: string) {
-    return await this.companyAssetRepository.aggregateFindOne({
-      _id: `ObjectId(${id})`,
-    });
+    return await this.companyAssetRepository.aggregateFindOne({ id });
   }
 
   async updateCompanyAsset(

@@ -38,6 +38,6 @@ export class EmployeeDocumentService {
   }
 
   deleteOne(id: string) {
-    return this.employeeDocumentRepository.deleteOne({ _id: id });
+    return this.employeeDocumentRepository.deleteOne({ id });
   }
 }

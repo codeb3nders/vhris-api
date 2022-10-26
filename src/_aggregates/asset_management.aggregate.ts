@@ -3,12 +3,12 @@ import { aggregateFormatDate } from 'src/_aggregates/helper.aggregate';
 export class AggregateAssetManagement {
   values() {
     return [
-      { $addFields: { userId: { $toObjectId: '$companyAssetId' } } },
+      { $addFields: { userId: '$companyAssetId' } },
       {
         $lookup: {
           from: 'company_assets',
           localField: 'userId',
-          foreignField: '_id',
+          foreignField: 'id',
           as: 'details',
         },
       },

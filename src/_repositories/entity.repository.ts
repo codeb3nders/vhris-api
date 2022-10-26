@@ -71,7 +71,6 @@ export abstract class EntityRepository<T extends Document> {
   }
 
   async deleteOne(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
-    console.log('CHECK', entityFilterQuery);
     const deleteResult = await await this.entityModel.deleteOne(
       entityFilterQuery,
     );
@@ -120,7 +119,6 @@ export abstract class EntityRepository<T extends Document> {
 
     const pLine = [...pipeline, ..._relations];
     const response = await this.entityModel.aggregate(pLine);
-    console.log({ response }, pLine);
     return response[0];
   }
 

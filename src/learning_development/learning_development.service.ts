@@ -31,7 +31,7 @@ export class LearningDevelopmentService {
     updateLearningDevelopmentDto: UpdateLearningDevelopmentDto,
   ) {
     updateLearningDevelopmentDto['lastModifiedDate'] = Date.now();
-    const filter = { _id: id };
+    const filter = { id };
     const update = updateLearningDevelopmentDto;
 
     return await this.learningDevelopmentRepository.findOneAndUpdate(
@@ -41,6 +41,6 @@ export class LearningDevelopmentService {
   }
 
   remove(id: string) {
-    return this.learningDevelopmentRepository.deleteOne({ _id: id });
+    return this.learningDevelopmentRepository.deleteOne({ id });
   }
 }

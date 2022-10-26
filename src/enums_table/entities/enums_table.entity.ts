@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { uuid } from 'src/_utils/data/uuid';
 
 export type EnumsTableDocument = EnumsTable & Document;
 
@@ -7,6 +8,7 @@ export type EnumsTableDocument = EnumsTable & Document;
 export class EnumsTable {
   @Prop({ required: true, unique: true })
   code: string;
+
   @Prop({ required: true })
   type: string;
 }

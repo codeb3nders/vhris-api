@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { uuid } from 'src/_utils/data/uuid';
 
 export type EmployeeDocument = Employee & Document;
 
 @Schema()
 export class Employee {
+  @Prop({ required: true, default: uuid })
+  id: string;
+
   @Prop({ required: true, unique: true })
   employeeNo: string;
 

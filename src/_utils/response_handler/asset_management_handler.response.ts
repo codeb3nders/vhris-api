@@ -23,7 +23,11 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
   }
 
   private companyAssetItems = (item: any) => {
-    const employee = item.employee;
+    const assignedTo = item.assignedTo.pop();
+    const { firstName, lastName } = item;
+    const ln = lastName.pop();
+    const fn = firstName.pop();
+
     const toReturn: any = {
       timestamp: item.timestamp,
       assetName: item.assetName,
@@ -33,8 +37,17 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
       status: item.status,
     };
 
-    if (employee) {
-      toReturn.employee = employee;
+    if (assignedTo) {
+      toReturn.assignedTo = {
+        employeeNo: assignedTo.employeeNo,
+        name: `${ln} ${fn}`,
+        companyAssetId: assignedTo.companyAssetId,
+        dateAssigned: assignedTo.dateAssigned,
+        dateReturned: assignedTo.dateReturned,
+        remarks: assignedTo.remarks,
+        id: assignedTo.id,
+      };
+      toReturn.employee = item.employee;
     }
 
     return toReturn;
