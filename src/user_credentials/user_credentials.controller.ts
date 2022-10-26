@@ -105,14 +105,14 @@ export class UserCredentialsController {
     // check old password
 
     const user: any = await this.userCredentialsService.findOne(employeeNo);
-    if (!user) ErrorResponse.badRequest('user not found');
+    if (!user) return { isValid: false, error: 'Invalid Employee Number' };
 
     const isMatch = await comparePassword(
       changePasswordDto.oldPassword,
       user.password,
     );
 
-    if (!isMatch) ErrorResponse.badRequest('Old Password is not correct');
+    if (!isMatch) return { isValid: false, error: 'Old Password is not correct' };
     changePasswordDto.password = changePasswordDto.newPassword;
     delete changePasswordDto.newPassword;
     delete changePasswordDto.oldPassword;
