@@ -37,18 +37,13 @@ const toCheck = [
   'citizenship',
   'userGroup',
   'civilStatus',
-  // 'religion',
-  //'educationalBackground',
-  //'payrollBankAccount',
+  'religion',
   'position',
   'department',
   'location',
   'employmentStatus',
   'employmentType',
   'rank',
-  // 'paymentMethod',
-  // 'deductPhilhealth',
-  // 'fixedContributionRate',
 ];
 
 @ApiTags('Employees')

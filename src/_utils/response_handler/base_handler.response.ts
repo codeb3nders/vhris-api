@@ -54,7 +54,8 @@ export class BaseResponseHandler {
     const { details } = data;
     Object.keys(details).map((item) => {
       if (withEnumValuesList.includes(item)) {
-        object[item] = this.prepareEnumItem(data[`${item}Enum`]);
+        object[item] =
+          this.prepareEnumItem(data[`${item}Enum`]) || details[item];
       } else {
         object[item] = details[item];
       }

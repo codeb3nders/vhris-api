@@ -227,7 +227,7 @@ export class Employee {
 
   @Prop({ type: JSON })
   allowanceDetails: {
-    code: string;
+    allowanceType: string;
     amount: number;
   };
 
