@@ -1,3 +1,4 @@
+import { isNil } from 'lodash';
 import {
   Controller,
   Get,
@@ -18,6 +19,7 @@ import { UpdateAssetManagementDto } from './dto/update-asset_management.dto';
 import { AssetManagementResponseHandler } from '../_utils/response_handler/asset_management_handler.response';
 import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 import { UpdateCompanyAssetDto } from './dto/update-company_asset.dto';
+import { EmployeesService } from 'src/employees/employees.service';
 
 const toCheck = ['assetType'];
 
@@ -25,6 +27,7 @@ const toCheck = ['assetType'];
 export class AssetManagementController {
   constructor(
     private readonly assetManagementService: AssetManagementService,
+    private readonly employeeService: EmployeesService,
     private validatorsService: ValidatorsService,
     private assetManagementResponseHandler: AssetManagementResponseHandler,
   ) {}
@@ -37,9 +40,26 @@ export class AssetManagementController {
         toCheck,
       );
 
+      if (isNil(createAssetManagementDto.employeeNo))
+        ErrorResponse.badRequest('Required EmployeeNo!');
+
+      const employee = await this.employeeService.findOne(
+        createAssetManagementDto.employeeNo,
+      );
+
+      if (isNil(employee)) ErrorResponse.badRequest('Employee not found!');
+
+      const asset = await this.assetManagementService.getCompanyAssetById(
+        createAssetManagementDto.companyAssetId,
+      );
+
+      if (isNil(asset)) {
+        ErrorResponse.badRequest('Asset not available!');
+      }
+
       return await this.assetManagementService.create(createAssetManagementDto);
     } catch (error) {
-      ErrorResponse.conflict(error.message || error);
+      ErrorResponse.badRequest(error.response || error);
     }
   }
 

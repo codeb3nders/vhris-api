@@ -12,7 +12,6 @@ export class EmployeesResponseHandler extends BaseResponseHandler {
     }
   }
   private items = (item: any) => {
-    console.log('-----', item.religionEnum);
     return {
       isActive: item.isActive,
       userGroup: this.prepareEnumItem(item.userGroupEnum),

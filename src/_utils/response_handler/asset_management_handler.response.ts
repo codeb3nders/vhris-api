@@ -29,6 +29,7 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
     const fn = firstName.pop();
 
     const toReturn: any = {
+      id: item.id,
       timestamp: item.timestamp,
       assetName: item.assetName,
       assetType: this.prepareEnumItem(item.assetTypeEnum),
@@ -47,7 +48,6 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
         remarks: assignedTo.remarks,
         id: assignedTo.id,
       };
-      toReturn.employee = item.employee;
     }
 
     return toReturn;
@@ -55,8 +55,9 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
 
   private assetManagementItems = (item: any) => {
     const itemDetails = item.details[0];
-    const employee = item.employee;
+
     const toReturn: any = {
+      id: item.id,
       timestamp: item.timestamp,
       lastModifiedDate: item.lastModifiedDate,
       employeeNo: item.employeeNo,
@@ -64,8 +65,6 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
       dateAssigned: item.dateAssigned,
       dateReturned: item.dateReturned,
       remarks: item.remarks,
-      // assetName: item.assetName,
-      // assetType: this.prepareEnumItem(item.assetTypeEnum),
       assetDetails: {
         name: itemDetails?.assetName,
         type: itemDetails?.assetType,
@@ -73,13 +72,9 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
         serialNumber: itemDetails?.assetSerialNumber,
         status: itemDetails?.status,
       },
-      // assetSerialNumber: item.assetSerialNumber,
+
       status: item.status,
     };
-
-    if (employee) {
-      toReturn.employee = employee;
-    }
 
     return toReturn;
   };

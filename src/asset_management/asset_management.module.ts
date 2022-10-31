@@ -17,9 +17,12 @@ import {
   CompanyAssetSchema,
 } from './entities/company_asset.entity';
 import { AggregateCompanyAsset } from 'src/_aggregates/company_asset.aggregate';
+import { EmployeesService } from 'src/employees/employees.service';
+import { EmployeesModule } from 'src/employees/employees.module';
 
 @Module({
   imports: [
+    EmployeesModule,
     ValidatorsModule,
     MongooseModule.forFeature([
       {
