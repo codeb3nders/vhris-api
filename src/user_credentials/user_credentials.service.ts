@@ -109,7 +109,7 @@ export class UserCredentialsService {
 
       const emailDetails = {
         to: employee.companyEmail,
-        subject: 'Forgot password request.',
+        subject: 'Forgot password request',
         text: `You may use this code: ${code} to authenticate forgot password request.`,
         html: `
         <h3>Authentication Code</h3>
@@ -119,7 +119,7 @@ export class UserCredentialsService {
         `,
       };
 
-      // await this.emailService.sendMail(emailDetails);
+      await this.emailService.sendMail(emailDetails);
 
       return { isValid: true, expiresInSeconds: CONSTANTS.TTL };
     }
