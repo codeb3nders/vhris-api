@@ -22,6 +22,7 @@ import { LearningDevelopmentModule } from './learning_development/learning_devel
 import { AssetManagementModule } from './asset_management/asset_management.module';
 import { EmployeeDocumentsModule } from './employee_documents/employee_documents.module';
 import { DisciplinaryActionsModule } from './disciplinary_actions/disciplinary_actions.module';
+import { TimeKeepingModule } from './time_keeping/time_keeping.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { DisciplinaryActionsModule } from './disciplinary_actions/disciplinary_a
     AssetManagementModule,
     EmployeeDocumentsModule,
     DisciplinaryActionsModule,
+    TimeKeepingModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

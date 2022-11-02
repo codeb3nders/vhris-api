@@ -1,160 +1,187 @@
 {
-    "firstName": "Liam Aki",
-    "lastName": "Calinog",
-    "middleName": "Agdan",
-    "suffix": "jr",
-    "citizenship": "PHILIPPINES",
-    "position": "DOCUMENT CONTROLLER",
-    "rank": "RANK AND FILE",
-    "department": "OPS",
-    "location": [
-        "VHO"
-    ],
-    "isActive": true,
-    "userGroup": "EMPLOYEE",
-    "reportsTo": "0001",
-    "dateHired": 1664553600000,
-    "employmentType": "PROBATIONARY",
-    "employmentStatus": "ACTIVE",
-    "endOfProbationary": 1680364799999,
-    "contractEndDate": 1680364799999,
-    "gender": "MALE",
-    "birthDate": 1304438400000,
-    "personalContactNumber": "9185355631",
-    "companyContactNumber": "123456",
-    "taxExemption": "married",
-    "companyEmail": "2lcalinog.vcdcph@gmail.com",
-    "personalEmail": "liam.aki.calinog@gmail.com",
-    "payrollBankAccount": {
-        "accountName": "liamaki",
-        "accountNumber": "123456777",
-        "bankName": "manila",
-        "bankBranch": "bdo"
+    "employee": {
+        "firstName": "Liam Aki",
+        "lastName": "Calinog",
+        "middleName": "Agdan",
+        "suffix": "jr",
+        "citizenship": "PHILIPPINES",
+        "position": "DOCUMENT CONTROLLER",
+        "rank": "RANK AND FILE",
+        "department": "OPS",
+        "location": [
+            "VHO"
+        ],
+        "isActive": true,
+        "userGroup": "EMPLOYEE",
+        "reportsTo": "0001",
+        "dateHired": 1664553600000,
+        "employmentType": "PROBATIONARY",
+        "employmentStatus": "ACTIVE",
+        "endOfProbationary": 1680364799999,
+        "contractEndDate": 1680364799999,
+        "gender": "MALE",
+        "birthDate": 1304438400000,
+        "personalContactNumber": "9185355631",
+        "companyContactNumber": "123456",
+        "taxExemption": "married",
+        "companyEmail": "2lcalinog.vcdcph@gmail.com",
+        "personalEmail": "liam.aki.calinog@gmail.com",
+        "payrollBankAccount": {
+            "accountName": "liamaki",
+            "accountNumber": "123456777",
+            "bankName": "manila",
+            "bankBranch": "bdo"
+        },
+        "civilStatus": "SINGLE",
+        "religion": "roman chatolic",
+        "sss": "12312312312",
+        "philHealth": "5535354",
+        "pagIbig": "34535454567",
+        "tin": "3535353535",
+        "emergencyContact": [
+            {
+                "name": "john",
+                "relation": "brother",
+                "address": "antipolo",
+                "contactNumber": "12341234"
+            }
+        ],
+        "govtProfExamsPassed": [
+            {
+                "examTitle": "ECE Ecam",
+                "dateTaken": 1680364799999,
+                "rating": "passed"
+            }
+        ],
+        "familyBackground": [
+            {
+                "name": "string",
+                "relation": "PARENTS",
+                "occupation": "string",
+                "company": "string",
+                "residence": "string"
+            }
+        ],
+        "basicPay": 500,
+        "dateInactive": 1680364799999,
+        "deductHMDF": 100,
+        "deductionSSS": 200,
+        "deductPhilhealth": "Bi monthly",
+        "deductWithholdingTax": 300,
+        "employeeBenefits": [
+            "benefit 1",
+            "benefit2"
+        ],
+        "fixedContributionRate": "Weekly",
+        "paymentMethod": "Payroll Account",
+        "payRateType": "Weekly",
+        "payrollGroup": "Weekly",
+        "presentAddress": {
+            "addressLine": "asdfsaf",
+            "barangay": "asfsaf",
+            "municipality": "asdfasf",
+            "province": "asfasd",
+            "region": "asdfasd"
+        },
+        "permanentAddress": {
+            "addressLine": "asfsadf",
+            "barangay": "asfsdf",
+            "municipality": "asdfas",
+            "province": "asdfasdf",
+            "region": "asdfasd"
+        },
+        "educationalBackground": [
+            {
+                "yrFrom": 2001,
+                "yrTo": 2006,
+                "level": "Elementary",
+                "degree": "Graduated",
+                "schoolAndAddress": "asfasf",
+                "honors": "asfsad"
+            },
+            {
+                "yrFrom": 2006,
+                "yrTo": 2012,
+                "level": "Secondary",
+                "degree": "fasff",
+                "schoolAndAddress": "asfsadf",
+                "honors": "asdfsdf"
+            },
+            {
+                "yrFrom": 2018,
+                "yrTo": 2020,
+                "level": "Tertiary",
+                "schoolAndAddress": "fasfasf",
+                "degree": "asfsaf",
+                "honors": "asdfsad"
+            },
+            {
+                "yrFrom": 2021,
+                "yrTo": 2022,
+                "level": "Post Graduate",
+                "degree": "fasfd",
+                "schoolAndAddress": "asfas",
+                "honors": "asfs"
+            },
+            {
+                "yrFrom": 2022,
+                "yrTo": 2022,
+                "level": "Others",
+                "degree": "asfasf",
+                "schoolAndAddress": "asfsdf",
+                "honors": "asfsadf"
+            }
+        ],
+        "employmentRecords": [
+            {
+                "yrFrom": 2021,
+                "yrTo": 2022,
+                "companyName": "asdfsadf",
+                "positionHeld": "asdfsadf"
+            }
+        ],
+        "licensesCertifications": [
+            {
+                "name": "string",
+                "authorizingEntity": "string",
+                "validUntil": 1680364799999,
+                "licenseCertNo": "string"
+            }
+        ],
+        "allowanceDetails": [
+            {
+                "allowanceType": "BASIC ALLOWANCE",
+                "amount": 500
+            }
+        ],
+        "employmentLastUpdate": 1664553600000,
+        "jobLastUpdate": 1664553600000,
+        "isRehire": false,
+        "oldEmployeeNo": "0100"
     },
-    "civilStatus": "SINGLE",
-    "religion": "roman chatolic",
-    "sss": "12312312312",
-    "philHealth": "5535354",
-    "pagIbig": "34535454567",
-    "tin": "3535353535",
-    "emergencyContact": [
-        {
-            "name": "john",
-            "relation": "brother",
-            "address": "antipolo",
-            "contactNumber": "12341234"
-        }
-    ],
-    "govtProfExamsPassed": [
-        {
-            "examTitle": "ECE Ecam",
-            "dateTaken": 1680364799999,
-            "rating": "passed"
-        }
-    ],
-    "familyBackground": [
-        {
-            "name": "string",
-            "relation": "PARENTS",
-            "occupation": "string",
-            "company": "string",
-            "residence": "string"
-        }
-    ],
-    "basicPay": 500,
-    "dateInactive": 1680364799999,
-    "deductHMDF": 100,
-    "deductionSSS": 200,
-    "deductPhilhealth": "Bi monthly",
-    "deductWithholdingTax": 300,
-    "employeeBenefits": [
-        "benefit 1",
-        "benefit2"
-    ],
-    "fixedContributionRate": "Weekly",
-    "paymentMethod": "Payroll Account",
-    "payRateType": "Weekly",
-    "payrollGroup": "Weekly",
-    "presentAddress": {
-        "addressLine": "asdfsaf",
-        "barangay": "asfsaf",
-        "municipality": "asdfasf",
-        "province": "asfasd",
-        "region": "asdfasd"
-    },
-    "permanentAddress": {
-        "addressLine": "asfsadf",
-        "barangay": "asfsdf",
-        "municipality": "asdfas",
-        "province": "asdfasdf",
-        "region": "asdfasd"
-    },
-    "educationalBackground": [
-        {
-            "yrFrom": 2001,
-            "yrTo": 2006,
-            "level": "Elementary",
-            "degree": "Graduated",
-            "schoolAndAddress": "asfasf",
-            "honors": "asfsad"
-        },
-        {
-            "yrFrom": 2006,
-            "yrTo": 2012,
-            "level": "Secondary",
-            "degree": "fasff",
-            "schoolAndAddress": "asfsadf",
-            "honors": "asdfsdf"
-        },
-        {
-            "yrFrom": 2018,
-            "yrTo": 2020,
-            "level": "Tertiary",
-            "schoolAndAddress": "fasfasf",
-            "degree": "asfsaf",
-            "honors": "asdfsad"
-        },
-        {
-            "yrFrom": 2021,
-            "yrTo": 2022,
-            "level": "Post Graduate",
-            "degree": "fasfd",
-            "schoolAndAddress": "asfas",
-            "honors": "asfs"
-        },
-        {
-            "yrFrom": 2022,
-            "yrTo": 2022,
-            "level": "Others",
-            "degree": "asfasf",
-            "schoolAndAddress": "asfsdf",
-            "honors": "asfsadf"
-        }
-    ],
-    "employmentRecords": [
-        {
-            "yrFrom": 2021,
-            "yrTo": 2022,
-            "companyName": "asdfsadf",
-            "positionHeld": "asdfsadf"
-        }
-    ],
-    "licensesCertifications": [
-        {
-            "name": "string",
-            "authorizingEntity": "string",
-            "validUntil": 1680364799999,
-            "licenseCertNo": "string"
-        }
-    ],
-    "allowanceDetails": [
-        {
-            "allowanceType": "BASIC ALLOWANCE",
-            "amount": 500
-        }
-    ],
-    "employmentLastUpdate": 1664553600000,
-    "jobLastUpdate": 1664553600000,
-    "isRehire": false,
-    "oldEmployeeNo": "0100"
+    "timeKeeping": {
+        "employeeNo": "0001",
+        "periodStartDate": 1664553600000,
+        "periodEndDate": 1664553600000,
+        "verificationDueDate": 1664553600000,
+        "employeeName": "John Dane",
+        "date": 1664553600000,
+        "day": "Monday",
+        "holidayType": "special",
+        "shift": "first",
+        "in1": "in one",
+        "out1": "out out",
+        "in2": "in two",
+        "out2": "out two",
+        "regHours": 100,
+        "lateMins": 200,
+        "utMins": 300,
+        "absentHrs": 400,
+        "otHrs": 500,
+        "ndiffHrs": 600,
+        "ndiffOTHrs": 700,
+        "remarks": "remarks here",
+        "verified": "by Jane",
+        "dateVerified": 1664553600000
+    }
 }
