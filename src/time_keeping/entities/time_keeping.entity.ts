@@ -85,4 +85,15 @@ export class TimeKeeping {
   lastModifiedDate?: Date;
 }
 
-export const TimeKeepingSchema = SchemaFactory.createForClass(TimeKeeping);
+const TimeKeepingSchema = SchemaFactory.createForClass(TimeKeeping);
+
+TimeKeepingSchema.index(
+  {
+    verificationDueDate: 1,
+    periodStartDate: 1,
+    periodEndDate: 1,
+  },
+  { unique: true, background: true },
+);
+
+export { TimeKeepingSchema };

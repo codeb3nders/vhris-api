@@ -16,8 +16,12 @@ export class TimeKeepingController {
   constructor(private readonly timeKeepingService: TimeKeepingService) {}
 
   @Post()
-  create(@Body() createTimeKeepingDto: CreateTimeKeepingDto) {
-    return this.timeKeepingService.create(createTimeKeepingDto);
+  async create(@Body() createTimeKeepingDto: CreateTimeKeepingDto) {
+    try {
+      return await this.timeKeepingService.create(createTimeKeepingDto);
+    } catch (error) {
+      return error.response || error;
+    }
   }
 
   @Get()
