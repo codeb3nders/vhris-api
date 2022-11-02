@@ -62,6 +62,8 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
       lastModifiedDate: item.lastModifiedDate,
       employeeNo: item.employeeNo,
       companyAssetId: item.companyAssetId,
+      conditionAssigned: item.conditionAssigned,
+      conditionReturned: item.conditionReturned,
       dateAssigned: item.dateAssigned,
       dateReturned: item.dateReturned,
       remarks: item.remarks,
