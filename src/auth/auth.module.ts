@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { localStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { EmployeesModule } from 'src/employees/employees.module';
-import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
 
 @Module({
   imports: [

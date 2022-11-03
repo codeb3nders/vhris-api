@@ -15,7 +15,7 @@ import { EmailModule } from './email/email.module';
 
 import { UserCredentialsModule } from './user_credentials/user_credentials.module';
 import { AuthModule } from './auth/auth.module';
-import { EnumTablesModule } from './enum_tables/enum_tables.module';
+import { EnumTablesModule } from './enums_table/enums_table.module';
 import { ValidatorsService } from './validators/validators.service';
 import { ValidatorsModule } from './validators/validators.module';
 import { LearningDevelopmentModule } from './learning_development/learning_development.module';

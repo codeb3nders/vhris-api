@@ -1,43 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { EmployeeLeavesRepository } from 'src/_repositories/employee_leaves/employee_leaves.repository';
 import { CreateEmployeeLeaveDto } from './dto/create-employee_leave.dto';
 import { UpdateEmployeeLeaveDto } from './dto/update-employee_leave.dto';
-import {
-  EmployeeLeavesDocument,
-  EmployeeLeaves,
-} from './entities/employee_leave.entity';
 
 @Injectable()
 export class EmployeeLeavesService {
-  constructor(
-    @InjectModel(EmployeeLeaves.name)
-    private employeeLeavesModel: Model<EmployeeLeavesDocument>,
-  ) {}
+  constructor(private employeeLeavesRepository: EmployeeLeavesRepository) {}
 
-  create(createEmployeeLeaveDto: CreateEmployeeLeaveDto) {
-    const createdEmployeeLeave = new this.employeeLeavesModel(
-      createEmployeeLeaveDto,
-    );
-    return createdEmployeeLeave.save();
+  async create(createEmployeeLeaveDto: CreateEmployeeLeaveDto) {
+    return await this.employeeLeavesRepository.create(createEmployeeLeaveDto);
   }
 
-  findAll() {
-    return this.employeeLeavesModel.find().exec();
+  async findAll() {
+    return await this.employeeLeavesRepository.find();
   }
 
-  findOne(employeeNo: string) {
-    return this.employeeLeavesModel.findOne({ employeeNo });
+  async findOne(employeeNo: string) {
+    return await this.employeeLeavesRepository.findOne({ employeeNo });
   }
 
-  update(employeeNo: string, updateEmployeeLeaveDto: UpdateEmployeeLeaveDto) {
-    return this.employeeLeavesModel.updateOne(
+  async update(
+    employeeNo: string,
+    updateEmployeeLeaveDto: UpdateEmployeeLeaveDto,
+  ) {
+    return await this.employeeLeavesRepository.findOneAndUpdate(
       { employeeNo },
       { $set: { ...updateEmployeeLeaveDto } },
     );
   }
 
-  remove(employeeNo: string) {
-    return `This action removes a #${employeeNo} employeeleave`;
+  async remove(employeeNo: string) {
+    return await this.employeeLeavesRepository.deleteOne({ employeeNo });
   }
 }

@@ -13,23 +13,15 @@ export class CreateAssetManagementDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase().trim())
-  assetName: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase().trim())
-  assetType: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Transform((param) => param.value.toUpperCase().trim())
-  assetDetails: string;
+  companyAssetId: string;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => param.value.toUpperCase().trim())
-  assetSerialNumber: string;
+  conditionAssigned: string;
+
+  @ApiProperty()
+  @IsOptional()
+  conditionReturned: string;
 
   @ApiProperty()
   @IsOptional()

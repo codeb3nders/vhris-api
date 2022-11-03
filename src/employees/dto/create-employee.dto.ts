@@ -21,7 +21,7 @@ import {
   RelationEnum,
   ReligionEnum,
   UserGroupEnum,
-} from 'src/utils/enums/employee.enum';
+} from 'src/_utils/enums/employee.enum';
 import { IsNotEmpty } from 'class-validator';
 
 class PayrollBankAccount {
@@ -134,9 +134,10 @@ class GovtProfExamsPassed {
   @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   examTitle: string;
-  @Transform((param) => param.value.toUpperCase().trim())
+
   @IsOptional()
   dateTaken: Date;
+
   @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   rating: string;
@@ -149,7 +150,7 @@ class LicensesCertifications {
   @Transform((param) => param.value.toUpperCase().trim())
   @IsOptional()
   authorizingEntity: string;
-  @Transform((param) => param.value.toUpperCase().trim())
+
   @IsOptional()
   validUntil: Date;
   @Transform((param) => param.value.toUpperCase().trim())

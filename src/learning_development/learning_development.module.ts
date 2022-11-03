@@ -6,7 +6,8 @@ import {
   LearningDevelopment,
   LearningDevelopmentSchema,
 } from './entities/learning_development.entity';
-import { LearningDevelopmentResponseHandler } from 'src/utils/response_handler/learning_development_handler.response';
+import { LearningDevelopmentResponseHandler } from 'src/_utils/response_handler/learning_development_handler.response';
+import { LearningDevelopmentRepository } from 'src/_repositories/learning_developments/learning_developments.repository';
 
 @Module({
   imports: [
@@ -18,6 +19,10 @@ import { LearningDevelopmentResponseHandler } from 'src/utils/response_handler/l
     ]),
   ],
   controllers: [LearningDevelopmentController],
-  providers: [LearningDevelopmentService, LearningDevelopmentResponseHandler],
+  providers: [
+    LearningDevelopmentService,
+    LearningDevelopmentResponseHandler,
+    LearningDevelopmentRepository,
+  ],
 })
 export class LearningDevelopmentModule {}

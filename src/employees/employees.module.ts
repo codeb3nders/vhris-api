@@ -9,7 +9,9 @@ import { UserCredentialsModule } from 'src/user_credentials/user_credentials.mod
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { EmployeeHistoryModule } from 'src/employee_history/employee_history.module';
-import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
+import { EmployeeRepository } from 'src/employees/employee.repository';
+import { AggregateEmployee } from 'src/_aggregates/employee.aggregate';
 
 @Module({
   imports: [
@@ -29,7 +31,9 @@ import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_h
     EmailService,
     ValidatorsService,
     EmployeesResponseHandler,
+    EmployeeRepository,
+    AggregateEmployee,
   ],
-  exports: [EmployeesService],
+  exports: [EmployeesService, EmployeeRepository],
 })
 export class EmployeesModule {}

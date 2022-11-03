@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { EmployeeDocumentsService } from './employee_documents.service';
 import { EmployeeDocumentsController } from './employee_documents.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ValidatorsModule } from 'src/validators/validators.module';
@@ -8,7 +7,10 @@ import {
   EmployeeDocumentSchema,
 } from './entities/employee_document.entity';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
+import { EmployeeDocumentResponseHandler } from 'src/_utils/response_handler/employee_documents_handler.response';
+import { AggregateEmployeeDocument } from 'src/_aggregates/employee_documents.aggregate';
+import { EmployeeDocumentService } from './employee_documents.service';
+import { EmployeeDocumentRepository } from '../_repositories/employee_documents/asset_management.repository';
 
 @Module({
   imports: [
@@ -22,9 +24,11 @@ import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/empl
   ],
   controllers: [EmployeeDocumentsController],
   providers: [
-    EmployeeDocumentsService,
+    EmployeeDocumentService,
     ValidatorsService,
     EmployeeDocumentResponseHandler,
+    AggregateEmployeeDocument,
+    EmployeeDocumentRepository,
   ],
 })
 export class EmployeeDocumentsModule {}

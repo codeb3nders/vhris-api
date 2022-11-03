@@ -1,9 +1,9 @@
-import { withEnumValuesList } from 'src/utils/enums/employee.enum';
+import { withEnumValuesList } from 'src/_utils/enums/employee.enum';
 
 export class BaseResponseHandler {
   returnItem = (item: any, otherItem?: any) => {
     const toReturn: any = {
-      id: item._id,
+      id: item.id,
       employeeNo: item.employeeNo,
       timestamp: item.timestamp,
       lastModifiedDate: item.lastModifiedDate,
@@ -54,7 +54,8 @@ export class BaseResponseHandler {
     const { details } = data;
     Object.keys(details).map((item) => {
       if (withEnumValuesList.includes(item)) {
-        object[item] = this.prepareEnumItem(data[`${item}Enum`]);
+        object[item] =
+          this.prepareEnumItem(data[`${item}Enum`]) || details[item];
       } else {
         object[item] = details[item];
       }

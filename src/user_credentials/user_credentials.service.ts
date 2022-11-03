@@ -1,19 +1,15 @@
 import { isNil } from 'lodash';
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { CreateUserCredentialDto } from './dto/create-user_credential.dto';
-import {
-  UserCredentialDocument,
-  UserCredential,
-} from './entities/user_credential.entity';
-import { encodePassWord } from 'src/utils/data/encoder';
+import { encodePassWord } from 'src/_utils/data/encoder';
 
-import { EmployeesService } from 'src/employees/employees.service';
 import { EmailService } from 'src/email/email.service';
-import { generatePassword } from 'src/utils/data/password_generator.util';
+import { generatePassword } from 'src/_utils/data/password_generator.util';
 import { UpdateUserCredentialDto } from './dto/update-user_credential.dto';
-import { UserCode, UserCodeDocument } from './entities/user_code.entity';
+import { UserCredentialRepository } from 'src/_repositories/user_credential/user_credential.repository';
+import { EmployeeRepository } from 'src/employees/employee.repository';
+import { UserCodeRepository } from 'src/_repositories/user_codes/user_codes.repository';
+import { CONSTANTS } from 'src/_utils/constants/employees';
 
 export type User = {
   id: string;
@@ -25,13 +21,10 @@ export type User = {
 @Injectable()
 export class UserCredentialsService {
   constructor(
-    @InjectModel(UserCredential.name)
-    private userCredentialModel: Model<UserCredentialDocument>,
-    @InjectModel(UserCode.name)
-    private userCodeModel: Model<UserCodeDocument>,
-    @Inject(forwardRef(() => EmployeesService))
-    private employeesService: EmployeesService,
     private emailService: EmailService,
+    private userCredentialRepository: UserCredentialRepository,
+    private employeeRepository: EmployeeRepository,
+    private userCodeRepository: UserCodeRepository,
   ) {}
 
   async create(createUserCredentialDto: CreateUserCredentialDto) {
@@ -39,7 +32,7 @@ export class UserCredentialsService {
     const rawPassword = generatePassword();
     const password = await encodePassWord(rawPassword);
 
-    const employee = await this.employeesService.findOne(employeeNo);
+    const employee = await this.employeeRepository.findOne({ employeeNo });
 
     if (!employee) {
       return 'No Employee found';
@@ -53,11 +46,11 @@ export class UserCredentialsService {
       isActive: true,
     };
 
-    const createUserCredential = new this.userCredentialModel(userCredentials);
-    const response = await createUserCredential.save();
+    const response = await this.userCredentialRepository.create(
+      userCredentials,
+    );
 
     if (response) {
-      this.emailService.sendEmail(employee, rawPassword);
       response.password = rawPassword; // TODO: to be remove
       return response;
     }
@@ -65,11 +58,11 @@ export class UserCredentialsService {
   }
 
   async findAll(): Promise<CreateUserCredentialDto[]> {
-    return await this.userCredentialModel.find();
+    return await this.userCredentialRepository.find();
   }
 
   async findOne(employeeNo: string) {
-    return await this.userCredentialModel.findOne({ employeeNo });
+    return await this.userCredentialRepository.findOne({ employeeNo });
   }
 
   async update(
@@ -83,33 +76,40 @@ export class UserCredentialsService {
 
     const update = updateUserCredentialDto;
     try {
-      return await this.userCredentialModel.updateOne({ employeeNo }, update);
+      return await this.userCredentialRepository.findOneAndUpdate(
+        { employeeNo },
+        update,
+      );
     } catch (error) {
       return `Failed updating record with id ${employeeNo}`;
     }
   }
 
   remove(employeeNo: string) {
-    return this.userCredentialModel.deleteOne({ employeeNo });
+    return this.userCredentialRepository.deleteOne({ employeeNo });
   }
 
   async forgotPassword(employeeNo: string) {
-    const employee = await this.employeesService.findOne(employeeNo);
+    const employee = await this.employeeRepository.findOne({ employeeNo });
 
     if (isNil(employee)) {
-      throw new Error('Invalid Employee Number');
+      return { isValid: false, error: 'Invalid Employee Number' };
     } else {
       const code = generatePassword(5);
-      const createUserCode = new this.userCodeModel({
+      const createUserCode = {
         code,
         companyEmail: employee.companyEmail,
-      });
+        codeCreatedAt: new Date(),
+      };
 
-      await createUserCode.save();
+      await this.userCodeRepository.insertOrUpdate(
+        { companyEmail: employee.companyEmail },
+        createUserCode,
+      );
 
       const emailDetails = {
         to: employee.companyEmail,
-        subject: 'Forgot password request.',
+        subject: 'Forgot password request',
         text: `You may use this code: ${code} to authenticate forgot password request.`,
         html: `
         <h3>Authentication Code</h3>
@@ -121,28 +121,28 @@ export class UserCredentialsService {
 
       await this.emailService.sendMail(emailDetails);
 
-      return { code, email: employee.companyEmail };
+      return { isValid: true, expiresInSeconds: CONSTANTS.TTL };
     }
   }
 
   async validateCode(employeeNo: string, code: string) {
-    const employee = await this.employeesService.findOne(employeeNo);
+    const employee = await this.employeeRepository.findOne({ employeeNo });
 
     if (!isNil(employee)) {
       const { companyEmail } = employee;
-      return await this.userCodeModel.findOne({ code, companyEmail });
+      return await this.userCodeRepository.findOne({ code, companyEmail });
     }
     return null;
   }
 
-  async changePassword(employeeNo: string) {
-    return await this.userCredentialModel.findOne({ employeeNo });
-    // if code
-    // validate code
-    // update record
-    // return success
-    // else
-    // update record
-    // return success
-  }
+  // async changePassword(employeeNo: string) {
+  //   return await this.userCredentialRepository.findOne({ employeeNo });
+  //   // if code
+  //   // validate code
+  //   // update record
+  //   // return success
+  //   // else
+  //   // update record
+  //   // return success
+  // }
 }

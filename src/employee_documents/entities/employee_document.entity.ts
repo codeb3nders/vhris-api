@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { uuid } from 'src/_utils/data/uuid';
 
-export type EmployeeDocumentsDocument = EmployeeDocument & Document;
+export type EmployeeDocumentDocument = EmployeeDocument & Document;
 
 @Schema({ collection: 'employee_documents' })
 export class EmployeeDocument {
+  @Prop({ required: true, default: uuid })
+  id: string;
+
   @Prop({ required: true, default: Date.now() })
   timestamp: number;
 

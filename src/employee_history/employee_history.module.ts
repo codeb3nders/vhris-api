@@ -6,7 +6,9 @@ import {
   EmployeeHistory,
   EmployeeHistorySchema,
 } from './entities/employee_history.entity';
-import { EmployeeHistoryResponseHandler } from 'src/utils/response_handler/employee_history_handler.response';
+import { EmployeeHistoryResponseHandler } from 'src/_utils/response_handler/employee_history_handler.response';
+import { EmployeeHistoryRepository } from 'src/_repositories/employee_history/employee_history.repository';
+import { AggregateEmployeeHistory } from 'src/_aggregates/employee_history.aggregate';
 
 @Module({
   imports: [
@@ -18,7 +20,12 @@ import { EmployeeHistoryResponseHandler } from 'src/utils/response_handler/emplo
     ]),
   ],
   controllers: [EmployeeHistoryController],
-  providers: [EmployeeHistoryService, EmployeeHistoryResponseHandler],
+  providers: [
+    EmployeeHistoryService,
+    EmployeeHistoryResponseHandler,
+    EmployeeHistoryRepository,
+    AggregateEmployeeHistory,
+  ],
   exports: [EmployeeHistoryService],
 })
 export class EmployeeHistoryModule {}

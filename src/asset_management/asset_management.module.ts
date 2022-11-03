@@ -8,15 +8,30 @@ import {
 } from './entities/asset_management.entity';
 import { ValidatorsModule } from 'src/validators/validators.module';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { AssetManagementResponseHandler } from 'src/utils/response_handler/asset_management_handler.response';
+import { AssetManagementResponseHandler } from 'src/_utils/response_handler/asset_management_handler.response';
+import { AggregateAssetManagement } from 'src/_aggregates/asset_management.aggregate';
+import { AssetManagementRepository } from '../_repositories/asset_managements/asset_management.repository';
+import { CompanyAssetRepository } from 'src/_repositories/asset_managements/company_asset.repository';
+import {
+  CompanyAsset,
+  CompanyAssetSchema,
+} from './entities/company_asset.entity';
+import { AggregateCompanyAsset } from 'src/_aggregates/company_asset.aggregate';
+import { EmployeesService } from 'src/employees/employees.service';
+import { EmployeesModule } from 'src/employees/employees.module';
 
 @Module({
   imports: [
+    EmployeesModule,
     ValidatorsModule,
     MongooseModule.forFeature([
       {
         name: AssetManagement.name,
         schema: AssetManagementSchema,
+      },
+      {
+        name: CompanyAsset.name,
+        schema: CompanyAssetSchema,
       },
     ]),
   ],
@@ -25,6 +40,10 @@ import { AssetManagementResponseHandler } from 'src/utils/response_handler/asset
     AssetManagementService,
     ValidatorsService,
     AssetManagementResponseHandler,
+    AggregateAssetManagement,
+    AggregateCompanyAsset,
+    AssetManagementRepository,
+    CompanyAssetRepository,
   ],
 })
 export class AssetManagementModule {}

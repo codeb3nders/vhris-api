@@ -8,19 +8,19 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { EmployeeDocumentsService } from './employee_documents.service';
+import { EmployeeDocumentService } from './employee_documents.service';
 import { CreateEmployeeDocumentDto } from './dto/create-employee_document.dto';
 import { UpdateEmployeeDocumentDto } from './dto/update-employee_document.dto';
 import { ValidatorsService } from 'src/validators/validators.service';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
-import { EmployeeDocumentResponseHandler } from 'src/utils/response_handler/employee_documents_handler.response';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
+import { EmployeeDocumentResponseHandler } from 'src/_utils/response_handler/employee_documents_handler.response';
 
 const toCheck = ['documentType'];
 
 @Controller('employee-documents')
 export class EmployeeDocumentsController {
   constructor(
-    private readonly employeeDocumentsService: EmployeeDocumentsService,
+    private readonly employeeDocumentsService: EmployeeDocumentService,
     private readonly validatorService: ValidatorsService,
     private readonly employeeDocumentResponseHandler: EmployeeDocumentResponseHandler,
   ) {}
@@ -40,8 +40,8 @@ export class EmployeeDocumentsController {
   }
 
   @Get()
-  async findAll(@Query() params) {
-    const response = await this.employeeDocumentsService.findAll(params);
+  async find(@Query() params) {
+    const response = await this.employeeDocumentsService.aggregateFind(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -49,8 +49,12 @@ export class EmployeeDocumentsController {
   }
 
   @Get(':employeeNo')
-  async find(@Query() params: any, @Param('employeeNo') employeeNo: string) {
-    const response = await this.employeeDocumentsService.find(employeeNo);
+  async aggregateFindByEmployeeId(
+    @Query() params: any,
+    @Param('employeeNo') employeeNo: string,
+  ) {
+    const response =
+      await this.employeeDocumentsService.aggregateFindByEmployeeId(employeeNo);
     if (!response || response.length < 1) {
       return response;
     }
@@ -74,7 +78,7 @@ export class EmployeeDocumentsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeDocumentsService.remove(id);
+  deleteOne(@Param('id') id: string) {
+    return this.employeeDocumentsService.deleteOne(id);
   }
 }

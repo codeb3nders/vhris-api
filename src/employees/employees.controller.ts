@@ -18,7 +18,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 import { Employee } from './entities/employee.entity';
-import { ErrorResponse } from 'src/utils/response_handler/error_response.util';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 import { EmployeeI } from './interface/employee.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
@@ -27,28 +27,23 @@ import {
   isValidRequest,
 } from '../validators/validate.request.util';
 import { AuthUser } from 'src/auth/jwt.helper';
-import { CONSTANTS } from 'src/utils/constants/employees';
+import { CONSTANTS } from 'src/_utils/constants/employees';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { FindOneEmployeeDto } from './dto/findOne-employee.dto';
 import { EmployeeHistoryService } from 'src/employee_history/employee_history.service';
-import { EmployeesResponseHandler } from 'src/utils/response_handler/employees_handler.response';
+import { EmployeesResponseHandler } from 'src/_utils/response_handler/employees_handler.response';
 
 const toCheck = [
   'citizenship',
   'userGroup',
   'civilStatus',
-  // 'religion',
-  //'educationalBackground',
-  //'payrollBankAccount',
+  'religion',
   'position',
   'department',
   'location',
   'employmentStatus',
   'employmentType',
   'rank',
-  // 'paymentMethod',
-  // 'deductPhilhealth',
-  // 'fixedContributionRate',
 ];
 
 @ApiTags('Employees')
@@ -105,10 +100,11 @@ export class EmployeesController {
   async findOne(
     @Query() params: FindOneEmployeeDto,
     @Param('employeeNo') employeeNo: string,
-  ): Promise<EmployeeI[]> {
+  ): Promise<EmployeeI | {}> {
     const response = await this.employeesService.findOne(employeeNo, params);
-    if (!response || response.length < 1) {
-      return [];
+
+    if (!response) {
+      return {};
     }
     return this.employeesResponseHandler.ok(response);
   }
@@ -137,6 +133,7 @@ export class EmployeesController {
       employeeNo,
       updateEmployeeDto,
     );
+
     if (response) {
       const previousValue = {};
 
@@ -163,7 +160,7 @@ export class EmployeesController {
         }
       }
     }
-    return { response };
+    return response;
   }
 
   @UseGuards(JwtAuthGuard)
