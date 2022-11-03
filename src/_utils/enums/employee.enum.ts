@@ -227,6 +227,7 @@ export enum AutoCredentialEnum {
   'HR ADMIN',
   'SYSTEM ADMIN',
   'APPROVER',
+  'EMPLOYEE',
 }
 
 export enum RelationEnum {

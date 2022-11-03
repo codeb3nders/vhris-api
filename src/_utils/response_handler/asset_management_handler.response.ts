@@ -41,7 +41,7 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
     if (assignedTo) {
       toReturn.assignedTo = {
         employeeNo: assignedTo.employeeNo,
-        name: `${ln} ${fn}`,
+        name: `${ln}, ${fn}`,
         companyAssetId: assignedTo.companyAssetId,
         dateAssigned: assignedTo.dateAssigned,
         dateReturned: assignedTo.dateReturned,
@@ -67,13 +67,7 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
       dateAssigned: item.dateAssigned,
       dateReturned: item.dateReturned,
       remarks: item.remarks,
-      assetDetails: {
-        name: itemDetails?.assetName,
-        type: itemDetails?.assetType,
-        details: itemDetails?.assetDetails,
-        serialNumber: itemDetails?.assetSerialNumber,
-        status: itemDetails?.status,
-      },
+      assetDetails: itemDetails,
 
       status: item.status,
     };
