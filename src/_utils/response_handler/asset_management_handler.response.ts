@@ -23,10 +23,7 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
   }
 
   private companyAssetItems = (item: any) => {
-    const assignedTo = item.assignedTo.pop();
-    const { firstName, lastName } = item;
-    const ln = lastName.pop();
-    const fn = firstName.pop();
+    const assignedTo = item.assignedTo;
 
     const toReturn: any = {
       id: item.id,
@@ -39,15 +36,24 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
     };
 
     if (assignedTo) {
-      toReturn.assignedTo = {
-        employeeNo: assignedTo.employeeNo,
-        name: `${ln}, ${fn}`,
-        companyAssetId: assignedTo.companyAssetId,
-        dateAssigned: assignedTo.dateAssigned,
-        dateReturned: assignedTo.dateReturned,
-        remarks: assignedTo.remarks,
-        id: assignedTo.id,
-      };
+      toReturn.assignedTo = assignedTo.map((assigned) => {
+        const employee = item.employee
+          .filter((e: any) => e.employeeNo === assigned.employeeNo)
+          .pop();
+
+        console.log({ employee });
+        const { firstName: fn, lastName: ln } = employee;
+
+        return {
+          employeeNo: assigned.employeeNo,
+          name: `${ln}, ${fn}`,
+          companyAssetId: assigned.companyAssetId,
+          dateAssigned: assigned.dateAssigned,
+          dateReturned: assigned.dateReturned,
+          remarks: assigned.remarks,
+          id: assigned.id,
+        };
+      });
     }
 
     return toReturn;

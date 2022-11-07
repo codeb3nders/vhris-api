@@ -15,7 +15,7 @@ export class AssetManagement {
   @Prop({ default: Date.now() })
   timestamp: number;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   companyAssetId: string;
 
   @Prop()
