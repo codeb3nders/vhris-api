@@ -35,8 +35,8 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
       status: item.status,
     };
 
-    if (assignedTo) {
-      toReturn.assignedTo = assignedTo.map((assigned) => {
+    const f = () => {
+      const res = assignedTo.map((assigned) => {
         const employee = item.employee
           .filter((e: any) => e.employeeNo === assigned.employeeNo)
           .pop();
@@ -53,6 +53,14 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
           id: assigned.id,
         };
       });
+
+      res.sort((a, b) => b.dateAssigned - a.dateAssigned);
+
+      return res[0];
+    };
+
+    if (assignedTo) {
+      toReturn.assignedTo = f();
     }
 
     return toReturn;

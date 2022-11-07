@@ -80,8 +80,6 @@ export class AssetManagementController {
         continue;
       }
 
-      console.log('loop error', loopError);
-
       if (loopError == 0) {
         const response = await this.assetManagementService.create(
           createAssetManagementDto,
