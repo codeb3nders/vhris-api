@@ -41,7 +41,6 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
           .filter((e: any) => e.employeeNo === assigned.employeeNo)
           .pop();
 
-        console.log({ employee });
         const { firstName: fn, lastName: ln } = employee;
 
         return {
