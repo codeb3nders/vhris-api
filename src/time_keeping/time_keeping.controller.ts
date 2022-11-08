@@ -1,3 +1,4 @@
+import { isNil } from 'lodash';
 import {
   Controller,
   Get,
@@ -16,12 +17,24 @@ export class TimeKeepingController {
   constructor(private readonly timeKeepingService: TimeKeepingService) {}
 
   @Post()
-  async create(@Body() createTimeKeepingDto: CreateTimeKeepingDto) {
-    try {
-      return await this.timeKeepingService.create(createTimeKeepingDto);
-    } catch (error) {
-      return error.response || error;
+  async create(@Body() createTimeKeepingsDto: CreateTimeKeepingDto[]) {
+    const fail = [];
+    const success = [];
+    for (const createTimeKeepingDto of createTimeKeepingsDto) {
+      try {
+        const response = await this.timeKeepingService.create(
+          createTimeKeepingDto,
+        );
+        success.push(response);
+      } catch (error) {
+        fail.push({
+          errorMessage: error.message || error,
+          details: createTimeKeepingDto,
+        });
+      }
     }
+
+    return { success, fail };
   }
 
   @Get()

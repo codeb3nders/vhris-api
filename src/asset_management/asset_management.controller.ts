@@ -34,64 +34,7 @@ export class AssetManagementController {
   ) {}
 
   @Post('management')
-  async create(@Body() createAssetManagementsDto: CreateAssetManagementDto[]) {
-    const fail = [];
-    const success = [];
-    for (const createAssetManagementDto of createAssetManagementsDto) {
-      let loopError = 0;
-
-      await this.validatorsService.validateEmployeesPostRequest(
-        createAssetManagementDto,
-        toCheck,
-      );
-
-      if (isNil(createAssetManagementDto.employeeNo)) {
-        fail.push({
-          errorMessage: 'Required EmployeeNo!',
-          details: createAssetManagementDto,
-        });
-        loopError++;
-        continue;
-      }
-
-      const employee = await this.employeeService.findOne(
-        createAssetManagementDto.employeeNo,
-      );
-
-      if (isNil(employee)) {
-        fail.push({
-          errorMessage: 'Employee not found!',
-          details: createAssetManagementDto,
-        });
-        loopError++;
-        continue;
-      }
-
-      const asset = await this.assetManagementService.getCompanyAssetById(
-        createAssetManagementDto.companyAssetId,
-      );
-
-      if (isNil(asset)) {
-        fail.push({
-          errorMessage: 'Asset not available!',
-          details: createAssetManagementDto,
-        });
-        loopError++;
-        continue;
-      }
-
-      if (loopError == 0) {
-        const response = await this.assetManagementService.create(
-          createAssetManagementDto,
-        );
-
-        success.push(response);
-      }
-    }
-
-    return { success, fail };
-    const createAssetManagementDto = createAssetManagementsDto[0];
-
+  async create(@Body() createAssetManagementDto: CreateAssetManagementDto) {
     try {
       await this.validatorsService.validateEmployeesPostRequest(
         createAssetManagementDto,
@@ -115,7 +58,7 @@ export class AssetManagementController {
         ErrorResponse.badRequest('Asset not available!');
       }
 
-      // return await this.assetManagementService.create(createAssetManagementDto);
+      return await this.assetManagementService.create(createAssetManagementDto);
     } catch (error) {
       ErrorResponse.badRequest(error.response || error);
     }

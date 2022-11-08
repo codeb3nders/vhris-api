@@ -12,31 +12,31 @@ export class TimeKeeping {
   @Prop({ required: true })
   employeeNo: string;
 
-  @Prop({ default: Date.now() })
+  @Prop({ required: true, default: Date.now() })
   timestamp: number;
 
-  @Prop()
+  @Prop({ required: true })
   periodStartDate: Date;
 
-  @Prop()
+  @Prop({ required: true })
   periodEndDate: Date;
 
-  @Prop()
+  @Prop({ required: true })
   verificationDueDate: Date;
 
-  @Prop()
+  @Prop({ required: true })
   employeeName: string;
 
-  @Prop()
+  @Prop({ required: true })
   date: Date;
 
-  @Prop()
+  @Prop({ required: true })
   day: string;
 
   @Prop()
   holidayType: string;
 
-  @Prop()
+  @Prop({ required: true })
   shift: string;
 
   @Prop()

@@ -159,29 +159,231 @@
         "isRehire": false,
         "oldEmployeeNo": "0100"
     },
-    "timeKeeping": {
-        "employeeNo": "0001",
-        "periodStartDate": 1664553600000,
-        "periodEndDate": 1664553600000,
-        "verificationDueDate": 1664553600000,
-        "employeeName": "John Dane",
-        "date": 1664553600000,
-        "day": "Monday",
-        "holidayType": "special",
-        "shift": "first",
-        "in1": "in one",
-        "out1": "out out",
-        "in2": "in two",
-        "out2": "out two",
-        "regHours": 100,
-        "lateMins": 200,
-        "utMins": 300,
-        "absentHrs": 400,
-        "otHrs": 500,
-        "ndiffHrs": 600,
-        "ndiffOTHrs": 700,
-        "remarks": "remarks here",
-        "verified": "by Jane",
-        "dateVerified": 1664553600000
-    }
+    "timeKeeping": [
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/10/22",
+            "day": "SAT",
+            "shift": "0700AM-0400PM",
+            "in1": "05:03 AM",
+            "out2": "06:02 PM",
+            "regHours": "8.00"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/11/22",
+            "day": "SUN",
+            "holidayType": "RST",
+            "shift": "0700AM-0400PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/12/22",
+            "day": "MON",
+            "shift": "0700AM-0400PM",
+            "in1": "05:14 AM",
+            "out2": "07:29 PM",
+            "regHours": "8.00",
+            "otHrs": "3.00",
+            "remarks": "Auth. OT 3 hrs.04:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/13/22",
+            "day": "TUE",
+            "shift": "0700AM-0400PM",
+            "in1": "05:00 AM",
+            "out2": "07:25 PM",
+            "regHours": "8.00",
+            "otHrs": "3.00",
+            "remarks": "Auth. OT 3 hrs.04:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/14/22",
+            "day": "WED",
+            "shift": "0700AM-0400PM",
+            "in1": "05:03 AM",
+            "out2": "06:22 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/15/22",
+            "day": "THU",
+            "shift": "0700AM-0400PM",
+            "in1": "05:03 AM",
+            "out2": "07:01 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/16/22",
+            "day": "FRI",
+            "shift": "0700AM-0400PM",
+            "in1": "05:00 AM",
+            "out2": "08:08 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/17/22",
+            "day": "SAT",
+            "shift": "0700AM-0400PM",
+            "in1": "05:00 AM",
+            "out2": "07:00 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/18/22",
+            "day": "SUN",
+            "holidayType": "RST",
+            "shift": "0700AM-0400PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/19/22",
+            "day": "MON",
+            "shift": "0700AM-0400PM",
+            "in1": "05:05 AM",
+            "out2": "07:04 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/20/22",
+            "day": "TUE",
+            "shift": "0700AM-0400PM",
+            "in1": "05:03 AM",
+            "out2": "07:00 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/21/22",
+            "day": "WED",
+            "shift": "0700AM-0400PM",
+            "in1": "05:01 AM",
+            "out2": "07:02 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/22/22",
+            "day": "THU",
+            "shift": "0700AM-0400PM",
+            "in1": "05:02 AM",
+            "out2": "07:03 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/23/22",
+            "day": "FRI",
+            "shift": "0700AM-0400PM",
+            "in1": "05:00 AM",
+            "out2": "07:03 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Agarrado, Joey Albert",
+            "date": "9/24/22",
+            "day": "SAT",
+            "shift": "0700AM-0400PM",
+            "in1": "05:22 AM",
+            "out2": "07:01 PM",
+            "regHours": "8.00",
+            "otHrs": "2.00",
+            "remarks": "Auth. OT 2 hrs.05:00 PM to 07:00 PM"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/10/22",
+            "day": "SAT",
+            "shift": "0700AM-0400PM",
+            "in1": "07:00 AM",
+            "out2": "04:06 PM",
+            "regHours": "8.00"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/11/22",
+            "day": "SUN",
+            "holidayType": "RST",
+            "shift": "0700AM-0400PM"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/12/22",
+            "day": "MON",
+            "shift": "0700AM-0400PM",
+            "in1": "11:01 AM",
+            "out2": "04:09 PM",
+            "regHours": "8.00",
+            "lateMins": "241"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/13/22",
+            "day": "TUE",
+            "shift": "0700AM-0400PM",
+            "in1": "06:35 AM",
+            "out2": "04:00 PM",
+            "regHours": "8.00"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/14/22",
+            "day": "WED",
+            "shift": "0700AM-0400PM",
+            "regHours": "8.00",
+            "absentHrs": "8.00"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/15/22",
+            "day": "THU",
+            "shift": "0700AM-0400PM",
+            "regHours": "8.00",
+            "absentHrs": "8.00"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/16/22",
+            "day": "FRI",
+            "shift": "0700AM-0400PM",
+            "in1": "08:14 AM",
+            "out2": "04:01 PM",
+            "regHours": "8.00",
+            "lateMins": "74"
+        },
+        {
+            "employeeName": "Balbero, Christopher",
+            "date": "9/17/22",
+            "day": "SAT",
+            "shift": "0700AM-0400PM",
+            "in1": "06:31 AM",
+            "out2": "04:02 PM",
+            "regHours": "8.00"
+        }
+    ]
 }
