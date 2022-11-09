@@ -17,7 +17,7 @@ export class AggregateEmployee {
               ' ',
               '$firstName',
               ' ',
-              '$middleName',
+              { $ifNull: ['$middleName', ''] },
               ' ',
             ],
           },
