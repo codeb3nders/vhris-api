@@ -11,10 +11,14 @@ import {
 import { TimeKeepingService } from './time_keeping.service';
 import { CreateTimeKeepingDto } from './dto/create-time_keeping.dto';
 import { UpdateTimeKeepingDto } from './dto/update-time_keeping.dto';
+import { EmployeesService } from 'src/employees/employees.service';
 
 @Controller('time-keeping')
 export class TimeKeepingController {
-  constructor(private readonly timeKeepingService: TimeKeepingService) {}
+  constructor(
+    private readonly timeKeepingService: TimeKeepingService,
+    private readonly employeeService: EmployeesService,
+  ) {}
 
   @Post()
   async create(@Body() createTimeKeepingsDto: CreateTimeKeepingDto[]) {
@@ -22,6 +26,16 @@ export class TimeKeepingController {
     const success = [];
     for (const createTimeKeepingDto of createTimeKeepingsDto) {
       try {
+        const employee = await this.employeeService.search({
+          name: createTimeKeepingDto.employeeName,
+        });
+
+        if (employee.length > 0 && employee[0].employeeNo) {
+          createTimeKeepingDto.employeeNo = employee[0].employeeNo;
+        } else {
+          createTimeKeepingDto.employeeNo = null;
+        }
+
         const response = await this.timeKeepingService.create(
           createTimeKeepingDto,
         );
