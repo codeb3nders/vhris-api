@@ -72,13 +72,13 @@ export class TimeKeeping {
 
 const TimeKeepingSchema = SchemaFactory.createForClass(TimeKeeping);
 
-TimeKeepingSchema.index(
-  {
-    periodStartDate: 1,
-    periodEndDate: 1,
-    employeeName: 1,
-  },
-  { unique: true, background: true },
-);
+// TimeKeepingSchema.index(
+//   {
+//     periodStartDate: 1,
+//     periodEndDate: 1,
+//     employeeName: 1,
+//   },
+//   { unique: true, background: true },
+// );
 
 export { TimeKeepingSchema };
