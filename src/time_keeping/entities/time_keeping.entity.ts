@@ -27,59 +27,44 @@ export class TimeKeeping {
   @Prop({ required: true })
   employeeName: string;
 
-  @Prop({ required: true })
-  date: Date;
+  @Prop({ type: JSON })
+  details: {
+    date: Date;
 
-  @Prop({ required: true })
-  day: string;
+    day: string;
 
-  @Prop()
-  holidayType: string;
+    holidayType: string;
 
-  @Prop({ required: true })
-  shift: string;
+    shift: string;
 
-  @Prop()
-  in1: string;
+    in1: string;
 
-  @Prop()
-  out1: string;
+    out1: string;
 
-  @Prop()
-  in2: string;
+    in2: string;
 
-  @Prop()
-  out2: string;
+    out2: string;
 
-  @Prop()
-  regHours: number;
+    regHours: number;
 
-  @Prop()
-  lateMins: number;
+    lateMins: number;
 
-  @Prop()
-  utMins: number;
+    utMins: number;
 
-  @Prop()
-  absentHrs: number;
+    absentHrs: number;
 
-  @Prop()
-  otHrs: number;
+    otHrs: number;
 
-  @Prop()
-  ndiffHrs: number;
+    ndiffHrs: number;
 
-  @Prop()
-  ndiffOTHrs: number;
+    ndiffOTHrs: number;
 
-  @Prop()
-  remarks: string;
+    remarks: string;
 
-  @Prop()
-  verified: string;
+    verified: string;
 
-  @Prop()
-  dateVerified: Date;
+    dateVerified: Date;
+  };
 
   @Prop()
   lastModifiedDate?: Date;

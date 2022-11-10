@@ -23,6 +23,10 @@ export class CreateTimeKeepingDto {
   employeeName: string;
 
   @ApiProperty()
+  @IsOptional()
+  details: any;
+
+  @ApiProperty()
   @IsNotEmpty()
   date: Date;
 
