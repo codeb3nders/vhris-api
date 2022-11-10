@@ -1,31 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
-export class CreateTimeKeepingDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  employeeNo: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  periodStartDate: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  periodEndDate: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  verificationDueDate: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  employeeName: string;
-
-  @ApiProperty()
-  @IsOptional()
-  details: any;
-
+class Details {
   @ApiProperty()
   @IsNotEmpty()
   date: Date;
@@ -97,4 +73,30 @@ export class CreateTimeKeepingDto {
   @ApiProperty()
   @IsOptional()
   dateVerified: Date;
+}
+
+export class CreateTimeKeepingDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  employeeNo: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  periodStartDate: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  periodEndDate: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  verificationDueDate: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  employeeName: string;
+
+  @ApiProperty()
+  @IsOptional()
+  details: Details;
 }

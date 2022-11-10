@@ -30,39 +30,22 @@ export class TimeKeeping {
   @Prop({ type: JSON })
   details: {
     date: Date;
-
     day: string;
-
     holidayType: string;
-
     shift: string;
-
     in1: string;
-
     out1: string;
-
     in2: string;
-
     out2: string;
-
     regHours: number;
-
     lateMins: number;
-
     utMins: number;
-
     absentHrs: number;
-
     otHrs: number;
-
     ndiffHrs: number;
-
     ndiffOTHrs: number;
-
     remarks: string;
-
     verified: string;
-
     dateVerified: Date;
   };
 

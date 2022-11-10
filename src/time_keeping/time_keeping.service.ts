@@ -7,11 +7,13 @@ import { UpdateTimeKeepingDto } from './dto/update-time_keeping.dto';
 export class TimeKeepingService {
   constructor(private timeKeepingRepository: TimeKeepingRepository) {}
 
-  async create(createTimeKeepingDto: any): Promise<any> {
+  async create(
+    createTimeKeepingDto: CreateTimeKeepingDto,
+  ): Promise<CreateTimeKeepingDto> {
     return await this.timeKeepingRepository.create(createTimeKeepingDto);
   }
 
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<CreateTimeKeepingDto[]> {
     return await this.timeKeepingRepository.find();
   }
 
