@@ -36,7 +36,7 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
     };
 
     const f = () => {
-      const res = assignedTo.map((assigned) => {
+      const res = assignedTo.filter((x) => !x.dateReturned).map((assigned) => {
         const employee = item.employee
           .filter((e: any) => e.employeeNo === assigned.employeeNo)
           .pop();
