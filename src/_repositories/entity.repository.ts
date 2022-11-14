@@ -177,6 +177,46 @@ export abstract class EntityRepository<T extends Document> {
     return this.entityModel.aggregate(pLine);
   }
 
+  async aggregateFindByAttribute(
+    key: any,
+    entityFilterQuery?: any,
+  ): Promise<T[]> {
+    const _relations = [];
+
+    if (entityFilterQuery) {
+      const relations = entityFilterQuery.relations;
+      delete entityFilterQuery.relations;
+
+      if (relations) {
+        const rel = JSON.parse(relations);
+
+        rel.forEach((r) => {
+          _relations.push({
+            $lookup: {
+              from: `${r}`,
+              localField: 'employeeNo',
+              foreignField: 'employeeNo',
+              as: `${r}`,
+            },
+          });
+        });
+      }
+    }
+
+    const pipeline = [
+      ...this.aggregateQry.values(),
+      {
+        $match: {
+          ...key,
+        },
+      },
+
+      ..._relations,
+    ];
+
+    return await this.entityModel.aggregate(pipeline);
+  }
+
   async aggregateFindByEmployeeId(
     employeeNo: string,
     entityFilterQuery?: any,

@@ -23,6 +23,7 @@ import { AssetManagementModule } from './asset_management/asset_management.modul
 import { EmployeeDocumentsModule } from './employee_documents/employee_documents.module';
 import { DisciplinaryActionsModule } from './disciplinary_actions/disciplinary_actions.module';
 import { TimeKeepingModule } from './time_keeping/time_keeping.module';
+import { UserLogsModule } from './user_logs/user_logs.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { TimeKeepingModule } from './time_keeping/time_keeping.module';
     EmployeeDocumentsModule,
     DisciplinaryActionsModule,
     TimeKeepingModule,
+    UserLogsModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

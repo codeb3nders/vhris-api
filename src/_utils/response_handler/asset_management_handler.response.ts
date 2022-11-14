@@ -36,23 +36,25 @@ export class AssetManagementResponseHandler extends BaseResponseHandler {
     };
 
     const f = () => {
-      const res = assignedTo.filter((x) => !x.dateReturned).map((assigned) => {
-        const employee = item.employee
-          .filter((e: any) => e.employeeNo === assigned.employeeNo)
-          .pop();
+      const res = assignedTo
+        .filter((x) => !x.dateReturned)
+        .map((assigned) => {
+          const employee = item.employee
+            .filter((e: any) => e.employeeNo === assigned.employeeNo)
+            .pop();
 
-        const { firstName: fn, lastName: ln } = employee;
+          const { firstName: fn, lastName: ln } = employee;
 
-        return {
-          employeeNo: assigned.employeeNo,
-          name: `${ln}, ${fn}`,
-          companyAssetId: assigned.companyAssetId,
-          dateAssigned: assigned.dateAssigned,
-          dateReturned: assigned.dateReturned,
-          remarks: assigned.remarks,
-          id: assigned.id,
-        };
-      });
+          return {
+            employeeNo: assigned.employeeNo,
+            name: `${ln}, ${fn}`,
+            companyAssetId: assigned.companyAssetId,
+            dateAssigned: assigned.dateAssigned,
+            dateReturned: assigned.dateReturned,
+            remarks: assigned.remarks,
+            id: assigned.id,
+          };
+        });
 
       res.sort((a, b) => b.dateAssigned - a.dateAssigned);
 
