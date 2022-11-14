@@ -55,14 +55,4 @@ export class UserLogsController {
     }
     return this.userLogResponseHandler.ok(response);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserLogDto: UpdateUserLogDto) {
-    return this.userLogsService.update(id, updateUserLogDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userLogsService.remove(id);
-  }
 }

@@ -24,12 +24,4 @@ export class UserLogsService {
     const response = await this.userLogRepository.aggregateFindOne({ id });
     return response;
   }
-
-  update(id: string, updateUserLogDto: UpdateUserLogDto) {
-    return `This action updates a #${id} userLog`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} userLog`;
-  }
 }
