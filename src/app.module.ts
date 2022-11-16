@@ -24,6 +24,7 @@ import { EmployeeDocumentsModule } from './employee_documents/employee_documents
 import { DisciplinaryActionsModule } from './disciplinary_actions/disciplinary_actions.module';
 import { TimeKeepingModule } from './time_keeping/time_keeping.module';
 import { UserLogsModule } from './user_logs/user_logs.module';
+import { TeamLeadersModule } from './team_leaders/team_leaders.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { UserLogsModule } from './user_logs/user_logs.module';
     DisciplinaryActionsModule,
     TimeKeepingModule,
     UserLogsModule,
+    TeamLeadersModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],
