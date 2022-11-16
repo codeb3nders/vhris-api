@@ -9,7 +9,7 @@ export class TimeKeeping {
   @Prop({ required: true, default: uuid })
   id: string;
 
-  @Prop({ required: true })
+  @Prop()
   employeeNo: string;
 
   @Prop({ required: true, default: Date.now() })

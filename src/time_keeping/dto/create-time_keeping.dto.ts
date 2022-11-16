@@ -77,7 +77,7 @@ class Details {
 
 export class CreateTimeKeepingDto {
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   employeeNo: string;
 
   @ApiProperty()
