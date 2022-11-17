@@ -57,12 +57,20 @@ export class EmployeesService {
     );
   }
 
-  async update(employeeNo: string, updateEmployeeDto: UpdateEmployeeDto) {
-    updateEmployeeDto['lastModifiedDate'] = Date.now();
-    return this.employeeRepository.findOneAndUpdate(
-      { employeeNo },
-      { $set: { ...updateEmployeeDto } },
-    );
+  async update(params: any, updateEmployeeDto: UpdateEmployeeDto) {
+    try {
+      const upperCased = {};
+      for (const key in params) {
+        upperCased[key] = params[key].toUpperCase();
+      }
+
+      updateEmployeeDto['lastModifiedDate'] = Date.now();
+      return await this.employeeRepository.findOneAndUpdate(upperCased, {
+        $set: { ...updateEmployeeDto },
+      });
+    } catch (error) {
+      return error.response || error;
+    }
   }
 
   async remove(employeeNo: string) {

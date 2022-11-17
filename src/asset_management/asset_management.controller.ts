@@ -20,6 +20,7 @@ import { AssetManagementResponseHandler } from '../_utils/response_handler/asset
 import { CreateCompanyAssetDto } from './dto/create-company_asset.dto';
 import { UpdateCompanyAssetDto } from './dto/update-company_asset.dto';
 import { EmployeesService } from 'src/employees/employees.service';
+import { skip } from 'rxjs';
 
 const toCheck = ['assetType'];
 
