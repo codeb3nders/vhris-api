@@ -52,6 +52,28 @@ export class UserCredentialsService {
 
     if (response) {
       response.password = rawPassword; // TODO: to be remove
+
+      const emailDetails = {
+        to: employee.companyEmail,
+        subject: 'Welcome, Kabalikat!',
+        text: `test`,
+        html: `
+        <p>Hi ${employee.firstName}, </p>
+        <p>Welcome to Vision Properties Development Corporation!</p>
+        <p>As one of our newest Kabalikat, we want to help you acclimate to your new role and environment. Vision Human Resources Information System (HRIS) was designed and developed to help you onboard successfully and at your own pace. We recommend that you read all of the information provided to you.</p>
+        <p>To access your Vision HRIS Account, please see below details:</p>
+        <p>Please enter your username and password to log in to the portal <a href="http://localhost:3000/">here</a>.</p>
+        <p>
+          <strong>Username</strong>: ${employee.employeeNo}
+          <br />
+          <strong>Temporary Password</strong>: ${rawPassword}
+        </p>
+        <p>If you need any help, please feel free to contact your Recruiter and/or HR Coordinator.</p>
+        `,
+      };
+
+      await this.emailService.sendMail(emailDetails);
+
       return response;
     }
     return 'fail to create';
