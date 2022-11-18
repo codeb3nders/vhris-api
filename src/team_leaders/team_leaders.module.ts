@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TeamLeader, TeamLeaderSchema } from './entities/team_leader.entity';
 import { TeamLeaderRepository } from 'src/_repositories/team_leaders/team_leader.repository';
 import { AggregateTeamLeader } from 'src/_aggregates/team_leader.aggregate';
+import { TeamLeaderResponseHandler } from 'src/_utils/response_handler/team_leader_handler.response';
 
 @Module({
   imports: [
@@ -13,6 +14,11 @@ import { AggregateTeamLeader } from 'src/_aggregates/team_leader.aggregate';
     ]),
   ],
   controllers: [TeamLeadersController],
-  providers: [TeamLeadersService, TeamLeaderRepository, AggregateTeamLeader],
+  providers: [
+    TeamLeadersService,
+    TeamLeaderRepository,
+    AggregateTeamLeader,
+    TeamLeaderResponseHandler,
+  ],
 })
 export class TeamLeadersModule {}

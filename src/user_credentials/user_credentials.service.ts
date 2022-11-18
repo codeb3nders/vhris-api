@@ -141,7 +141,11 @@ export class UserCredentialsService {
         `,
       };
 
-      await this.emailService.sendMail(emailDetails);
+      try {
+        await this.emailService.sendMail(emailDetails);
+      } catch (error) {
+        return error.response || error;
+      }
 
       return { isValid: true, expiresInSeconds: CONSTANTS.TTL };
     }

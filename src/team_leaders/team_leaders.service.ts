@@ -12,19 +12,26 @@ export class TeamLeadersService {
     return await this.teamLeaderRepository.create(createTeamLeaderDto);
   }
 
-  findAll() {
-    return `This action returns all teamLeaders`;
+  async findAll(): Promise<TeamLeader[]> {
+    return await this.teamLeaderRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} teamLeader`;
+  async findOne(id: string): Promise<TeamLeader> {
+    return await this.teamLeaderRepository.findOne({ id });
   }
 
-  update(id: number, updateTeamLeaderDto: UpdateTeamLeaderDto) {
-    return `This action updates a #${id} teamLeader`;
+  async aggregateFindByAttribute(_params?: any): Promise<TeamLeader[]> {
+    return this.teamLeaderRepository.aggregateFindByAttribute(_params);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} teamLeader`;
+  async update(id: string, updateTeamLeaderDto: UpdateTeamLeaderDto) {
+    return await this.teamLeaderRepository.findOneAndUpdate(
+      { id },
+      updateTeamLeaderDto,
+    );
+  }
+
+  async remove(id: string) {
+    return await this.teamLeaderRepository.deleteOne({ id });
   }
 }

@@ -1,21 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateTeamLeaderDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  id: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  timestamp: number;
-
   @ApiProperty()
   @IsNotEmpty()
   employeeNo: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   isDelegated: boolean;
 
   @ApiProperty()
@@ -27,5 +19,6 @@ export class CreateTeamLeaderDto {
   endDate: Date;
 
   @ApiProperty()
+  @IsOptional()
   remarks: string;
 }
