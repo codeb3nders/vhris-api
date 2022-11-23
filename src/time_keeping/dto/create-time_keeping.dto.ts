@@ -77,7 +77,7 @@ class Details {
 
 export class CreateTimeKeepingDto {
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   employeeNo: string;
 
   @ApiProperty()
@@ -95,6 +95,34 @@ export class CreateTimeKeepingDto {
   @ApiProperty()
   @IsNotEmpty()
   employeeName: string;
+
+  @ApiProperty()
+  @IsOptional()
+  totalRegHrs: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalLateMins: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalUtMins: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalAbsentHrs: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalOTHrs: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalNdiffHrs: number;
+
+  @ApiProperty()
+  @IsOptional()
+  totalNdiffOTHrs: number;
 
   @ApiProperty()
   @IsOptional()
