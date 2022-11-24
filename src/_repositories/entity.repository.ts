@@ -131,12 +131,14 @@ export abstract class EntityRepository<T extends Document> {
     const params = entityFilterQuery;
 
     const keys = Object.keys(params);
+
     let n = keys.length;
     const toMatch = [];
     while (n--) {
-      let value = isNaN(params[keys[n]])
-        ? params[keys[n]].toLowerCase()
-        : Number(params[keys[n]]);
+      let value =
+        isNaN(params[keys[n]]) || keys[n] === 'employeeNo'
+          ? params[keys[n]].toLowerCase()
+          : Number(params[keys[n]]);
 
       if (value === 'true' || value === 'false') {
         value = value === 'true';
