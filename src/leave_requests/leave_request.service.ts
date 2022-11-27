@@ -1,79 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { LeaveRequestRepository } from 'src/_repositories/leave_request/leave_request.repository';
 import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
-import {
-  LeaveRequest,
-  LeaveRequestDocument,
-} from './entities/leave_request.entity';
+import { LeaveRequest } from './entities/leave_request.entity';
 
 @Injectable()
 export class LeaveRequestService {
   constructor(
     @InjectModel(LeaveRequest.name)
-    private leaveRequestModel: Model<LeaveRequestDocument>,
+    private leaveRequestRepository: LeaveRequestRepository,
   ) {}
-  create(createLeaveRequestDto: CreateLeaveRequestDto) {
-    const createLeaveRequest = new this.leaveRequestModel(
-      createLeaveRequestDto,
-    );
-    return createLeaveRequest.save();
+  async create(createLeaveRequestDto: CreateLeaveRequestDto) {
+    return await this.leaveRequestRepository.create(createLeaveRequestDto);
   }
 
-  findAll() {
-    return this.leaveRequestModel.find().exec();
+  async findAll(): Promise<LeaveRequest[]> {
+    return await this.leaveRequestRepository.find();
   }
 
-  async findAllWithEmployeeDetails() {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'employee',
-        },
-      },
-    ];
-
-    const results = await this.leaveRequestModel.aggregate(pipeline);
-
-    return results;
+  async find(employeeNo: string): Promise<LeaveRequest[]> {
+    return await this.leaveRequestRepository.find({ employeeNo });
   }
 
-  findByIdWithEmployeeDetails(leaveRequestNo: string) {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'employee',
-        },
-      },
-      {
-        $match: {
-          leaveRequestNo: leaveRequestNo,
-        },
-      },
-    ];
+  async update(id: string, updateLeaveRequestDto: UpdateLeaveRequestDto) {
+    updateLeaveRequestDto['lastModifiedDate'] = Date.now();
+    const filter = { id };
+    const update = updateLeaveRequestDto;
 
-    return this.leaveRequestModel.aggregate(pipeline);
+    return await this.leaveRequestRepository.findOneAndUpdate(filter, update);
   }
 
-  findOne(leaveRequestNo: string) {
-    return this.leaveRequestModel.findOne({ leaveRequestNo });
-  }
-
-  update(leaveRequestNo: string, updateLeaveDto: UpdateLeaveRequestDto) {
-    return this.leaveRequestModel.updateOne(
-      { leaveRequestNo },
-      { $set: { ...updateLeaveDto } },
-    );
-  }
-
-  remove(leaveRequestNo: string) {
-    return this.leaveRequestModel.deleteOne({ leaveRequestNo });
+  remove(id: string) {
+    return this.leaveRequestRepository.deleteOne({ id });
   }
 }

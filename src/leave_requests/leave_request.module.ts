@@ -7,9 +7,12 @@ import {
   LeaveRequestSchema,
 } from './entities/leave_request.entity';
 import { LeaveRequestResponseHandler } from 'src/_utils/response_handler/leave_request_handler.response';
+import { ValidatorsService } from 'src/validators/validators.service';
+import { ValidatorsModule } from 'src/validators/validators.module';
 
 @Module({
   imports: [
+    ValidatorsModule,
     MongooseModule.forFeature([
       {
         name: LeaveRequest.name,
@@ -18,6 +21,10 @@ import { LeaveRequestResponseHandler } from 'src/_utils/response_handler/leave_r
     ]),
   ],
   controllers: [LeaveRequestController],
-  providers: [LeaveRequestService, LeaveRequestResponseHandler],
+  providers: [
+    LeaveRequestService,
+    ValidatorsService,
+    LeaveRequestResponseHandler,
+  ],
 })
 export class LeaveRequestModule {}

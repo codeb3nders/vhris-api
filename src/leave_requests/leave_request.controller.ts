@@ -12,21 +12,29 @@ import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
 import { UpdateLeaveRequestDto } from './dto/update-leave_request.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LeaveRequest } from './entities/leave_request.entity';
-import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 import { LeaveRequestResponseHandler } from 'src/_utils/response_handler/leave_request_handler.response';
+import { ValidatorsService } from 'src/validators/validators.service';
+
+const toCheck = ['leaveType'];
 
 @ApiTags('Leave Request')
 @Controller('leave')
 export class LeaveRequestController {
   constructor(
     private readonly leaveRequestService: LeaveRequestService,
+    private readonly validatorsService: ValidatorsService,
     private leaveRequestResponseHandler: LeaveRequestResponseHandler,
   ) {}
 
   @Post()
-  async create(@Body() createLeaveRequestDto: CreateLeaveRequestDto) {
-    // TODO: Validation
+  async create(
+    @Body() createLeaveRequestDto: CreateLeaveRequestDto,
+  ): Promise<LeaveRequest> {
     try {
+      await this.validatorsService.validateEmployeesPostRequest(
+        createLeaveRequestDto,
+        toCheck,
+      );
       return await this.leaveRequestService.create(createLeaveRequestDto);
     } catch (error) {
       return error.message || error;
@@ -35,45 +43,32 @@ export class LeaveRequestController {
 
   @Get()
   async findAll(): Promise<LeaveRequest[]> {
-    try {
-      const response = await this.leaveRequestService.findAll();
-      return this.leaveRequestResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
+    const response = await this.leaveRequestService.findAll();
+    if (!response || response.length < 1) {
+      return response;
     }
+    return this.leaveRequestResponseHandler.ok(response);
   }
 
-  @Get('/employee')
-  async findAllWithEmployeeDetails(): Promise<LeaveRequest[]> {
-    try {
-      const response =
-        await this.leaveRequestService.findAllWithEmployeeDetails();
-      return this.leaveRequestResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
+  @Get(':employeeNo')
+  async find(@Param('employeeNo') employeeNo: string) {
+    const response = await this.leaveRequestService.find(employeeNo);
+    if (!response || response.length < 1) {
+      return response;
     }
+    return this.leaveRequestResponseHandler.ok(response);
   }
 
-  @Get(':leaveRequestNo')
-  findOne(@Param('leaveRequestNo') leaveRequestNo: string) {
-    return this.leaveRequestService.findOne(leaveRequestNo);
-  }
-
-  @Get('/employee/:leaveRequestNo')
-  findByIdWithEmployeeDetails(@Param('leaveRequestNo') leaveRequestNo: string) {
-    return this.leaveRequestService.findByIdWithEmployeeDetails(leaveRequestNo);
-  }
-
-  @Patch(':leaveRequestNo')
-  update(
-    @Param('leaveRequestNo') leaveRequestNo: string,
-    @Body() updateLeaveDto: UpdateLeaveRequestDto,
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateLeaveRequestDto: UpdateLeaveRequestDto,
   ) {
-    return this.leaveRequestService.update(leaveRequestNo, updateLeaveDto);
+    return await this.leaveRequestService.update(id, updateLeaveRequestDto);
   }
 
-  @Delete(':leaveRequestNo')
-  remove(@Param('leaveRequestNo') leaveRequestNo: string) {
-    return this.leaveRequestService.remove(leaveRequestNo);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.leaveRequestService.remove(id);
   }
 }

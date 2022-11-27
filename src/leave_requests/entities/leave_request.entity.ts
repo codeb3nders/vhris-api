@@ -9,35 +9,47 @@ export class LeaveRequest {
   @Prop({ required: true, default: uuid })
   id: string;
 
-  @Prop({ required: [true, 'leaveRequestNo is required!'] })
-  leaveRequestNo: string;
-  @Prop()
+  @Prop({ required: true })
   employeeNo: string;
-  @Prop({ default: new Date() })
-  timestamp: string;
-  @Prop()
-  leaveApplied: string;
-  @Prop()
-  dateTimeLeaveFirst: string;
-  @Prop()
-  dateTimeLeaveLast: string;
-  @Prop()
-  leaveDays: string;
-  @Prop()
-  returnToWorkDate: string;
 
-  @Prop({ required: true, default: 'Vacation' })
-  fieldLeaveReason: string;
+  @Prop({ required: true })
+  leaveType: string;
+
   @Prop()
-  immediateSupervisor: string;
+  offsetOThrs: number;
+
+  @Prop({ required: true })
+  dateFrom: Date;
+
+  @Prop({ required: true })
+  dateTo: Date;
+
+  @Prop({ required: true })
+  noOfDays: number;
+
+  @Prop({ required: true })
+  dateOfReturnToWork: Date;
+
+  @Prop({ required: true })
+  reasonOfLeave: string;
+
+  @Prop({ required: true })
+  status: string;
+
+  @Prop({ required: true })
+  approver: string;
+
   @Prop()
-  applicationLeaveStatus: string;
+  leaveReasonOfDisapproval: string;
+
   @Prop()
-  disapprovalReason: string;
+  dateTimeApproved: Date;
+
   @Prop()
-  approvedDate: string;
+  approvedBy: string;
+
   @Prop()
-  disapprovedDate: string;
+  lastModifiedDate?: Date;
 }
 
 export const LeaveRequestSchema = SchemaFactory.createForClass(LeaveRequest);
