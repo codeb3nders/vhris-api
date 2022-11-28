@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { LeaveRequestService } from './leave_request.service';
 import { CreateLeaveRequestDto } from './dto/create-leave_request.dto';
@@ -42,8 +43,8 @@ export class LeaveRequestController {
   }
 
   @Get()
-  async findAll(): Promise<LeaveRequest[]> {
-    const response = await this.leaveRequestService.findAll();
+  async findAll(@Query() params): Promise<LeaveRequest[]> {
+    const response = await this.leaveRequestService.aggregateFind(params);
     if (!response || response.length < 1) {
       return response;
     }
@@ -52,7 +53,7 @@ export class LeaveRequestController {
 
   @Get(':employeeNo')
   async find(@Param('employeeNo') employeeNo: string) {
-    const response = await this.leaveRequestService.find(employeeNo);
+    const response = await this.leaveRequestService.aggregateFind(employeeNo);
     if (!response || response.length < 1) {
       return response;
     }

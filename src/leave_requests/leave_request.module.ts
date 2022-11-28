@@ -9,6 +9,8 @@ import {
 import { LeaveRequestResponseHandler } from 'src/_utils/response_handler/leave_request_handler.response';
 import { ValidatorsService } from 'src/validators/validators.service';
 import { ValidatorsModule } from 'src/validators/validators.module';
+import { AggregateLeaveRequest } from 'src/_aggregates/leave_request.aggregate';
+import { LeaveRequestRepository } from 'src/_repositories/leave_request/leave_request.repository';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { ValidatorsModule } from 'src/validators/validators.module';
   providers: [
     LeaveRequestService,
     ValidatorsService,
+    AggregateLeaveRequest,
+    LeaveRequestRepository,
     LeaveRequestResponseHandler,
   ],
 })

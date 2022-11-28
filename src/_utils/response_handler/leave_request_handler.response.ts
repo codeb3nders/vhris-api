@@ -29,6 +29,11 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
       dateTimeApproved: item.dateTimeApproved,
       approvedBy: item.approvedBy,
       lastModifiedDate: item.lastModifiedDate,
+      employeeDetails: item.employeeDetails,
+      approverDetails:
+        item.approverDetails.length >= 1
+          ? item.approverDetails
+          : item.employeeNo,
     };
 
     return toReturn;

@@ -5,6 +5,7 @@ import {
   LeaveRequestDocument,
   LeaveRequest,
 } from 'src/leave_requests/entities/leave_request.entity';
+import { AggregateLeaveRequest } from 'src/_aggregates/leave_request.aggregate';
 
 import { EntityRepository } from '../entity.repository';
 
@@ -13,7 +14,8 @@ export class LeaveRequestRepository extends EntityRepository<LeaveRequestDocumen
   constructor(
     @InjectModel(LeaveRequest.name)
     leaveRequestModel: Model<LeaveRequestDocument>,
+    aggregateQry: AggregateLeaveRequest,
   ) {
-    super(leaveRequestModel);
+    super(leaveRequestModel, aggregateQry);
   }
 }
