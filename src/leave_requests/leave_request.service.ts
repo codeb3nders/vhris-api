@@ -29,13 +29,10 @@ export class LeaveRequestService {
     return response;
   }
 
-  async update(
-    id: string,
-    updateLearningDevelopmentDto: UpdateLeaveRequestDto,
-  ) {
-    updateLearningDevelopmentDto['lastModifiedDate'] = Date.now();
+  async update(id: string, updateLeaveRequestDto: UpdateLeaveRequestDto) {
+    updateLeaveRequestDto['lastModifiedDate'] = Date.now();
     const filter = { id };
-    const update = updateLearningDevelopmentDto;
+    const update = updateLeaveRequestDto;
 
     return await this.leaveRequestRepository.findOneAndUpdate(filter, update);
   }

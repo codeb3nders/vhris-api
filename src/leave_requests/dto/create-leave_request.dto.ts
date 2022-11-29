@@ -14,23 +14,23 @@ export class CreateLeaveRequestDto {
 
   @ApiProperty()
   @IsOptional()
-  offsetOThrs: string;
+  offsetOThrs: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  dateFrom: string;
+  dateFrom: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  dateTo: string;
+  dateTo: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  noOfDays: string;
+  noOfDays: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  dateOfReturnToWork: string;
+  dateOfReturnToWork: Date;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -50,7 +50,7 @@ export class CreateLeaveRequestDto {
 
   @ApiProperty()
   @IsOptional()
-  dateTimeApproved: string;
+  dateTimeApproved: Date;
 
   @ApiProperty()
   @IsOptional()
