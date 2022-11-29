@@ -27,6 +27,27 @@ export class TimeKeeping {
   @Prop({ required: true })
   employeeName: string;
 
+  @Prop()
+  totalRegHrs: number;
+
+  @Prop()
+  totalLateMins: number;
+
+  @Prop()
+  totalUtMins: number;
+
+  @Prop()
+  totalAbsentHrs: number;
+
+  @Prop()
+  totalOTHrs: number;
+
+  @Prop()
+  totalNdiffHrs: number;
+
+  @Prop()
+  totalNdiffOTHrs: number;
+
   @Prop({ type: JSON })
   details: {
     date: Date;

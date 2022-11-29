@@ -110,10 +110,9 @@ export class EmployeesController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  @Patch(':employeeNo')
+  @Patch('update')
   async update(
     // @AuthUser() user: any,
-    @Param('employeeNo') employeeNo: string,
     @Query() entityFilterQuery: any,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
@@ -126,12 +125,12 @@ export class EmployeesController {
     const effectiveDate = updateEmployeeDto.effectiveDate;
     const remarks = updateEmployeeDto?.remarks || null;
 
-    const employee = await this.employeesService.findOne(employeeNo);
+    const employee = await this.employeesService.findAll(entityFilterQuery);
 
-    if (!employee)
+    if (!employee || employee.length <= 0)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
     const response = await this.employeesService.update(
-      { employeeNo, ...entityFilterQuery },
+      { ...entityFilterQuery },
       updateEmployeeDto,
     );
 
@@ -143,9 +142,9 @@ export class EmployeesController {
           previousValue[item] = employee[item];
         }
       });
-      if (type) {
+      if (type && entityFilterQuery.employeeNo) {
         const history = {
-          employeeNo: employeeNo,
+          employeeNo: entityFilterQuery.employeeNo,
           type: type,
           effectiveDate,
           remarks,
