@@ -20,6 +20,7 @@ export class TeamLeaderResponseHandler extends BaseResponseHandler {
       startDate: item.startDate,
       endDate: item.endDate,
       remarks: item.remarks,
+      employeeDetails: item.employeeDetails,
     };
 
     return toReturn;

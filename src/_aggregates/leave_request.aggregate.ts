@@ -32,14 +32,6 @@ export class AggregateLeaveRequest {
           'employeeDetails',
         ),
       },
-      // {
-      //   $lookup: aggregateLookUp(
-      //     'employees',
-      //     'employeeNo',
-      //     'employeeNo',
-      //     'approverDetails',
-      //   ),
-      // },
       {
         $set: {
           lastModifiedDate: aggregateFormatDate('lastModifiedDate'),

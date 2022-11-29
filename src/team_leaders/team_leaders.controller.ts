@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TeamLeadersService } from './team_leaders.service';
 import { CreateTeamLeaderDto } from './dto/create-team_leader.dto';
@@ -28,8 +29,8 @@ export class TeamLeadersController {
   }
 
   @Get()
-  async findAll(): Promise<TeamLeader[]> {
-    const response = await this.teamLeadersService.findAll();
+  async findAll(@Query() params): Promise<TeamLeader[]> {
+    const response = await this.teamLeadersService.findAll(params);
     if (!response || response.length < 1) {
       return response;
     }
