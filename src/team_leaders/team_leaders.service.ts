@@ -12,8 +12,8 @@ export class TeamLeadersService {
     return await this.teamLeaderRepository.create(createTeamLeaderDto);
   }
 
-  async findAll(): Promise<TeamLeader[]> {
-    return await this.teamLeaderRepository.find();
+  async findAll(_params?: any): Promise<TeamLeader[]> {
+    return await this.teamLeaderRepository.aggregateFind(_params);
   }
 
   async findOne(id: string): Promise<TeamLeader> {

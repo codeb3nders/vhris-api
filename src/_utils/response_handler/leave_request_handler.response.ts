@@ -1,8 +1,9 @@
 import { CreateLeaveRequestDto } from 'src/leave_requests/dto/create-leave_request.dto';
+import { LeaveRequest } from 'src/leave_requests/entities/leave_request.entity';
 import { BaseResponseHandler } from './base_handler.response';
 
 export class LeaveRequestResponseHandler extends BaseResponseHandler {
-  ok(data: CreateLeaveRequestDto | CreateLeaveRequestDto[]) {
+  ok(data: LeaveRequest | LeaveRequest[]) {
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
         return this.returnItem(item, this.items(item));
@@ -12,36 +13,28 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
     }
   }
   private items = (item: any) => {
-    const employee = item.employee;
     const toReturn: any = {
-      leaveRequestNo: item.leaveRequestNo,
+      id: item.id,
       employeeNo: item.employeeNo,
-      timestamp: item.timestamp,
-      leaveApplied: item.leaveApplied,
-      otHoursOffset: item.otHoursOffset,
-      dateToOffsetFrom: item.dateToOffsetFrom,
-      dateToOffsetTo: item.dateToOffsetTo,
-      dateTimeLeaveFirst: item.dateTimeLeaveFirst,
-      dateTimeLeaveLast: item.dateTimeLeaveLast,
-      leaveDays: item.leaveDays,
-      returnToWorkDate: item.returnToWorkDate,
-      reason: item.reason,
-      itineraryFrom: item.itineraryFrom,
-      itineraryTo: item.itineraryTo,
-      purpose: item.purpose,
-      dateTimeDeparture: item.dateTimeDeparture,
-      dateTimeArrival: item.dateTimeArrival,
-      information: item.information,
-      immediateSupervisor: item.immediateSupervisor,
+      leaveType: item.leaveType,
+      offsetOThrs: item.offsetOThrs,
+      dateFrom: item.dateFrom,
+      dateTo: item.dateTo,
+      noOfDays: item.noOfDays,
+      dateOfReturnToWork: item.dateOfReturnToWork,
+      reasonOfLeave: item.reasonOfLeave,
       status: item.status,
-      disapprovalReason: item.disapprovalReason,
-      approvedDate: item.approvedDate,
-      disapprovedDate: item.disapprovedDate,
+      approver: item.approver,
+      leaveReasonOfDisapproval: item.leaveReasonOfDisapproval,
+      dateTimeApproved: item.dateTimeApproved,
+      approvedBy: item.approvedBy,
+      lastModifiedDate: item.lastModifiedDate,
+      employeeDetails: item.employeeDetails,
+      approverDetails:
+        item.approverDetails.length >= 1
+          ? item.approverDetails
+          : item.employeeNo,
     };
-
-    if (employee) {
-      toReturn.employee = employee;
-    }
 
     return toReturn;
   };

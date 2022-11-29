@@ -109,14 +109,14 @@ export class EmployeesController {
     return this.employeesResponseHandler.ok(response);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch('update')
   async update(
-    // @AuthUser() user: any,
+    @AuthUser() user: any,
     @Query() entityFilterQuery: any,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    // isValidRequest(updateEmployeeDto, user);
+    isValidRequest(updateEmployeeDto, user);
     await this.validatorsService.validateEmployeesPostRequest(
       updateEmployeeDto,
       toCheck,

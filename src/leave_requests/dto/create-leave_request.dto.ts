@@ -1,45 +1,58 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateLeaveRequestDto {
   @ApiProperty()
-  leaveRequestNo: string;
-
-  @ApiProperty()
+  @IsNotEmpty()
   employeeNo: string;
 
   @ApiProperty()
-  timestamp: string;
+  @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase().trim())
+  leaveType: string;
 
   @ApiProperty()
-  leaveApplied: string;
+  @IsOptional()
+  offsetOThrs: number;
 
   @ApiProperty()
-  dateTimeLeaveFirst: string;
+  @IsNotEmpty()
+  dateFrom: Date;
 
   @ApiProperty()
-  dateTimeLeaveLast: string;
+  @IsNotEmpty()
+  dateTo: Date;
 
   @ApiProperty()
-  leaveDays: string;
+  @IsNotEmpty()
+  noOfDays: number;
 
   @ApiProperty()
-  returnToWorkDate: string;
-
-  @ApiProperty({ required: true })
-  fieldLeaveReason: string;
+  @IsNotEmpty()
+  dateOfReturnToWork: Date;
 
   @ApiProperty()
-  immediateSupervisor: string;
+  @IsNotEmpty()
+  reasonOfLeave: string;
 
   @ApiProperty()
-  applicationLeaveStatus: string;
+  @IsNotEmpty()
+  status: string;
 
   @ApiProperty()
-  disapprovalReason: string;
+  @IsNotEmpty()
+  approver: string;
 
   @ApiProperty()
-  approvedDate: string;
+  @IsOptional()
+  leaveReasonOfDisapproval: string;
 
   @ApiProperty()
-  disapprovedDate: string;
+  @IsOptional()
+  dateTimeApproved: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  approvedBy: string;
 }

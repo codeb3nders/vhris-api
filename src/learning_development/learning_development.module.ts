@@ -8,6 +8,7 @@ import {
 } from './entities/learning_development.entity';
 import { LearningDevelopmentResponseHandler } from 'src/_utils/response_handler/learning_development_handler.response';
 import { LearningDevelopmentRepository } from 'src/_repositories/learning_developments/learning_developments.repository';
+import { AggregateLeaveRequest } from 'src/_aggregates/leave_request.aggregate';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LearningDevelopmentRepository } from 'src/_repositories/learning_develo
   controllers: [LearningDevelopmentController],
   providers: [
     LearningDevelopmentService,
+    AggregateLeaveRequest,
     LearningDevelopmentResponseHandler,
     LearningDevelopmentRepository,
   ],

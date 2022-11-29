@@ -1,16 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { UserLogsService } from './user_logs.service';
 import { CreateUserLogDto } from './dto/create-user_log.dto';
-import { UpdateUserLogDto } from './dto/update-user_log.dto';
 import { UserLogResponseHandler } from 'src/_utils/response_handler/user_log_handler.response';
 
 @Controller('user-logs')
