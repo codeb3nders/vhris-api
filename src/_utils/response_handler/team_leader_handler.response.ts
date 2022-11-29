@@ -20,7 +20,8 @@ export class TeamLeaderResponseHandler extends BaseResponseHandler {
       startDate: item.startDate,
       endDate: item.endDate,
       remarks: item.remarks,
-      employeeDetails: item.employeeDetails,
+      employeeDetails:
+        item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
     };
 
     return toReturn;
