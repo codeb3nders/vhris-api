@@ -1,52 +1,78 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateOvertimeRequestDto {
   @ApiProperty()
-  @IsOptional()
-  timestamp: number;
-
-  @ApiProperty()
-  @IsOptional()
-  overtimeRequestNo: string;
-
-  @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   employeeNo: string;
 
   @ApiProperty()
-  @IsOptional()
-  dateTimeFrom: Date;
+  @IsNotEmpty()
+  date: Date;
 
   @ApiProperty()
-  @IsOptional()
-  dateTimeTo: Date;
+  @IsNotEmpty()
+  timeFrom: Date;
 
   @ApiProperty()
-  @IsOptional()
-  isEarlyOt: boolean;
+  @IsNotEmpty()
+  timeTo: Date;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
+  earlyOT: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   reason: string;
 
   @ApiProperty()
-  @IsOptional()
-  isLessBreak: boolean;
+  @IsNotEmpty()
+  lessBreak: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  plus1day: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  approver: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase().trim())
+  status: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  totalOThrs: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  OTreasonOfDisapproval: Date;
 
   @ApiProperty()
   @IsOptional()
-  isPlusDay: boolean;
+  dateTimeApproved: Date;
 
   @ApiProperty()
   @IsOptional()
-  otStatus: string;
+  approvedBy: string;
 
   @ApiProperty()
   @IsOptional()
-  isApprove: boolean;
+  CLid: string;
 
   @ApiProperty()
   @IsOptional()
-  disapprovalReason: string;
+  CLapproved: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  employeeDetails: string;
+
+  @ApiProperty()
+  @IsOptional()
+  approverDetails: string;
 }

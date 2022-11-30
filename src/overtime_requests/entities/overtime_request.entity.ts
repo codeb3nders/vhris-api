@@ -9,31 +9,62 @@ export class OvertimeRequest {
   @Prop({ required: true, default: uuid })
   id: string;
 
-  @Prop()
+  @Prop({ required: true, default: Date.now() })
   timestamp: number;
-  @Prop({ required: [true, 'overtimeRequestNo is required!'] })
-  overtimeRequestNo: string;
-  @Prop()
-  employeeNo: string;
-  @Prop()
-  dateTimeFrom: Date;
-  @Prop()
-  dateTimeTo: Date;
-  @Prop()
-  isEarlyOt: boolean;
-  @Prop()
-  reason: string;
-  @Prop()
-  isLessBreak: boolean;
-  @Prop()
-  isPlusDay: boolean;
-  @Prop()
-  otStatus: string;
-  @Prop()
-  isApprove: boolean;
 
   @Prop()
-  disapprovalReason: string;
+  employeeNo: string;
+
+  @Prop()
+  date: Date;
+
+  @Prop()
+  timeFrom: Date;
+
+  @Prop()
+  timeTo: Date;
+
+  @Prop()
+  earlyOT: string;
+
+  @Prop()
+  reason: string;
+
+  @Prop()
+  lessBreak: string;
+
+  @Prop()
+  plus1day: string;
+
+  @Prop()
+  approver: string;
+
+  @Prop({ required: true, default: 'PENDING' })
+  status: string;
+
+  @Prop()
+  totalOThrs: number;
+
+  @Prop()
+  OTreasonOfDisapproval: Date;
+
+  @Prop()
+  dateTimeApproved: Date;
+
+  @Prop()
+  approvedBy: string;
+
+  @Prop()
+  CLid: string;
+
+  @Prop({ default: null })
+  CLapproved: boolean | null;
+
+  @Prop()
+  employeeDetails: string;
+
+  @Prop()
+  approverDetails: string;
 }
 
 export const OvertimeRequestSchema =

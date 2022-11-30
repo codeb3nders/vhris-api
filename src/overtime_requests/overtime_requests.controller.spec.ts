@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OvertimeRequestsController } from './overtime_requests.controller';
-import { OvertimeRequestsService } from './overtime_requests.service';
+import { OvertimeRequestController } from './overtime_requests.controller';
+import { OvertimeRequestService } from './overtime_requests.service';
 
-describe('OvertimeRequestsController', () => {
-  let controller: OvertimeRequestsController;
+describe('OvertimeRequestController', () => {
+  let controller: OvertimeRequestController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [OvertimeRequestsController],
-      providers: [OvertimeRequestsService],
+      controllers: [OvertimeRequestController],
+      providers: [OvertimeRequestService],
     }).compile();
 
-    controller = module.get<OvertimeRequestsController>(
-      OvertimeRequestsController,
+    controller = module.get<OvertimeRequestController>(
+      OvertimeRequestController,
     );
   });
 
