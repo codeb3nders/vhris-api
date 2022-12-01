@@ -19,10 +19,10 @@ export class OvertimeRequest {
   date: Date;
 
   @Prop()
-  timeFrom: Date;
+  timeFrom: string;
 
   @Prop()
-  timeTo: Date;
+  timeTo: string;
 
   @Prop()
   earlyOT: string;
@@ -46,7 +46,7 @@ export class OvertimeRequest {
   totalOThrs: number;
 
   @Prop()
-  OTreasonOfDisapproval: Date;
+  OTreasonOfDisapproval: string;
 
   @Prop()
   dateTimeApproved: Date;

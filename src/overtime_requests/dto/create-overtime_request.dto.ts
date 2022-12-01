@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 
 export class CreateOvertimeRequestDto {
   @ApiProperty()
@@ -13,11 +14,27 @@ export class CreateOvertimeRequestDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  timeFrom: Date;
+  @Transform((param) => {
+    const re = new RegExp('^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$');
+    if (re.test(param.value)) {
+      return param.value;
+    } else {
+      ErrorResponse.conflict('Invalid time from');
+    }
+  })
+  timeFrom: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  timeTo: Date;
+  @Transform((param) => {
+    const re = new RegExp('^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$');
+    if (re.test(param.value)) {
+      return param.value;
+    } else {
+      ErrorResponse.conflict('Invalid time to');
+    }
+  })
+  timeTo: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -50,7 +67,7 @@ export class CreateOvertimeRequestDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  OTreasonOfDisapproval: Date;
+  OTreasonOfDisapproval: string;
 
   @ApiProperty()
   @IsOptional()
