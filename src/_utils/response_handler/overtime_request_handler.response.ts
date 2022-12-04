@@ -36,7 +36,7 @@ export class OvertimeRequestResponseHandler extends BaseResponseHandler {
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
       approverDetails:
         item.approverDetails.length >= 1
-          ? item.approverDetails
+          ? item.approverDetails[0]
           : item.employeeNo,
     };
 

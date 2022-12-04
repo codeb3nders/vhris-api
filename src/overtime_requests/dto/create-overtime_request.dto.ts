@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
+import { timeFormatChecker } from 'src/_utils/data/time_format_checker.util';
 import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 
 export class CreateOvertimeRequestDto {
@@ -15,11 +16,10 @@ export class CreateOvertimeRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   @Transform((param) => {
-    const re = new RegExp('^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$');
-    if (re.test(param.value)) {
+    if (timeFormatChecker(param.value)) {
       return param.value;
     } else {
-      ErrorResponse.conflict('Invalid time from');
+      ErrorResponse.conflict('Invalid Time From!');
     }
   })
   timeFrom: string;
@@ -27,11 +27,10 @@ export class CreateOvertimeRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   @Transform((param) => {
-    const re = new RegExp('^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$');
-    if (re.test(param.value)) {
+    if (timeFormatChecker(param.value)) {
       return param.value;
     } else {
-      ErrorResponse.conflict('Invalid time to');
+      ErrorResponse.conflict('Invalid Time To!');
     }
   })
   timeTo: string;
@@ -84,12 +83,4 @@ export class CreateOvertimeRequestDto {
   @ApiProperty()
   @IsOptional()
   CLapproved: boolean;
-
-  @ApiProperty()
-  @IsOptional()
-  employeeDetails: string;
-
-  @ApiProperty()
-  @IsOptional()
-  approverDetails: string;
 }

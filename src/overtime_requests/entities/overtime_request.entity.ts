@@ -59,12 +59,6 @@ export class OvertimeRequest {
 
   @Prop({ default: null })
   CLapproved: boolean | null;
-
-  @Prop()
-  employeeDetails: string;
-
-  @Prop()
-  approverDetails: string;
 }
 
 export const OvertimeRequestSchema =
