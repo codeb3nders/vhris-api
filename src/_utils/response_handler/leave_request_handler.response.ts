@@ -1,4 +1,3 @@
-import { CreateLeaveRequestDto } from 'src/leave_requests/dto/create-leave_request.dto';
 import { LeaveRequest } from 'src/leave_requests/entities/leave_request.entity';
 import { BaseResponseHandler } from './base_handler.response';
 
@@ -29,10 +28,11 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
       dateTimeApproved: item.dateTimeApproved,
       approvedBy: item.approvedBy,
       lastModifiedDate: item.lastModifiedDate,
-      employeeDetails: item.employeeDetails,
+      employeeDetails:
+        item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
       approverDetails:
         item.approverDetails.length >= 1
-          ? item.approverDetails
+          ? item.approverDetails[0]
           : item.employeeNo,
     };
 

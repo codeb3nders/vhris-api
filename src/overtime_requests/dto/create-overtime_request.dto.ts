@@ -1,52 +1,86 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { timeFormatChecker } from 'src/_utils/data/time_format_checker.util';
+import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 
 export class CreateOvertimeRequestDto {
   @ApiProperty()
-  @IsOptional()
-  timestamp: number;
-
-  @ApiProperty()
-  @IsOptional()
-  overtimeRequestNo: string;
-
-  @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   employeeNo: string;
 
   @ApiProperty()
-  @IsOptional()
-  dateTimeFrom: Date;
+  @IsNotEmpty()
+  date: Date;
 
   @ApiProperty()
-  @IsOptional()
-  dateTimeTo: Date;
+  @IsNotEmpty()
+  @Transform((param) => {
+    if (timeFormatChecker(param.value)) {
+      return param.value;
+    } else {
+      ErrorResponse.conflict('Invalid Time From!');
+    }
+  })
+  timeFrom: string;
 
   @ApiProperty()
-  @IsOptional()
-  isEarlyOt: boolean;
+  @IsNotEmpty()
+  @Transform((param) => {
+    if (timeFormatChecker(param.value)) {
+      return param.value;
+    } else {
+      ErrorResponse.conflict('Invalid Time To!');
+    }
+  })
+  timeTo: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
+  earlyOT: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   reason: string;
 
   @ApiProperty()
-  @IsOptional()
-  isLessBreak: boolean;
+  @IsNotEmpty()
+  lessBreak: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  plus1day: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  approver: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase().trim())
+  status: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  totalOThrs: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  OTreasonOfDisapproval: string;
 
   @ApiProperty()
   @IsOptional()
-  isPlusDay: boolean;
+  dateTimeApproved: Date;
 
   @ApiProperty()
   @IsOptional()
-  otStatus: string;
+  approvedBy: string;
 
   @ApiProperty()
   @IsOptional()
-  isApprove: boolean;
+  CLid: string;
 
   @ApiProperty()
   @IsOptional()
-  disapprovalReason: string;
+  CLapproved: boolean;
 }

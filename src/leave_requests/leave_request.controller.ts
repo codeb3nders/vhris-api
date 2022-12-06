@@ -51,9 +51,22 @@ export class LeaveRequestController {
     return this.leaveRequestResponseHandler.ok(response);
   }
 
-  @Get(':employeeNo')
+  @Get('employee/:employeeNo')
   async find(@Param('employeeNo') employeeNo: string) {
-    const response = await this.leaveRequestService.aggregateFind(employeeNo);
+    const response = await this.leaveRequestService.aggregateFind({
+      employeeNo,
+    });
+    if (!response || response.length < 1) {
+      return response;
+    }
+    return this.leaveRequestResponseHandler.ok(response);
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const response = await this.leaveRequestService.aggregateFind({
+      id,
+    });
     if (!response || response.length < 1) {
       return response;
     }
@@ -65,6 +78,10 @@ export class LeaveRequestController {
     @Param('id') id: string,
     @Body() updateLeaveRequestDto: UpdateLeaveRequestDto,
   ) {
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateLeaveRequestDto,
+      toCheck,
+    );
     return await this.leaveRequestService.update(id, updateLeaveRequestDto);
   }
 

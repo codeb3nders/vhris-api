@@ -6,80 +6,90 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
-import { OvertimeRequestsService } from './overtime_requests.service';
+import { ApiTags } from '@nestjs/swagger';
+import { ValidatorsService } from 'src/validators/validators.service';
+import { OvertimeRequestResponseHandler } from 'src/_utils/response_handler/overtime_request_handler.response';
 import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
 import { OvertimeRequest } from './entities/overtime_request.entity';
-import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
-import { ApiTags } from '@nestjs/swagger';
-import { OvertimeRequestResponseHandler } from 'src/_utils/response_handler/overtime_request_handler.response';
+import { OvertimeRequestService } from './overtime_requests.service';
 
-@ApiTags('Overtime Requests')
+const toCheck = ['OTreasonOfDisapproval'];
+
+@ApiTags('Overtime Request')
 @Controller('overtime')
-export class OvertimeRequestsController {
+export class OvertimeRequestController {
   constructor(
-    private readonly overtimeRequestsService: OvertimeRequestsService,
-    private readonly overtimeRequestResponseHandler: OvertimeRequestResponseHandler,
+    private readonly overtimeRequestService: OvertimeRequestService,
+    private readonly validatorsService: ValidatorsService,
+    private overtimeRequestResponseHandler: OvertimeRequestResponseHandler,
   ) {}
 
   @Post()
-  async create(@Body() overtimeLeaveRequestDto: CreateOvertimeRequestDto) {
+  async create(
+    @Body() createOvertimeRequestDto: CreateOvertimeRequestDto,
+  ): Promise<OvertimeRequest> {
     try {
-      return await this.overtimeRequestsService.create(overtimeLeaveRequestDto);
+      await this.validatorsService.validateEmployeesPostRequest(
+        createOvertimeRequestDto,
+        toCheck,
+      );
+      return await this.overtimeRequestService.create(createOvertimeRequestDto);
     } catch (error) {
       return error.message || error;
     }
   }
 
   @Get()
-  async findAll(): Promise<OvertimeRequest[]> {
-    try {
-      const response = await this.overtimeRequestsService.findAll();
-      return this.overtimeRequestResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
+  async findAll(@Query() params): Promise<OvertimeRequest[]> {
+    const response = await this.overtimeRequestService.aggregateFind(params);
+    if (!response || response.length < 1) {
+      return response;
     }
+    return this.overtimeRequestResponseHandler.ok(response);
   }
 
-  @Get('/employee')
-  async findAllWithEmployeeDetails(): Promise<OvertimeRequest[]> {
-    try {
-      const response =
-        await this.overtimeRequestsService.findAllWithEmployeeDetails();
-      return this.overtimeRequestResponseHandler.ok(response);
-    } catch (error) {
-      ErrorResponse.badRequest(error.message || error);
+  @Get('employee/:employeeNo')
+  async find(@Param('employeeNo') employeeNo: string) {
+    const response = await this.overtimeRequestService.aggregateFind({
+      employeeNo,
+    });
+    if (!response || response.length < 1) {
+      return response;
     }
+    return this.overtimeRequestResponseHandler.ok(response);
   }
 
-  @Get(':overtimeRequestNo')
-  findOne(@Param('overtimeRequestNo') overtimeRequestNo: string) {
-    return this.overtimeRequestsService.findOne(overtimeRequestNo);
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const response = await this.overtimeRequestService.aggregateFind({
+      id,
+    });
+    if (!response || response.length < 1) {
+      return response;
+    }
+    return this.overtimeRequestResponseHandler.ok(response);
   }
 
-  @Get('/employee/:overtimeRequestNo')
-  findByIdWithEmployeeDetails(
-    @Param('overtimeRequestNo') overtimeRequestNo: string,
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateOvertimeRequestDto: UpdateOvertimeRequestDto,
   ) {
-    return this.overtimeRequestsService.findByIdWithEmployeeDetails(
-      overtimeRequestNo,
+    await this.validatorsService.validateEmployeesPostRequest(
+      updateOvertimeRequestDto,
+      toCheck,
+    );
+    return await this.overtimeRequestService.update(
+      id,
+      updateOvertimeRequestDto,
     );
   }
 
-  @Patch(':overtimeRequestNo')
-  update(
-    @Param('overtimeRequestNo') overtimeRequestNo: string,
-    @Body() updateLeaveDto: UpdateOvertimeRequestDto,
-  ) {
-    return this.overtimeRequestsService.update(
-      overtimeRequestNo,
-      updateLeaveDto,
-    );
-  }
-
-  @Delete(':overtimeRequestNo')
-  remove(@Param('overtimeRequestNo') overtimeRequestNo: string) {
-    return this.overtimeRequestsService.remove(overtimeRequestNo);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.overtimeRequestService.remove(id);
   }
 }

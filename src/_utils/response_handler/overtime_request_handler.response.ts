@@ -14,17 +14,30 @@ export class OvertimeRequestResponseHandler extends BaseResponseHandler {
   private items = (item: any) => {
     const employee = item.employee;
     const toReturn: any = {
-      overtimeRequestNo: item.overtimeRequestNo,
-      dateTimeFrom: item.dateTimeFrom,
-      dateTimeTo: item.dateTimeTo,
-      isEarlyOt: item.isEarlyOt,
-      reason: item.reason,
-      isLessBreak: item.isLessBreak,
-      isPlusDay: item.isPlusDay,
-      otStatus: item.otStatus,
-      isApprove: item.isApprove,
+      id: item.id,
+      timestamp: item.timestamp,
+      employeeNo: item.employeeNo,
       date: item.date,
-      disapprovalReason: item.disapprovalReason,
+      timeFrom: item.timeFrom,
+      timeTo: item.timeTo,
+      earlyOT: item.earlyOT,
+      reason: item.reason,
+      lessBreak: item.lessBreak,
+      plus1day: item.plus1day,
+      approver: item.approver,
+      status: item.status,
+      totalOThrs: item.totalOThrs,
+      OTreasonOfDisapproval: item.OTreasonOfDisapproval,
+      dateTimeApproved: item.dateTimeApproved,
+      approvedBy: item.approvedBy,
+      CLid: item.CLid,
+      CLapproved: item.CLapproved,
+      employeeDetails:
+        item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
+      approverDetails:
+        item.approverDetails.length >= 1
+          ? item.approverDetails[0]
+          : item.employeeNo,
     };
 
     if (employee) {

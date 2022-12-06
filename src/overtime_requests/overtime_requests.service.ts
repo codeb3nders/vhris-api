@@ -1,80 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { OvertimeRequestRepository } from 'src/_repositories/overtime_request/overtime_request.repository';
 import { CreateOvertimeRequestDto } from './dto/create-overtime_request.dto';
 import { UpdateOvertimeRequestDto } from './dto/update-overtime_request.dto';
-import {
-  OvertimeRequestDocument,
-  OvertimeRequest,
-} from './entities/overtime_request.entity';
+import { OvertimeRequest } from './entities/overtime_request.entity';
 
 @Injectable()
-export class OvertimeRequestsService {
-  constructor(
-    @InjectModel(OvertimeRequest.name)
-    private overtimeRequestModel: Model<OvertimeRequestDocument>,
-  ) {}
+export class OvertimeRequestService {
+  constructor(private overtimeRequestRepository: OvertimeRequestRepository) {}
 
-  create(createOvertimeRequestDto: CreateOvertimeRequestDto) {
-    const createOvertimeRequest = new this.overtimeRequestModel(
+  async create(
+    createOvertimeRequestDto: CreateOvertimeRequestDto,
+  ): Promise<OvertimeRequest> {
+    return await this.overtimeRequestRepository.create(
       createOvertimeRequestDto,
     );
-    return createOvertimeRequest.save();
   }
 
-  findAll() {
-    return this.overtimeRequestModel.find().exec();
+  async aggregateFind(_params?: any): Promise<OvertimeRequest[]> {
+    return this.overtimeRequestRepository.aggregateFind(_params);
   }
 
-  async findAllWithEmployeeDetails() {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'employee',
-        },
-      },
-    ];
-
-    const results = await this.overtimeRequestModel.aggregate(pipeline);
-
-    return results;
+  async aggregateFindByAttribute(_params?: any): Promise<OvertimeRequest[]> {
+    return this.overtimeRequestRepository.aggregateFindByAttribute(_params);
   }
 
-  findByIdWithEmployeeDetails(overtimeRequestNo: string) {
-    const pipeline = [
-      {
-        $lookup: {
-          from: 'employees',
-          localField: 'employeeNo',
-          foreignField: 'employeeNo',
-          as: 'employee',
-        },
-      },
-      {
-        $match: {
-          overtimeRequestNo: overtimeRequestNo,
-        },
-      },
-    ];
-
-    return this.overtimeRequestModel.aggregate(pipeline);
+  async findOne(id: string): Promise<any> {
+    const response = await this.overtimeRequestRepository.aggregateFindOne({
+      id,
+    });
+    return response;
   }
 
-  findOne(overtimeRequestNo: string) {
-    return this.overtimeRequestModel.findOne({ overtimeRequestNo });
-  }
+  async update(id: string, updateOvertimeRequestDto: UpdateOvertimeRequestDto) {
+    updateOvertimeRequestDto['lastModifiedDate'] = Date.now();
+    const filter = { id };
+    const update = updateOvertimeRequestDto;
 
-  update(overtimeRequestNo: string, updateLeaveDto: UpdateOvertimeRequestDto) {
-    return this.overtimeRequestModel.updateOne(
-      { overtimeRequestNo },
-      { $set: { ...updateLeaveDto } },
+    return await this.overtimeRequestRepository.findOneAndUpdate(
+      filter,
+      update,
     );
   }
 
-  remove(overtimeRequestNo: string) {
-    return this.overtimeRequestModel.deleteOne({ overtimeRequestNo });
+  remove(id: string) {
+    return this.overtimeRequestRepository.deleteOne({ id });
   }
 }
