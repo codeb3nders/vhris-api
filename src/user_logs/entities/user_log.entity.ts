@@ -24,11 +24,8 @@ export class UserLog {
   @Prop()
   event: string;
 
-  @Prop()
-  details: string;
-
-  @Prop()
-  ip_address: string;
+  @Prop({ type: JSON })
+  details: {};
 
   @Prop()
   user_agent: string;
