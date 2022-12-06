@@ -20,11 +20,7 @@ export class CreateUserLogDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  details: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  ip_address: string;
+  details: {};
 
   @ApiProperty()
   @IsNotEmpty()

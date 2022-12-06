@@ -55,4 +55,8 @@ export class CreateLeaveRequestDto {
   @ApiProperty()
   @IsOptional()
   approvedBy: string;
+
+  @ApiProperty()
+  @IsOptional()
+  approverComments: string;
 }

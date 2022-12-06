@@ -49,6 +49,9 @@ export class LeaveRequest {
   approvedBy: string;
 
   @Prop()
+  approverComments: string;
+
+  @Prop()
   lastModifiedDate?: Date;
 }
 
