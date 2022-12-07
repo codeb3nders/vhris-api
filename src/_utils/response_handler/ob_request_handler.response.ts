@@ -29,7 +29,7 @@ export class OBRequestResponseHandler extends BaseResponseHandler {
       approverComments: item.approverComments,
       employeeDetails:
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
-      approverDetails: item.approverDetails.length,
+      approverDetails: item.approverDetails[0],
     };
 
     if (employee) {

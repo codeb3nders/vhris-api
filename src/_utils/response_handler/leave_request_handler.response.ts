@@ -30,7 +30,7 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
       lastModifiedDate: item.lastModifiedDate,
       employeeDetails:
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
-      approverDetails: item.approverDetails,
+      approverDetails: item.approverDetails[0],
     };
 
     return toReturn;
