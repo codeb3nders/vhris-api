@@ -16,5 +16,5 @@ export class CreateEmployeeHistoryDto {
 
   @IsNotEmpty()
   @ApiProperty()
-  details: {};
+  details: any;
 }
