@@ -14,6 +14,7 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
   private items = (item: any) => {
     const toReturn: any = {
       id: item.id,
+      timestamp: item.timestamp,
       employeeNo: item.employeeNo,
       leaveType: item.leaveType,
       offsetOThrs: item.offsetOThrs,
