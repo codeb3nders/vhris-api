@@ -10,7 +10,7 @@ export class LeaveRequest {
   id: string;
 
   @Prop({ required: true, default: Date.now() })
-  timestamp: number;
+  timestamp: Date;
 
   @Prop({ required: true })
   employeeNo: string;

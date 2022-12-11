@@ -17,7 +17,7 @@ export class OBRequest {
   id: string;
 
   @Prop({ required: true, default: Date.now() })
-  timestamp: number;
+  timestamp: Date;
 
   @Prop()
   employeeNo: string;
