@@ -6,6 +6,10 @@ import { ErrorResponse } from 'src/_utils/response_handler/error_response.util';
 
 class ItineraryDetailsDto {
   @ApiProperty()
+  @IsOptional()
+  id: string;
+
+  @ApiProperty()
   @IsNotEmpty()
   from: string;
 
