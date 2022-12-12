@@ -7,8 +7,8 @@ export type OBRequestDocument = OBRequest & Document;
 class ItineraryDetails {
   from: string;
   to: string;
-  timeOfDeparture: string;
-  timeOfArrival: string;
+  timeOfDeparture: Date;
+  timeOfArrival: Date;
 }
 
 @Schema({ collection: 'ob_request' })
@@ -30,6 +30,9 @@ export class OBRequest {
 
   @Prop()
   itineraryDetails: ItineraryDetails[];
+
+  @Prop()
+  isWorkFromHome: boolean;
 
   @Prop()
   purpose: string;

@@ -15,25 +15,11 @@ class ItineraryDetailsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Transform((param) => {
-    if (timeFormatChecker(param.value)) {
-      return param.value;
-    } else {
-      ErrorResponse.conflict('Invalid Time Of Departure!');
-    }
-  })
-  timeOfDeparture: string;
+  timeOfDeparture: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  @Transform((param) => {
-    if (timeFormatChecker(param.value)) {
-      return param.value;
-    } else {
-      ErrorResponse.conflict('Invalid Time Of Arrival!');
-    }
-  })
-  timeOfArrival: string;
+  timeOfArrival: Date;
 }
 
 export class CreateOBRequestDto {
@@ -54,6 +40,10 @@ export class CreateOBRequestDto {
   @Type(() => ItineraryDetailsDto)
   @IsOptional()
   itineraryDetails: ItineraryDetailsDto[];
+
+  @ApiProperty()
+  @IsOptional()
+  isWorkFromHome: boolean;
 
   @ApiProperty()
   @IsNotEmpty()
