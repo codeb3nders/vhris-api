@@ -27,6 +27,7 @@ export class OBRequestResponseHandler extends BaseResponseHandler {
       dateTimeApproved: item.dateTimeApproved,
       approvedBy: item.approvedBy,
       approverComments: item.approverComments,
+      isWorkFromHome: item.isWorkFromHome,
       employeeDetails:
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
       approverDetails: item.approverDetails[0],
