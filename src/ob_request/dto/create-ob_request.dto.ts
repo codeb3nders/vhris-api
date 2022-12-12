@@ -15,11 +15,11 @@ class ItineraryDetailsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  timeOfDeparture: Date;
+  departureDateTime: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  timeOfArrival: Date;
+  arrivalDateTime: Date;
 }
 
 export class CreateOBRequestDto {

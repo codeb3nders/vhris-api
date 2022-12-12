@@ -5,10 +5,12 @@ import { uuid } from 'src/_utils/data/uuid';
 export type OBRequestDocument = OBRequest & Document;
 
 class ItineraryDetails {
+  @Prop({ required: true, default: uuid })
+  id: string;
   from: string;
   to: string;
-  timeOfDeparture: Date;
-  timeOfArrival: Date;
+  departureDateTime: Date;
+  arrivalDateTime: Date;
 }
 
 @Schema({ collection: 'ob_request' })
