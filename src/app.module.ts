@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
@@ -26,9 +27,11 @@ import { TimeKeepingModule } from './time_keeping/time_keeping.module';
 import { UserLogsModule } from './user_logs/user_logs.module';
 import { TeamLeadersModule } from './team_leaders/team_leaders.module';
 import { OBRequestModule } from './ob_request/ob_request.module';
+import { LeaveBalancesModule } from './leave_balances/leave_balances.module';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: 'env_var/.env',
@@ -64,6 +67,7 @@ import { OBRequestModule } from './ob_request/ob_request.module';
     UserLogsModule,
     TeamLeadersModule,
     OBRequestModule,
+    LeaveBalancesModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

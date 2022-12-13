@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserLogRepository } from 'src/_repositories/user_logs/user_log.repository';
 import { CreateUserLogDto } from './dto/create-user_log.dto';
-import { UpdateUserLogDto } from './dto/update-user_log.dto';
 import { UserLog } from './entities/user_log.entity';
 
 @Injectable()
