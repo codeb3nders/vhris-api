@@ -1,8 +1,8 @@
-import { LeaveRequest } from 'src/leave_requests/entities/leave_request.entity';
+import { CreateOBRequestDto } from 'src/ob_request/dto/create-ob_request.dto';
 import { BaseResponseHandler } from './base_handler.response';
 
-export class LeaveRequestResponseHandler extends BaseResponseHandler {
-  ok(data: LeaveRequest | LeaveRequest[]) {
+export class OBRequestResponseHandler extends BaseResponseHandler {
+  ok(data: CreateOBRequestDto | CreateOBRequestDto[]) {
     if (Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
         return this.returnItem(item, this.items(item));
@@ -12,27 +12,30 @@ export class LeaveRequestResponseHandler extends BaseResponseHandler {
     }
   }
   private items = (item: any) => {
+    const employee = item.employee;
     const toReturn: any = {
       id: item.id,
       timestamp: item.timestamp,
       employeeNo: item.employeeNo,
-      leaveType: item.leaveType,
-      offsetOThrs: item.offsetOThrs,
       dateFrom: item.dateFrom,
       dateTo: item.dateTo,
-      noOfDays: item.noOfDays,
-      dateOfReturnToWork: item.dateOfReturnToWork,
-      reasonOfLeave: item.reasonOfLeave,
+      itineraryDetails: item.itineraryDetails,
+      purpose: item.purpose,
       status: item.status,
       approver: item.approver,
-      leaveReasonOfDisapproval: item.leaveReasonOfDisapproval,
+      OBreasonOfDisapproval: item.OBreasonOfDisapproval,
       dateTimeApproved: item.dateTimeApproved,
       approvedBy: item.approvedBy,
-      lastModifiedDate: item.lastModifiedDate,
+      approverComments: item.approverComments,
+      isWorkFromHome: item.isWorkFromHome,
       employeeDetails:
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
       approverDetails: item.approverDetails[0],
     };
+
+    if (employee) {
+      toReturn.employee = employee;
+    }
 
     return toReturn;
   };

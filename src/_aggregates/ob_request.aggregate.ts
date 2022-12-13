@@ -4,7 +4,7 @@ import {
 } from 'src/_aggregates/helper.aggregate';
 
 const foreignField = 'employeeNo';
-export class AggregateLeaveRequest {
+export class AggregateOBRequest {
   values() {
     return [
       {

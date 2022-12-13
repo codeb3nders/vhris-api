@@ -127,9 +127,9 @@ export class EmployeesController {
 
     const employee = await this.employeesService.findAll(entityFilterQuery);
 
-    if (!employee || employee.length <= 0)
+    if (!employee && employee.length <= 0)
       throw new HttpException('Not Modified!', HttpStatus.NOT_MODIFIED);
-    const response = await this.employeesService.update(
+    const response = await this.employeesService.updateMany(
       { ...entityFilterQuery },
       updateEmployeeDto,
     );

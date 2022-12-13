@@ -73,6 +73,22 @@ export class EmployeesService {
     }
   }
 
+  async updateMany(params: any, updateEmployeeDto: UpdateEmployeeDto) {
+    try {
+      const upperCased = {};
+      for (const key in params) {
+        upperCased[key] = params[key].toUpperCase();
+      }
+
+      updateEmployeeDto['lastModifiedDate'] = Date.now();
+      return await this.employeeRepository.updateMany(upperCased, {
+        $set: { ...updateEmployeeDto },
+      });
+    } catch (error) {
+      return error.response || error;
+    }
+  }
+
   async remove(employeeNo: string) {
     const response = await this.employeeRepository.deleteMany({ employeeNo });
     if (response) {

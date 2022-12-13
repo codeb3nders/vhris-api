@@ -9,4 +9,8 @@ export class CreateEnumTableDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   type: boolean;
+
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
+  name: boolean;
 }

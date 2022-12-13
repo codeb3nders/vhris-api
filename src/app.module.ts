@@ -25,6 +25,7 @@ import { DisciplinaryActionsModule } from './disciplinary_actions/disciplinary_a
 import { TimeKeepingModule } from './time_keeping/time_keeping.module';
 import { UserLogsModule } from './user_logs/user_logs.module';
 import { TeamLeadersModule } from './team_leaders/team_leaders.module';
+import { OBRequestModule } from './ob_request/ob_request.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { TeamLeadersModule } from './team_leaders/team_leaders.module';
     TimeKeepingModule,
     UserLogsModule,
     TeamLeadersModule,
+    OBRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

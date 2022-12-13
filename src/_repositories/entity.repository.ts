@@ -51,6 +51,19 @@ export abstract class EntityRepository<T extends Document> {
     );
   }
 
+  async updateMany(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<unknown>,
+  ) {
+    return await this.entityModel.updateMany(
+      entityFilterQuery,
+      updateEntityData,
+      {
+        new: true,
+      },
+    );
+  }
+
   async insertOrUpdate(
     entityFilterQuery: FilterQuery<T>,
     updateEntityData: UpdateQuery<unknown>,
@@ -149,7 +162,7 @@ export abstract class EntityRepository<T extends Document> {
         });
       } else {
         toMatch.push({
-          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, value] },
+          ['$expr']: { $eq: [{ $toLower: `$${keys[n]}` }, `${value}`] },
         });
       }
     }

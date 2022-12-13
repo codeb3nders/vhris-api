@@ -9,6 +9,9 @@ export class LeaveRequest {
   @Prop({ required: true, default: uuid })
   id: string;
 
+  @Prop({ required: true, default: Date.now() })
+  timestamp: Date;
+
   @Prop({ required: true })
   employeeNo: string;
 

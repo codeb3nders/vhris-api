@@ -10,7 +10,7 @@ export class AggregateOvertimeRequest {
       {
         $lookup: {
           from: 'employees',
-          let: { field: '$approvedBy' },
+          let: { field: { $ifNull: ['$approvedBy', '$approver'] } },
           pipeline: [
             {
               $addFields: {
