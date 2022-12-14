@@ -65,7 +65,7 @@ export class CreateOvertimeRequestDto {
   totalOThrs: number;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   OTreasonOfDisapproval: string;
 
   @ApiProperty()
