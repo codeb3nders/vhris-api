@@ -4,7 +4,7 @@ import { uuid } from 'src/_utils/data/uuid';
 
 export type LeaveBalanceDocument = LeaveBalance & Document;
 
-@Schema({ collection: 'leave_request' })
+@Schema({ collection: 'leave_balance' })
 export class LeaveBalance {
   @Prop({ required: true, default: uuid })
   id: string;
@@ -15,13 +15,13 @@ export class LeaveBalance {
   @Prop({ required: true })
   employeeNo: string;
 
-  @Prop({ required: true })
+  @Prop()
   leaveType: string;
 
-  @Prop({ required: true })
+  @Prop()
   leaveBalance: number;
 
-  @Prop({ required: true })
+  @Prop()
   leaveTaken: number;
 
   @Prop()

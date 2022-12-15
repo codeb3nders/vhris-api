@@ -38,6 +38,19 @@ export abstract class EntityRepository<T extends Document> {
     });
   }
 
+  async upsert(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<unknown>,
+  ): Promise<T | null> {
+    return await this.entityModel.findOneAndUpdate(
+      entityFilterQuery,
+      updateEntityData,
+      {
+        upsert: true,
+      },
+    );
+  }
+
   async findOneAndUpdate(
     entityFilterQuery: FilterQuery<T>,
     updateEntityData: UpdateQuery<unknown>,

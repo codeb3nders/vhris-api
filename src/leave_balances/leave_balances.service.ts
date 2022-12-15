@@ -1,37 +1,58 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { UserLogsService } from 'src/user_logs/user_logs.service';
-import { CreateLeaveBalanceDto } from './dto/create-leave_balance.dto';
-import { UpdateLeaveBalanceDto } from './dto/update-leave_balance.dto';
+import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
+import { EmployeeRepository } from 'src/employees/employee.repository';
+import { CreateLeaveBalanceDto } from 'src/leave_balances/dto/create-leave_balance.dto';
+import { LeaveBalance } from 'src/leave_balances/entities/leave_balance.entity';
+import { LeaveBalanceRepository } from 'src/_repositories/leave_balance/leave_balance.repository';
+import { CONSTANTS } from 'src/_utils/constants/employees';
 
 @Injectable()
-export class LeaveBalancesService {
-  private readonly logger = new Logger(UserLogsService.name);
+export class LeaveBalanceService {
+  constructor(
+    private leaveBalanceRepository: LeaveBalanceRepository,
+    private employeeRepository: EmployeeRepository,
+  ) {}
 
-  // @Cron(CronExpression.EVERY_10_SECONDS)
-  handleCron() {
-    this.logger.debug('Run Create Job');
-    this.create();
+  @Cron(CONSTANTS.CRON_TIME)
+  async handleCron() {
+    const allEmployee = await this.employeeRepository.find({
+      isActive: true,
+      employmentType: CONSTANTS.EMPLOYMENT_TYPE_REGULAR,
+    });
+
+    if (!allEmployee.length) return 'NO EMPLOYEE FOUND';
+
+    allEmployee.forEach((employee) => {
+      const data: CreateLeaveBalanceDto = {
+        employeeNo: employee.employeeNo,
+        leaveBalance: CONSTANTS.LEAVE_BALANCE,
+      };
+
+      this.create(data);
+    });
   }
 
-  create(createLeaveBalanceDto?: CreateLeaveBalanceDto) {
-    console.log('CREATE');
-    return 'This action adds a new leaveBalance';
+  async create(
+    createLeaveBalanceDto: CreateLeaveBalanceDto,
+  ): Promise<LeaveBalance> {
+    const employeeNo = createLeaveBalanceDto.employeeNo;
+
+    return await this.leaveBalanceRepository.upsert(
+      { employeeNo },
+      createLeaveBalanceDto,
+    );
   }
 
-  findAll() {
-    return `This action returns all leaveBalances`;
+  async aggregateFind(_params?: any): Promise<LeaveBalance[]> {
+    return this.leaveBalanceRepository.aggregateFind(_params);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} leaveBalance`;
+  async aggregateFindByAttribute(_params?: any): Promise<LeaveBalance[]> {
+    return this.leaveBalanceRepository.aggregateFindByAttribute(_params);
   }
 
-  update(id: number, updateLeaveBalanceDto: UpdateLeaveBalanceDto) {
-    return `This action updates a #${id} leaveBalance`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} leaveBalance`;
+  async findOne(id: string): Promise<any> {
+    const response = await this.leaveBalanceRepository.aggregateFindOne({ id });
+    return response;
   }
 }

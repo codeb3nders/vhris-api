@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LeaveBalancesController } from './leave_balances.controller';
-import { LeaveBalancesService } from './leave_balances.service';
+import { LeaveBalanceController } from './leave_balances.controller';
+import { LeaveBalanceService } from './leave_balances.service';
 
-describe('LeaveBalancesController', () => {
-  let controller: LeaveBalancesController;
+describe('LeaveBalanceController', () => {
+  let controller: LeaveBalanceController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [LeaveBalancesController],
-      providers: [LeaveBalancesService],
+      controllers: [LeaveBalanceController],
+      providers: [LeaveBalanceService],
     }).compile();
 
-    controller = module.get<LeaveBalancesController>(LeaveBalancesController);
+    controller = module.get<LeaveBalanceController>(LeaveBalanceController);
   });
 
   it('should be defined', () => {

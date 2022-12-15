@@ -27,7 +27,7 @@ import { TimeKeepingModule } from './time_keeping/time_keeping.module';
 import { UserLogsModule } from './user_logs/user_logs.module';
 import { TeamLeadersModule } from './team_leaders/team_leaders.module';
 import { OBRequestModule } from './ob_request/ob_request.module';
-import { LeaveBalancesModule } from './leave_balances/leave_balances.module';
+import { LeaveBalanceModule } from './leave_balances/leave_balances.module';
 
 @Module({
   imports: [
@@ -67,7 +67,7 @@ import { LeaveBalancesModule } from './leave_balances/leave_balances.module';
     UserLogsModule,
     TeamLeadersModule,
     OBRequestModule,
-    LeaveBalancesModule,
+    LeaveBalanceModule,
   ],
   controllers: [AppController],
   providers: [AppService, ValidatorsService],

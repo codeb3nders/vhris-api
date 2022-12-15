@@ -8,23 +8,23 @@ export class CreateLeaveBalanceDto {
   employeeNo: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @Transform((param) => param.value.toUpperCase().trim())
-  leaveType: string;
+  leaveType?: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  leaveBalance: number;
+  @IsOptional()
+  leaveBalance?: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  leaveTaken: number;
+  @IsOptional()
+  leaveTaken?: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  dateUpdated: Date;
+  @IsOptional()
+  dateUpdated?: Date;
 
   @ApiProperty()
-  @IsNotEmpty()
-  employeeDetails: string;
+  @IsOptional()
+  employeeDetails?: string;
 }
