@@ -22,18 +22,7 @@ export class EnumTablesController {
   }
 
   @Get()
-  find(@Query('type') type: string, @Query('code') code: string) {
-    const params = {};
-
-    if (type && code) {
-      params['type'] = { $regex: new RegExp('^' + type.toUpperCase(), 'i') };
-      params['code'] = { $regex: new RegExp('^' + code.toUpperCase(), 'i') };
-    } else if (type) {
-      params['type'] = { $regex: new RegExp('^' + type.toUpperCase(), 'i') };
-    } else if (code) {
-      params['code'] = { $regex: new RegExp('^' + code.toUpperCase(), 'i') };
-    }
-
+  find(@Query() params) {
     return this.enumTablesService.find(params);
   }
 

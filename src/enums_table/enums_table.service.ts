@@ -11,7 +11,7 @@ export class EnumTablesService {
   }
 
   async find(params?: any) {
-    return await this.enumsTableRepository.find(params);
+    return await this.enumsTableRepository.aggregateFind(params);
   }
 
   async update(code: string, updateEnumTableDto: UpdateEnumTableDto) {

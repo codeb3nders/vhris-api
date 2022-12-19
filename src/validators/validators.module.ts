@@ -6,6 +6,7 @@ import {
 } from 'src/enums_table/entities/enums_table.entity';
 import { EnumTablesModule } from 'src/enums_table/enums_table.module';
 import { EnumTablesService } from 'src/enums_table/enums_table.service';
+import { AggregateEnumsTable } from 'src/_aggregates/enums_table.aggregate';
 import { EnumsTableRepository } from 'src/_repositories/enums_table/enums_table.repository';
 
 @Module({
@@ -19,7 +20,7 @@ import { EnumsTableRepository } from 'src/_repositories/enums_table/enums_table.
     ]),
   ],
 
-  providers: [EnumTablesService, EnumsTableRepository],
+  providers: [EnumTablesService, AggregateEnumsTable, EnumsTableRepository],
   exports: [EnumTablesService],
 })
 export class ValidatorsModule {}
