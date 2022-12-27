@@ -13,7 +13,7 @@ export class LeaveBalanceService {
     private employeeRepository: EmployeeRepository,
   ) {}
 
-  // @Cron(CONSTANTS.CRON_TIME)
+  @Cron(CONSTANTS.CRON_TIME)
   async handleCron() {
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
