@@ -15,6 +15,9 @@ export class LeaveBalance {
   @Prop({ required: true })
   employeeNo: string;
 
+  @Prop({ required: true })
+  applicableMonth: string;
+
   @Prop()
   leaveType: string;
 

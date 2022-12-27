@@ -163,7 +163,7 @@ export class Employee {
   dateInactive: Date;
 
   @Prop()
-  endOfProbationary: number;
+  endOfProbationary: Date;
 
   @Prop()
   contractEndDate: Date;

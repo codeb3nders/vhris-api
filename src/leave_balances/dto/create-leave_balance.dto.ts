@@ -9,6 +9,10 @@ export class CreateLeaveBalanceDto {
 
   @ApiProperty()
   @IsOptional()
+  applicableMonth?: string;
+
+  @ApiProperty()
+  @IsOptional()
   @Transform((param) => param.value.toUpperCase().trim())
   leaveType?: string;
 

@@ -13,32 +13,65 @@ export class LeaveBalanceService {
     private employeeRepository: EmployeeRepository,
   ) {}
 
-  @Cron(CONSTANTS.CRON_TIME)
+  // @Cron(CONSTANTS.CRON_TIME)
   async handleCron() {
+    const dte = new Date();
+    dte.setDate(dte.getDate() + 1);
+
     const allEmployee = await this.employeeRepository.find({
       isActive: true,
-      employmentType: CONSTANTS.EMPLOYMENT_TYPE_REGULAR,
+      $or: [
+        { employmentType: CONSTANTS.EMPLOYMENT_TYPE_REGULAR },
+        {
+          endOfProbationary: {
+            $lte: dte,
+          },
+        },
+      ],
     });
 
     if (!allEmployee.length) return 'NO EMPLOYEE FOUND';
 
-    allEmployee.forEach((employee) => {
+    const promises = [];
+
+    allEmployee.forEach(async (employee) => {
       const data: CreateLeaveBalanceDto = {
         employeeNo: employee.employeeNo,
         leaveBalance: CONSTANTS.LEAVE_BALANCE,
       };
 
-      this.create(data);
+      promises.push(this.create(data));
     });
+
+    return Promise.all(promises);
   }
 
   async create(
     createLeaveBalanceDto: CreateLeaveBalanceDto,
   ): Promise<LeaveBalance> {
-    const employeeNo = createLeaveBalanceDto.employeeNo;
+    const { employeeNo } = createLeaveBalanceDto;
+
+    const month = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const monthName = month[date.getMonth()];
 
     return await this.leaveBalanceRepository.upsert(
-      { employeeNo },
+      { employeeNo, applicableMonth: `${monthName}_${year}` },
       createLeaveBalanceDto,
     );
   }

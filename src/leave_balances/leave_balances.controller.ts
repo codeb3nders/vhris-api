@@ -17,6 +17,12 @@ export class LeaveBalanceController {
     return this.leaveBalanceService.create(createLeaveBalanceDto);
   }
 
+  @Get('run-cron-job')
+  async runCronJob() {
+    const response: any = await this.leaveBalanceService.handleCron();
+    return this.leaveBalanceResponseHandler.ok(response);
+  }
+
   @Get()
   async findAll(@Query() params) {
     const response: any = await this.leaveBalanceService.aggregateFind(params);
