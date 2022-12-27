@@ -11,6 +11,10 @@ export class EnumTablesService {
   }
 
   async find(params?: any) {
+    return await this.enumsTableRepository.find(params);
+  }
+
+  async aggregateFind(params?: any) {
     return await this.enumsTableRepository.aggregateFind(params);
   }
 
