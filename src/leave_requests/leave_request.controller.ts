@@ -44,7 +44,9 @@ export class LeaveRequestController {
 
   @Get()
   async findAll(@Query() params): Promise<LeaveRequest[]> {
-    const response = await this.leaveRequestService.aggregateFind(params);
+    const response = await this.leaveRequestService.aggregateFindByAttribute(
+      params,
+    );
     if (!response || response.length < 1) {
       return response;
     }
