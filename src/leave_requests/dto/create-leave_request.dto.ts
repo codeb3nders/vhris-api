@@ -38,6 +38,7 @@ export class CreateLeaveRequestDto {
 
   @ApiProperty()
   @IsNotEmpty()
+  @Transform((param) => param.value.toUpperCase().trim())
   status: string;
 
   @ApiProperty()

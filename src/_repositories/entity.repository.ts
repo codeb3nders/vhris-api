@@ -164,7 +164,7 @@ export abstract class EntityRepository<T extends Document> {
       let value =
         isNaN(params[keys[n]]) || keys[n] === 'employeeNo'
           ? params[keys[n]].toLowerCase()
-          : Number(params[keys[n]]);
+          : params[keys[n]];
 
       if (value === 'true' || value === 'false') {
         value = value === 'true';
