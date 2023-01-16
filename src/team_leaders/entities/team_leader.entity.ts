@@ -21,8 +21,8 @@ export class TeamLeader {
   @Prop()
   startDate: Date;
 
-  @Prop()
-  endDate: Date;
+  @Prop({ default: true })
+  isActive: boolean;
 
   @Prop()
   remarks: string;

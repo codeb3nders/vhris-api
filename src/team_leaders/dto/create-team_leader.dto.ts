@@ -16,7 +16,7 @@ export class CreateTeamLeaderDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  endDate: Date;
+  isActive: boolean;
 
   @ApiProperty()
   @IsOptional()

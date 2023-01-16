@@ -18,7 +18,7 @@ export class TeamLeaderResponseHandler extends BaseResponseHandler {
       employeeNo: item.employeeNo,
       isDelegated: item.isDelegated,
       startDate: item.startDate,
-      endDate: item.endDate,
+      isActive: item.isActive,
       remarks: item.remarks,
       employeeDetails:
         item.employeeDetails.length > 0 ? item.employeeDetails[0] : null,
