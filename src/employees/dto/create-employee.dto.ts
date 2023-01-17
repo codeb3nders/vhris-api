@@ -447,7 +447,7 @@ export class CreateEmployeeDto {
   oldEmployeeNo: string;
 
   @IsOptional()
-  type?: 'string';
+  type?: string;
 
   @IsOptional()
   effectiveDate?: Date;

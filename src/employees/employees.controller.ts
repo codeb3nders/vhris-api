@@ -139,9 +139,10 @@ export class EmployeesController {
 
       Object.keys(updateEmployeeDto).forEach((item) => {
         if (item !== 'lastModifiedDate' && item !== 'type') {
-          previousValue[item] = employee[item];
+          previousValue[item] = employee[0][item];
         }
       });
+
       if (type && entityFilterQuery.employeeNo) {
         const history = {
           employeeNo: entityFilterQuery.employeeNo,
