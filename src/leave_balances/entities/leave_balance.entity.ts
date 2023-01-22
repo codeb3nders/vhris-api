@@ -19,13 +19,58 @@ export class LeaveBalance {
   applicableMonth: string;
 
   @Prop()
-  leaveType: string;
+  SL: number;
 
   @Prop()
-  leaveBalance: number;
+  SLTaken: number;
 
   @Prop()
-  leaveTaken: number;
+  VL: number;
+
+  @Prop()
+  VLTaken: number;
+
+  @Prop()
+  BL: number;
+
+  @Prop()
+  BLTaken: number;
+
+  @Prop()
+  CL: number;
+
+  @Prop()
+  CLTaken: number;
+
+  @Prop()
+  ML: number;
+
+  @Prop()
+  MLTaken: number;
+
+  @Prop()
+  PL: number;
+
+  @Prop()
+  PLTaken: number;
+
+  @Prop()
+  SIL: number;
+
+  @Prop()
+  SILTaken: number;
+
+  @Prop()
+  BRL: number;
+
+  @Prop()
+  BRLTaken: number;
+
+  @Prop()
+  UL: number;
+
+  @Prop()
+  ULTaken: number;
 
   @Prop()
   dateUpdated: Date;

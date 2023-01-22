@@ -1,6 +1,8 @@
 import { forwardRef, Inject } from '@nestjs/common';
 import { Document, FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { UserCredentialsService } from 'src/user_credentials/user_credentials.service';
+import { CONSTANTS } from 'src/_utils/constants/employees';
+import { isNil } from 'lodash';
 interface StringMap {
   [key: string]: string;
 }
@@ -36,6 +38,51 @@ export abstract class EntityRepository<T extends Document> {
       __v: 0,
       ...projection,
     });
+  }
+
+  getLeaveValue = (leave, newLeaveValue) => {
+    return !isNil(leave) ? leave : newLeaveValue;
+  };
+
+  async findOneThenUpdate(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<unknown>,
+  ): Promise<any> {
+    const res: any = await this.entityModel.findOne(entityFilterQuery);
+    try {
+      if (!res) {
+        await this.entityModel.findOneAndUpdate(
+          entityFilterQuery,
+          updateEntityData,
+          {
+            upsert: true,
+          },
+        );
+
+        return updateEntityData;
+      } else {
+        const newData = {
+          ...updateEntityData,
+          VL: res.VL ? (res.VL += CONSTANTS.VL) : CONSTANTS.VL,
+          SL: res.SL ? (res.SL += CONSTANTS.SL) : CONSTANTS.SL,
+          BL: this.getLeaveValue(res.BL, updateEntityData.BL),
+          PL: this.getLeaveValue(res.PL, updateEntityData.PL),
+          ML: this.getLeaveValue(res.ML, updateEntityData.ML),
+          CL: this.getLeaveValue(res.CL, updateEntityData.CL),
+          UL: this.getLeaveValue(res.UL, updateEntityData.UL),
+          BRL: this.getLeaveValue(res.BRL, updateEntityData.BRL),
+          NL: this.getLeaveValue(res.NL, updateEntityData.NL),
+          SIL: this.getLeaveValue(res.SIL, updateEntityData.SIL),
+        };
+        await this.entityModel.updateOne(entityFilterQuery, newData, {
+          upsert: true,
+        });
+
+        return newData;
+      }
+    } catch (error) {
+      return error.message || error;
+    }
   }
 
   async upsert(
@@ -97,9 +144,7 @@ export abstract class EntityRepository<T extends Document> {
   }
 
   async deleteOne(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
-    const deleteResult = await await this.entityModel.deleteOne(
-      entityFilterQuery,
-    );
+    const deleteResult = await this.entityModel.deleteOne(entityFilterQuery);
     return deleteResult.deletedCount >= 1;
   }
 

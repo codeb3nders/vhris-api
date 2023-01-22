@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateLeaveBalanceDto {
@@ -8,21 +7,72 @@ export class CreateLeaveBalanceDto {
   employeeNo: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   applicableMonth?: string;
 
   @ApiProperty()
   @IsOptional()
-  @Transform((param) => param.value.toUpperCase().trim())
-  leaveType?: string;
+  VL?: number;
 
   @ApiProperty()
   @IsOptional()
-  leaveBalance?: number;
+  SL?: number;
 
   @ApiProperty()
   @IsOptional()
-  leaveTaken?: number;
+  BL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  BLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  CL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  CLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  ML?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  MLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  PL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  PLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  SIL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  SILTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  BRL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  BRLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  UL?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  ULTaken?: number;
 
   @ApiProperty()
   @IsOptional()
