@@ -1,22 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/mongoose';
 import { Cron } from '@nestjs/schedule';
 import { EmployeeRepository } from 'src/employees/employee.repository';
 import { CreateLeaveBalanceDto } from 'src/leave_balances/dto/create-leave_balance.dto';
 import { LeaveBalance } from 'src/leave_balances/entities/leave_balance.entity';
 import { LeaveBalanceRepository } from 'src/_repositories/leave_balance/leave_balance.repository';
 import { CONSTANTS } from 'src/_utils/constants/employees';
+import * as mongoose from 'mongoose';
+import { CONTAINS } from 'class-validator';
 
 @Injectable()
 export class LeaveBalanceService {
   constructor(
     private leaveBalanceRepository: LeaveBalanceRepository,
     private employeeRepository: EmployeeRepository,
+    @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
   @Cron(CONSTANTS.CRON_TIME)
   async handleCron() {
+    let reset = false;
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
+
+    const date = new Date();
+    const year = date.getFullYear();
+
+    const currentDate = new Date('2023-01-01').toLocaleDateString();
+
+    const curr = `1/1/${year}`;
+
+    if (currentDate === curr) {
+      reset = true;
+      console.log('DO RESET', reset); // TODO:
+    }
 
     const allEmployee = await this.employeeRepository.find({
       isActive: true,
@@ -34,16 +51,70 @@ export class LeaveBalanceService {
 
     const promises = [];
 
+    const getDaysFromDateHired = (dateHired: Date): number => {
+      const date1 = new Date(dateHired);
+      const date2 = new Date();
+
+      // To calculate the time difference of two dates
+      const Difference_In_Time = date2.getTime() - date1.getTime();
+
+      // To calculate the no. of days between two dates
+      return Math.round(Difference_In_Time / (1000 * 3600 * 24));
+    };
+
+    const isYearOld = (dateHired: Date): boolean => {
+      return getDaysFromDateHired(dateHired) <= 365;
+    };
+
     allEmployee.forEach(async (employee) => {
+      /**
+       * BL: 3,
+        CL: 3,
+        ML: 3,
+        PL: 3,
+        SIL: 3,
+        UL: 3,
+       */
+
+      const leaveData: any = {
+        employeeNo: employee.employeeNo,
+        SL: CONSTANTS.SL,
+        VL: CONSTANTS.VL,
+      };
+      // bereavement leave
+
+      if (
+        employee.employmentStatus.toLowerCase() === 'active' &&
+        employee.employmentType.toLowerCase() === 'regular'
+      ) {
+        leaveData.SIL = 3;
+        leaveData.BRL = 3;
+      }
+
+      // birthday leave
+
+      if (isYearOld(employee.dateHired)) {
+        leaveData.BL = CONSTANTS.BL;
+        leaveData.NL = CONSTANTS.NL;
+        if (employee.gender.toLowerCase() === 'male')
+          leaveData.PL = CONSTANTS.PL;
+        if (employee.gender.toLowerCase() === 'female')
+          leaveData.ML = CONSTANTS.ML;
+      }
+
       const data: CreateLeaveBalanceDto = {
         employeeNo: employee.employeeNo,
-        leaveBalance: CONSTANTS.LEAVE_BALANCE,
+        ...leaveData,
       };
 
       promises.push(this.create(data));
     });
 
-    return Promise.all(promises);
+    return await Promise.all(promises);
+  }
+
+  async resetLeave() {
+    return await this.leaveBalanceRepository.deleteMany({});
   }
 
   async create(
@@ -66,12 +137,13 @@ export class LeaveBalanceService {
       'December',
     ];
 
-    const date = new Date();
+    const date = new Date('2023-02-01');
     const year = date.getFullYear();
     const monthName = month[date.getMonth()];
 
-    return await this.leaveBalanceRepository.upsert(
-      { employeeNo, applicableMonth: `${monthName}_${year}` },
+    return await this.leaveBalanceRepository.findOneThenUpdate(
+      // { employeeNo, applicableMonth: `${monthName}_${year}` },
+      { employeeNo },
       createLeaveBalanceDto,
     );
   }
