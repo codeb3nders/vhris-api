@@ -19,21 +19,9 @@ export class LeaveBalanceService {
 
   @Cron(CONSTANTS.CRON_TIME)
   async handleCron() {
-    let reset = false;
+    this.handleResetCron();
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
-
-    const date = new Date();
-    const year = date.getFullYear();
-
-    const currentDate = new Date('2023-01-01').toLocaleDateString();
-
-    const curr = `1/1/${year}`;
-
-    if (currentDate === curr) {
-      reset = true;
-      console.log('DO RESET', reset); // TODO:
-    }
 
     const allEmployee = await this.employeeRepository.find({
       isActive: true,
@@ -67,21 +55,11 @@ export class LeaveBalanceService {
     };
 
     allEmployee.forEach(async (employee) => {
-      /**
-       * BL: 3,
-        CL: 3,
-        ML: 3,
-        PL: 3,
-        SIL: 3,
-        UL: 3,
-       */
-
       const leaveData: any = {
         employeeNo: employee.employeeNo,
         SL: CONSTANTS.SL,
         VL: CONSTANTS.VL,
       };
-      // bereavement leave
 
       if (
         employee.employmentStatus.toLowerCase() === 'active' &&
@@ -90,8 +68,6 @@ export class LeaveBalanceService {
         leaveData.SIL = 3;
         leaveData.BRL = 3;
       }
-
-      // birthday leave
 
       if (isYearOld(employee.dateHired)) {
         leaveData.BL = CONSTANTS.BL;
@@ -110,11 +86,24 @@ export class LeaveBalanceService {
       promises.push(this.create(data));
     });
 
-    return await Promise.all(promises);
+    const response = await Promise.all(promises);
+    return response;
   }
 
-  async resetLeave() {
-    return await this.leaveBalanceRepository.deleteMany({});
+  async handleResetCron() {
+    const dte = new Date();
+    dte.setDate(dte.getDate() + 1);
+
+    const date = new Date();
+    const year = date.getFullYear();
+
+    const currentDate = new Date('2023-01-01').toLocaleDateString();
+
+    const curr = `1/1/${year}`;
+
+    if (currentDate === curr) {
+      return await this.leaveBalanceRepository.deleteMany({});
+    }
   }
 
   async create(
@@ -138,14 +127,14 @@ export class LeaveBalanceService {
     ];
 
     const date = new Date('2023-02-01');
-    const year = date.getFullYear();
     const monthName = month[date.getMonth()];
 
-    return await this.leaveBalanceRepository.findOneThenUpdate(
-      // { employeeNo, applicableMonth: `${monthName}_${year}` },
-      { employeeNo },
-      createLeaveBalanceDto,
+    const response = await this.leaveBalanceRepository.findOneThenUpdate(
+      { employeeNo, applicableMonth: `${monthName}` },
+      { ...createLeaveBalanceDto, applicableMonth: `${monthName}` },
     );
+
+    return response;
   }
 
   async aggregateFind(_params?: any): Promise<LeaveBalance[]> {

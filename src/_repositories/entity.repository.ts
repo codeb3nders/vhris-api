@@ -51,18 +51,20 @@ export abstract class EntityRepository<T extends Document> {
     const res: any = await this.entityModel.findOne(entityFilterQuery);
     try {
       if (!res) {
-        return await this.entityModel.findOneAndUpdate(
+        await this.entityModel.findOneAndUpdate(
           entityFilterQuery,
           updateEntityData,
           {
             upsert: true,
           },
         );
+
+        return updateEntityData;
       } else {
         const newData = {
           ...updateEntityData,
-          VL: (res.VL += CONSTANTS.VL),
-          SL: (res.SL += CONSTANTS.SL),
+          VL: res.VL ? (res.VL += CONSTANTS.VL) : CONSTANTS.VL,
+          SL: res.SL ? (res.SL += CONSTANTS.SL) : CONSTANTS.SL,
           BL: this.getLeaveValue(res.BL, updateEntityData.BL),
           PL: this.getLeaveValue(res.PL, updateEntityData.PL),
           ML: this.getLeaveValue(res.ML, updateEntityData.ML),

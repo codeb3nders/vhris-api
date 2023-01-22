@@ -12,5 +12,5 @@ export const CONSTANTS = {
   ML: 105,
   PL: 5,
   EMPLOYMENT_TYPE_REGULAR: 'REGULAR',
-  CRON_TIME: CronExpression.EVERY_DAY_AT_1AM,
+  CRON_TIME: CronExpression.EVERY_10_MINUTES,
 };

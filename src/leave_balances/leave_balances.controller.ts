@@ -20,6 +20,14 @@ export class LeaveBalanceController {
   @Get('run-cron-job')
   async runCronJob() {
     const response: any = await this.leaveBalanceService.handleCron();
+
+    return this.leaveBalanceResponseHandler.ok(response);
+  }
+
+  @Get('run-reset-cron-job')
+  async runResetCronJob() {
+    const response: any = await this.leaveBalanceService.handleResetCron();
+
     return this.leaveBalanceResponseHandler.ok(response);
   }
 
