@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { EmployeesService } from 'src/employees/employees.service';
 import { LeaveBalanceResponseHandler } from 'src/_utils/response_handler/leave_balance_handler.response';
-import { CreateLeaveBalanceDto } from './dto/create-leave_balance.dto';
+import { CreateLeaveBalanceDto, DateDto } from './dto/create-leave_balance.dto';
 import { LeaveBalanceService } from './leave_balances.service';
 
 @Controller('leave-balance')
@@ -17,9 +17,11 @@ export class LeaveBalanceController {
     return this.leaveBalanceService.create(createLeaveBalanceDto);
   }
 
-  @Get('run-cron-job')
-  async runCronJob() {
-    const response: any = await this.leaveBalanceService.handleCron();
+  @Post('run-cron-job/')
+  async runCronJob(@Body() dateDto: DateDto) {
+    const response: any = await this.leaveBalanceService.handleCron(
+      dateDto.date,
+    );
 
     return this.leaveBalanceResponseHandler.ok(response);
   }

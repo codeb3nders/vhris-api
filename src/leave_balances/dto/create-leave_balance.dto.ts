@@ -2,6 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
+export class DateDto {
+  @ApiProperty()
+  @IsOptional()
+  date: Date;
+}
+
 export class CreateLeaveBalanceDto {
   @ApiProperty()
   @IsNotEmpty()

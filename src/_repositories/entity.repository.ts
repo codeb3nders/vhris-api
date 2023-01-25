@@ -51,7 +51,6 @@ export abstract class EntityRepository<T extends Document> {
     const res: any = await this.entityModel.findOne(entityFilterQuery);
     try {
       if (!res) {
-        console.log('AA');
         await this.entityModel.findOneAndUpdate(
           entityFilterQuery,
           updateEntityData,

@@ -17,9 +17,23 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  // @Cron(CONSTANTS.CRON_TIME)
-  async handleCron() {
-    console.log('CRON');
+  @Cron(CONSTANTS.CRON_TIME)
+  async handleCron(date?: Date) {
+    if (this.checkDate()) {
+      await this.handleResetCron();
+
+      setTimeout(() => {
+        return this.runCron(date);
+      }, 10000); // Allow 20 seconds to clear all leave balances
+
+      return {};
+    } else {
+      return this.runCron(date);
+    }
+  }
+
+  async runCron(date?: Date) {
+    console.log('Add leave balance');
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
 
@@ -81,33 +95,38 @@ export class LeaveBalanceService {
         ...leaveData,
       };
 
-      promises.push(this.create(data));
+      promises.push(this.create(data, date));
     });
 
     const response = await Promise.all(promises);
     return response;
   }
 
-  // @Cron(CONSTANTS.RESET_CRON_TIME)
-  async handleResetCron() {
-    console.log('RESET CRON');
+  checkDate() {
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
 
     const date = new Date();
     const year = date.getFullYear();
 
-    const currentDate = new Date('2023-01-01').toLocaleDateString();
+    const currentDate = new Date('2023-01-01').toLocaleDateString(); // TEST HERE FOR RESET DATE
 
     const curr = `1/1/${year}`;
 
-    if (currentDate === curr) {
+    return currentDate === curr;
+  }
+
+  async handleResetCron() {
+    console.log('Reset leave balance');
+
+    if (this.checkDate()) {
       return await this.leaveBalanceRepository.deleteMany({});
     }
   }
 
   async create(
     createLeaveBalanceDto: CreateLeaveBalanceDto,
+    dte?: Date,
   ): Promise<LeaveBalance> {
     const { employeeNo } = createLeaveBalanceDto;
 
@@ -125,8 +144,9 @@ export class LeaveBalanceService {
       'November',
       'December',
     ];
+    const nDate = dte ? new Date(dte) : new Date();
 
-    const date = new Date();
+    const date = nDate;
     const monthName = month[date.getMonth()];
 
     const response = await this.leaveBalanceRepository.findOneThenUpdate(
