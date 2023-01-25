@@ -51,6 +51,7 @@ export abstract class EntityRepository<T extends Document> {
     const res: any = await this.entityModel.findOne(entityFilterQuery);
     try {
       if (!res) {
+        console.log('AA');
         await this.entityModel.findOneAndUpdate(
           entityFilterQuery,
           updateEntityData,
@@ -61,8 +62,23 @@ export abstract class EntityRepository<T extends Document> {
 
         return updateEntityData;
       } else {
+        const one = JSON.stringify(res.applicableMonth);
+
+        const amConverted = JSON.parse(one);
+
+        const index = amConverted.indexOf(
+          updateEntityData.applicableMonth.toUpperCase(),
+        );
+
+        if (index !== -1) {
+          return updateEntityData;
+        } else {
+          amConverted.push(updateEntityData.applicableMonth.toUpperCase());
+        }
+
         const newData = {
           ...updateEntityData,
+          applicableMonth: amConverted,
           VL: res.VL ? (res.VL += CONSTANTS.VL) : CONSTANTS.VL,
           SL: res.SL ? (res.SL += CONSTANTS.SL) : CONSTANTS.SL,
           BL: this.getLeaveValue(res.BL, updateEntityData.BL),

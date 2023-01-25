@@ -16,7 +16,7 @@ export class LeaveBalance {
   employeeNo: string;
 
   @Prop({ required: true })
-  applicableMonth: string;
+  applicableMonth: string[];
 
   @Prop()
   SL: number;

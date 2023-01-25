@@ -17,9 +17,9 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  @Cron(CONSTANTS.CRON_TIME)
+  // @Cron(CONSTANTS.CRON_TIME)
   async handleCron() {
-    this.handleResetCron();
+    console.log('CRON');
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
 
@@ -43,10 +43,8 @@ export class LeaveBalanceService {
       const date1 = new Date(dateHired);
       const date2 = new Date();
 
-      // To calculate the time difference of two dates
       const Difference_In_Time = date2.getTime() - date1.getTime();
 
-      // To calculate the no. of days between two dates
       return Math.round(Difference_In_Time / (1000 * 3600 * 24));
     };
 
@@ -90,7 +88,9 @@ export class LeaveBalanceService {
     return response;
   }
 
+  // @Cron(CONSTANTS.RESET_CRON_TIME)
   async handleResetCron() {
+    console.log('RESET CRON');
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
 
@@ -126,12 +126,12 @@ export class LeaveBalanceService {
       'December',
     ];
 
-    const date = new Date('2023-02-01');
+    const date = new Date();
     const monthName = month[date.getMonth()];
 
     const response = await this.leaveBalanceRepository.findOneThenUpdate(
-      { employeeNo, applicableMonth: `${monthName}` },
-      { ...createLeaveBalanceDto, applicableMonth: `${monthName}` },
+      { employeeNo },
+      { ...createLeaveBalanceDto, applicableMonth: monthName.toUpperCase() },
     );
 
     return response;

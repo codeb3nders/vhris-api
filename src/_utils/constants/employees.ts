@@ -1,4 +1,3 @@
-import { CronExpression } from '@nestjs/schedule';
 export const CONSTANTS = {
   HR_ADMIN: 'HR ADMIN',
   TTL: 300,
@@ -12,5 +11,15 @@ export const CONSTANTS = {
   ML: 105,
   PL: 5,
   EMPLOYMENT_TYPE_REGULAR: 'REGULAR',
-  CRON_TIME: CronExpression.EVERY_10_MINUTES,
+  CRON_TIME: '*/15 * * * * *', // Every day 01 1:30 am
+  RESET_CRON_TIME: '0 */1 * * * *', // Every Jan 01 1:00 am
 };
+
+/**
+ * 
+
+CRON_TIME: '* 30 1 * * *', // Every day 01 1:30 am
+RESET_CRON_TIME: '* 00 01 01 01 *', // Every Jan 01 1:00 am
+
+
+ */

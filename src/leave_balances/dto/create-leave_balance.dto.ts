@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateLeaveBalanceDto {
@@ -8,7 +9,8 @@ export class CreateLeaveBalanceDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  applicableMonth?: string;
+  @Transform((param) => param.value.map((item) => item.toUpperCase()))
+  applicableMonth?: string[];
 
   @ApiProperty()
   @IsOptional()
