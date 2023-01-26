@@ -8,6 +8,7 @@ import { LeaveBalanceRepository } from 'src/_repositories/leave_balance/leave_ba
 import { CONSTANTS } from 'src/_utils/constants/employees';
 import * as mongoose from 'mongoose';
 import { CONTAINS } from 'class-validator';
+import { UpdateLeaveBalanceDto } from './dto/update-leave_balance.dto';
 
 @Injectable()
 export class LeaveBalanceService {
@@ -17,7 +18,7 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  @Cron(CONSTANTS.CRON_TIME)
+  // @Cron(CONSTANTS.CRON_TIME)
   async handleCron(date?: Date) {
     if (this.checkDate()) {
       await this.handleResetCron();
@@ -164,8 +165,23 @@ export class LeaveBalanceService {
     return this.leaveBalanceRepository.aggregateFindByAttribute(_params);
   }
 
-  async findOne(id: string): Promise<any> {
-    const response = await this.leaveBalanceRepository.aggregateFindOne({ id });
-    return response;
+  async aggregateFindOneByAttribute(_params?: any): Promise<any> {
+    return await this.leaveBalanceRepository.aggregateFindOne(_params);
+  }
+
+  async findOne(employeeId: string): Promise<any> {
+    return await this.leaveBalanceRepository.aggregateFindOne({
+      employeeId,
+    });
+  }
+
+  async update(
+    employeeNo: string,
+    updateLeaveBalanceDto: UpdateLeaveBalanceDto,
+  ) {
+    updateLeaveBalanceDto['lastModifiedDate'] = Date.now();
+    const filter = { employeeNo };
+    const update = updateLeaveBalanceDto;
+    return await this.leaveBalanceRepository.findOneAndUpdate(filter, update);
   }
 }

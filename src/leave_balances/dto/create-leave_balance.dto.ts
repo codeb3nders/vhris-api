@@ -28,6 +28,14 @@ export class CreateLeaveBalanceDto {
 
   @ApiProperty()
   @IsOptional()
+  VLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  SLTaken?: number;
+
+  @ApiProperty()
+  @IsOptional()
   BL?: number;
 
   @ApiProperty()
