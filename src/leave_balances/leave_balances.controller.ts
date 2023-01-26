@@ -23,14 +23,14 @@ export class LeaveBalanceController {
       dateDto.date,
     );
 
-    return this.leaveBalanceResponseHandler.ok(response);
+    return response;
   }
 
   @Get('run-reset-cron-job')
   async runResetCronJob() {
     const response: any = await this.leaveBalanceService.handleResetCron();
 
-    return this.leaveBalanceResponseHandler.ok(response);
+    return response;
   }
 
   @Get()

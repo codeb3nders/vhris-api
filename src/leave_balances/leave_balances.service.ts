@@ -17,24 +17,22 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  // @Cron(CONSTANTS.CRON_TIME)
+  @Cron(CONSTANTS.CRON_TIME)
   async handleCron(date?: Date) {
     if (this.checkDate()) {
       await this.handleResetCron();
 
       setTimeout(async () => {
         await this.runCron(date);
-        return { VL: 1000 };
       }, 10000); // Allow 20 seconds to clear all leave balances
-
-      return {};
     } else {
-      return await this.runCron(date);
+      await this.runCron(date);
     }
+
+    return 'CRON Job triggered, kindly try get endpoint after 10 seconds.';
   }
 
   async runCron(date?: Date) {
-    console.log('Add leave balance');
     const dte = new Date();
     dte.setDate(dte.getDate() + 1);
 
@@ -100,7 +98,7 @@ export class LeaveBalanceService {
     });
 
     const response = await Promise.all(promises);
-    console.log({ response });
+    console.log(`Added leave to ${response.length} employees.`);
     return response;
   }
 
@@ -111,7 +109,7 @@ export class LeaveBalanceService {
     const date = new Date();
     const year = date.getFullYear();
 
-    const currentDate = new Date('2023-01-01').toLocaleDateString(); // TEST HERE FOR RESET DATE
+    const currentDate = new Date('2023-01-01').toLocaleDateString(); // TEST HERE FOR RESET DATE, Remove hardcoded date if done testing.
 
     const curr = `1/1/${year}`;
 
@@ -119,10 +117,9 @@ export class LeaveBalanceService {
   }
 
   async handleResetCron() {
-    console.log('Reset leave balance');
-
     if (this.checkDate()) {
-      return await this.leaveBalanceRepository.deleteMany({});
+      await this.leaveBalanceRepository.deleteMany({});
+      console.log(`Reset leave to all employees. `);
     }
   }
 
