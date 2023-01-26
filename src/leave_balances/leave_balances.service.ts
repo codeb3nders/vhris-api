@@ -17,18 +17,19 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  @Cron(CONSTANTS.CRON_TIME)
+  // @Cron(CONSTANTS.CRON_TIME)
   async handleCron(date?: Date) {
     if (this.checkDate()) {
       await this.handleResetCron();
 
-      setTimeout(() => {
-        return this.runCron(date);
+      setTimeout(async () => {
+        await this.runCron(date);
+        return { VL: 1000 };
       }, 10000); // Allow 20 seconds to clear all leave balances
 
       return {};
     } else {
-      return this.runCron(date);
+      return await this.runCron(date);
     }
   }
 
@@ -99,6 +100,7 @@ export class LeaveBalanceService {
     });
 
     const response = await Promise.all(promises);
+    console.log({ response });
     return response;
   }
 
