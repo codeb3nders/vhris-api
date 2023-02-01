@@ -12,6 +12,9 @@ export class Employee {
   @Prop({ required: true, unique: true })
   employeeNo: string;
 
+  @Prop()
+  type: string;
+
   @Prop({ required: true })
   isActive: boolean;
 
