@@ -18,7 +18,7 @@ export class LeaveBalanceService {
     @InjectConnection() private readonly connection?: mongoose.Connection,
   ) {}
 
-  // @Cron(CONSTANTS.CRON_TIME)
+  @Cron(CONSTANTS.CRON_TIME)
   async handleCron(date?: Date) {
     if (this.checkDate()) {
       await this.handleResetCron();
